@@ -1,0 +1,8 @@
+author: Miguel Nieto
+author_url: https://github.com/m-lab
+github_url: https://github.com/m-lab/ndt7-client-ios
+output: docs
+theme: fullwidth
+readme: README.md
+module: ndt7
+xcodebuild_arguments: [-workspace, 'ndt7.xcworkspace', -scheme, 'ndt7']
