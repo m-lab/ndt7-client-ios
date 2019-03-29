@@ -38,7 +38,7 @@
 		49BE5B42224EA90800DB7BDF = {
 			isa = PBXGroup;
 			children = (
-				49BE5B4D224EA90800DB7BDF /* ndt7 iOS Example */,
+				49BE5B4D224EA90800DB7BDF /* Sources */,
 				49BE5B4C224EA90800DB7BDF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,7 +51,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49BE5B4D224EA90800DB7BDF /* ndt7 iOS Example */ = {
+		49BE5B4D224EA90800DB7BDF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				49BE5B4E224EA90800DB7BDF /* AppDelegate.swift */,
@@ -61,7 +61,7 @@
 				49BE5B57224EA90900DB7BDF /* LaunchScreen.storyboard */,
 				49BE5B5A224EA90900DB7BDF /* Info.plist */,
 			);
-			path = "ndt7 iOS Example";
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +284,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "ndt7 iOS Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -301,6 +302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "ndt7 iOS Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

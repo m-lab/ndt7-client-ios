@@ -6,7 +6,7 @@
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 //! Project version number for ndt7.
 FOUNDATION_EXPORT double ndt7VersionNumber;
