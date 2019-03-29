@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-               BuildableName = "ndt7.framework"
-               BlueprintName = "ndt7 iOS"
+               BlueprintIdentifier = "49C52FF2224ED19600592C4C"
+               BuildableName = "ndt7 watchOS.framework"
+               BlueprintName = "ndt7 watchOS"
                ReferencedContainer = "container:ndt7.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B84224EAA3900DB7BDF"
-               BuildableName = "ndt7 iOS Tests.xctest"
-               BlueprintName = "ndt7 iOS Tests"
+               BlueprintIdentifier = "49C53001224ED19900592C4C"
+               BuildableName = "ndt7 watchOS Tests.xctest"
+               BlueprintName = "ndt7 watchOS Tests"
                ReferencedContainer = "container:ndt7.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,9 +46,9 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
+            BlueprintIdentifier = "49C52FF2224ED19600592C4C"
+            BuildableName = "ndt7 watchOS.framework"
+            BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
@@ -57,9 +57,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B84224EAA3900DB7BDF"
-               BuildableName = "ndt7 iOS Tests.xctest"
-               BlueprintName = "ndt7 iOS Tests"
+               BlueprintIdentifier = "49C53001224ED19900592C4C"
+               BuildableName = "ndt7 watchOS Tests.xctest"
+               BlueprintName = "ndt7 watchOS Tests"
                ReferencedContainer = "container:ndt7.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -67,9 +67,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
+            BlueprintIdentifier = "49C52FF2224ED19600592C4C"
+            BuildableName = "ndt7 watchOS.framework"
+            BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -89,9 +89,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
+            BlueprintIdentifier = "49C52FF2224ED19600592C4C"
+            BuildableName = "ndt7 watchOS.framework"
+            BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -107,9 +107,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
+            BlueprintIdentifier = "49C52FF2224ED19600592C4C"
+            BuildableName = "ndt7 watchOS.framework"
+            BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

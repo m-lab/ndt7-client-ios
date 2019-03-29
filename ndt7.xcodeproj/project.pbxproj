@@ -25,6 +25,14 @@
 		49BE5BC9224EBA2200DB7BDF /* ndt7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */; };
 		49BE5BD6224EC1D900DB7BDF /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */; };
 		49BE5BD7224EC1F000DB7BDF /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BA9224EB9D000DB7BDF /* ndt7.framework */; };
+		49BE5BDA224ECD7700DB7BDF /* ndt7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* ndt7.swift */; };
+		49C52FF4224ED19600592C4C /* ndt7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* ndt7.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49C52FF6224ED19600592C4C /* ndt7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* ndt7.swift */; };
+		49C52FF9224ED19600592C4C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B9B224EAB7300DB7BDF /* LICENSE */; };
+		49C52FFA224ED19600592C4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B99224EAB5C00DB7BDF /* README.md */; };
+		49C52FFB224ED19600592C4C /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B97224EAB5200DB7BDF /* AUTHORS */; };
+		49C53005224ED19900592C4C /* ndt7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */; };
+		49C53007224ED19900592C4C /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5B7C224EAA3900DB7BDF /* ndt7.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,13 @@
 			remoteGlobalIDString = 49BE5BB7224EBA1E00DB7BDF;
 			remoteInfo = "ndt7 tvOS";
 		};
+		49C5300E224ED25000592C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49BE5B73224EAA3900DB7BDF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49C52FF2224ED19600592C4C;
+			remoteInfo = "ndt7 watchOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +80,9 @@
 		49BE5BB6224EB9D400DB7BDF /* ndt7 macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ndt7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BE5BD0224EBA2200DB7BDF /* ndt7 tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5BD9224ECD7700DB7BDF /* ndt7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ndt7.swift; sourceTree = "<group>"; };
+		49C52FFF224ED19600592C4C /* ndt7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ndt7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49C5300C224ED19900592C4C /* ndt7 watchOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 watchOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +131,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49C52FF7224ED19600592C4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C53006224ED19900592C4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49C53007224ED19900592C4C /* ndt7.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -137,6 +170,8 @@
 				49BE5BB6224EB9D400DB7BDF /* ndt7 macOS Tests.xctest */,
 				49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */,
 				49BE5BD0224EBA2200DB7BDF /* ndt7 tvOS Tests.xctest */,
+				49C52FFF224ED19600592C4C /* ndt7.framework */,
+				49C5300C224ED19900592C4C /* ndt7 watchOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -144,8 +179,8 @@
 		49BE5B7E224EAA3900DB7BDF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				49BE5B7F224EAA3900DB7BDF /* ndt7.h */,
-				49BE5B80224EAA3900DB7BDF /* Info.plist */,
+				49BE5BD9224ECD7700DB7BDF /* ndt7.swift */,
+				49BE5BDB224ECD9200DB7BDF /* Supporting Files */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -183,6 +218,15 @@
 			name = Deployment;
 			sourceTree = "<group>";
 		};
+		49BE5BDB224ECD9200DB7BDF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				49BE5B7F224EAA3900DB7BDF /* ndt7.h */,
+				49BE5B80224EAA3900DB7BDF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -207,6 +251,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				49BE5BB9224EBA1E00DB7BDF /* ndt7.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C52FF3224ED19600592C4C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49C52FF4224ED19600592C4C /* ndt7.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +373,42 @@
 			productReference = 49BE5BD0224EBA2200DB7BDF /* ndt7 tvOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		49C52FF2224ED19600592C4C /* ndt7 watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49C52FFC224ED19600592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS" */;
+			buildPhases = (
+				49C52FF3224ED19600592C4C /* Headers */,
+				49C52FF5224ED19600592C4C /* Sources */,
+				49C52FF7224ED19600592C4C /* Frameworks */,
+				49C52FF8224ED19600592C4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ndt7 watchOS";
+			productName = ndt7;
+			productReference = 49C52FFF224ED19600592C4C /* ndt7.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		49C53001224ED19900592C4C /* ndt7 watchOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49C53009224ED19900592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS Tests" */;
+			buildPhases = (
+				49C53004224ED19900592C4C /* Sources */,
+				49C53006224ED19900592C4C /* Frameworks */,
+				49C53008224ED19900592C4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				49C5300F224ED25000592C4C /* PBXTargetDependency */,
+			);
+			name = "ndt7 watchOS Tests";
+			productName = ndt7Tests;
+			productReference = 49C5300C224ED19900592C4C /* ndt7 watchOS Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -333,6 +421,7 @@
 				TargetAttributes = {
 					49BE5B7B224EAA3900DB7BDF = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 					49BE5B84224EAA3900DB7BDF = {
 						CreatedOnToolsVersion = 10.2;
@@ -357,6 +446,8 @@
 				49BE5BAB224EB9D400DB7BDF /* ndt7 macOS Tests */,
 				49BE5BB7224EBA1E00DB7BDF /* ndt7 tvOS */,
 				49BE5BC5224EBA2200DB7BDF /* ndt7 tvOS Tests */,
+				49C52FF2224ED19600592C4C /* ndt7 watchOS */,
+				49C53001224ED19900592C4C /* ndt7 watchOS Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -413,6 +504,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49C52FF8224ED19600592C4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49C52FF9224ED19600592C4C /* LICENSE in Resources */,
+				49C52FFA224ED19600592C4C /* README.md in Resources */,
+				49C52FFB224ED19600592C4C /* AUTHORS in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C53008224ED19900592C4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -420,6 +528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49BE5BDA224ECD7700DB7BDF /* ndt7.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +570,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49C52FF5224ED19600592C4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49C52FF6224ED19600592C4C /* ndt7.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C53004224ED19900592C4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49C53005224ED19900592C4C /* ndt7Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -478,6 +603,11 @@
 			isa = PBXTargetDependency;
 			target = 49BE5BB7224EBA1E00DB7BDF /* ndt7 tvOS */;
 			targetProxy = 49BE5BD3224EC1B800DB7BDF /* PBXContainerItemProxy */;
+		};
+		49C5300F224ED25000592C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49C52FF2224ED19600592C4C /* ndt7 watchOS */;
+			targetProxy = 49C5300E224ED25000592C4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -612,6 +742,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
@@ -629,6 +760,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
 				PRODUCT_NAME = ndt7;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -638,6 +770,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
@@ -663,6 +796,7 @@
 		49BE5B94224EAA3900DB7BDF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -680,6 +814,7 @@
 		49BE5B95224EAA3900DB7BDF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -876,6 +1011,101 @@
 			};
 			name = Release;
 		};
+		49C52FFD224ED19600592C4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
+				PRODUCT_NAME = ndt7;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Debug;
+		};
+		49C52FFE224ED19600592C4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
+				PRODUCT_NAME = ndt7;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Release;
+		};
+		49C5300A224ED19900592C4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Manual;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		49C5300B224ED19900592C4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Manual;
+				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -938,6 +1168,24 @@
 			buildConfigurations = (
 				49BE5BCE224EBA2200DB7BDF /* Debug */,
 				49BE5BCF224EBA2200DB7BDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49C52FFC224ED19600592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49C52FFD224ED19600592C4C /* Debug */,
+				49C52FFE224ED19600592C4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49C53009224ED19900592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49C5300A224ED19900592C4C /* Debug */,
+				49C5300B224ED19900592C4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

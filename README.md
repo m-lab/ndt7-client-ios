@@ -49,7 +49,7 @@ Measure the Internet, save the data, and make it universally accessible and usef
 
 **Documentation in progress.**
 
-- iOS 10.0+ / macOS 10.14.0+ / appleTV 10.0+
+- iOS 10.0+ / macOS 10.14.0+ / appleTV 10.0+ / watchOS 3.0+
 - Xcode 10.2+
 - Swift 5.0+
 
