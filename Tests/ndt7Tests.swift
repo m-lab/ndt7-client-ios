@@ -9,7 +9,7 @@
 import XCTest
 @testable import ndt7
 
-class ndt7Tests: XCTestCase {
+class NDT7Tests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
