@@ -1,0 +1,1 @@
+jazzy --config .jazzy.yaml

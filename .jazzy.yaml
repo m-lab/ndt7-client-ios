@@ -5,4 +5,4 @@ output: docs
 theme: fullwidth
 readme: README.md
 module: ndt7
-xcodebuild_arguments: [-workspace, 'ndt7.xcworkspace', -scheme, 'ndt7']
+xcodebuild_arguments: [-workspace, 'ndt7.xcworkspace', -scheme, 'ndt7 iOS']
