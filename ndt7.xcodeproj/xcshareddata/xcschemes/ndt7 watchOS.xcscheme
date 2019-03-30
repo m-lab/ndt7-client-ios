@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "49C52FF2224ED19600592C4C"
-               BuildableName = "ndt7 watchOS.framework"
+               BuildableName = "ndt7.framework"
                BlueprintName = "ndt7 watchOS"
                ReferencedContainer = "container:ndt7.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49C52FF2224ED19600592C4C"
-            BuildableName = "ndt7 watchOS.framework"
+            BuildableName = "ndt7.framework"
             BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
@@ -68,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49C52FF2224ED19600592C4C"
-            BuildableName = "ndt7 watchOS.framework"
+            BuildableName = "ndt7.framework"
             BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
@@ -90,7 +90,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49C52FF2224ED19600592C4C"
-            BuildableName = "ndt7 watchOS.framework"
+            BuildableName = "ndt7.framework"
             BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>
@@ -108,7 +108,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49C52FF2224ED19600592C4C"
-            BuildableName = "ndt7 watchOS.framework"
+            BuildableName = "ndt7.framework"
             BlueprintName = "ndt7 watchOS"
             ReferencedContainer = "container:ndt7.xcodeproj">
          </BuildableReference>

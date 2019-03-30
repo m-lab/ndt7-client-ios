@@ -56,7 +56,7 @@ Measure the Internet, save the data, and make it universally accessible and usef
 <a name="documentation"></a>
 # Documentation
 
-**Documentation in progress.**
+Visit the `ndt7` [documentation](http://htmlpreview.github.io/?https://github.com/m-lab/ndt7-client-ios/blob/master/docs/index.html) for instructions and browsing api references.
 
 <a name="installation"></a>
 # Installation
