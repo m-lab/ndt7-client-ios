@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = 'ndt7'
+  s.name = 'NDT7'
   s.version = '0.0.1-beta.1'
   s.license = 'Apache License, Version 2.0'
   s.summary = 'Measure the Internet, save the data, and make it universally accessible and useful.'

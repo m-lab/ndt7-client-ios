@@ -15,23 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "49BE5B9D224EB9D000DB7BDF"
-               BuildableName = "ndt7.framework"
-               BlueprintName = "ndt7 macOS"
-               ReferencedContainer = "container:ndt7.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5BAB224EB9D400DB7BDF"
-               BuildableName = "ndt7 macOS Tests.xctest"
-               BlueprintName = "ndt7 macOS Tests"
-               ReferencedContainer = "container:ndt7.xcodeproj">
+               BuildableName = "NDT7.framework"
+               BlueprintName = "NDT7 macOS"
+               ReferencedContainer = "container:NDT7.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49BE5B9D224EB9D000DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 macOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 macOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -58,9 +44,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "49BE5BAB224EB9D400DB7BDF"
-               BuildableName = "ndt7 macOS Tests.xctest"
-               BlueprintName = "ndt7 macOS Tests"
-               ReferencedContainer = "container:ndt7.xcodeproj">
+               BuildableName = "NDT7 macOS Tests.xctest"
+               BlueprintName = "NDT7 macOS Tests"
+               ReferencedContainer = "container:NDT7.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49BE5B9D224EB9D000DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 macOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 macOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -90,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49BE5B9D224EB9D000DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 macOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 macOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -108,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49BE5B9D224EB9D000DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 macOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 macOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

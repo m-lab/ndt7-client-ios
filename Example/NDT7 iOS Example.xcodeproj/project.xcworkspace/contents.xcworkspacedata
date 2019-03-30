@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ndt7.xcodeproj">
+      location = "self:NDT7 iOS Example.xcodeproj">
    </FileRef>
 </Workspace>

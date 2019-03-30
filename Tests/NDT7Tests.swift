@@ -1,13 +1,13 @@
 //
-//  ndt7Tests.swift
-//  ndt7Tests
+//  NDT7Tests.swift
+//  NDT7Tests
 //
 //  Created by Miguel on 3/29/19.
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
 
 import XCTest
-@testable import ndt7
+@testable import NDT7
 
 class NDT7Tests: XCTestCase {
 

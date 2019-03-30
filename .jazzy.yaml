@@ -4,5 +4,5 @@ github_url: https://github.com/m-lab/ndt7-client-ios
 output: docs
 theme: fullwidth
 readme: README.md
-module: ndt7
-xcodebuild_arguments: [-workspace, 'ndt7.xcworkspace', -scheme, 'ndt7 iOS']
+module: NDT7
+xcodebuild_arguments: [-workspace, 'NDT7.xcworkspace', -scheme, 'NDT7 iOS']
