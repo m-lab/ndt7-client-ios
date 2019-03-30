@@ -7,32 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49BE5B86224EAA3900DB7BDF /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5B7C224EAA3900DB7BDF /* ndt7.framework */; };
-		49BE5B8B224EAA3900DB7BDF /* ndt7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */; };
-		49BE5B8D224EAA3900DB7BDF /* ndt7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* ndt7.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49BB5F12224FDC7200CEB9E0 /* NDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* NDT7.swift */; };
+		49BB5F13224FDC7300CEB9E0 /* NDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* NDT7.swift */; };
+		49BE5B86224EAA3900DB7BDF /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5B7C224EAA3900DB7BDF /* NDT7.framework */; };
+		49BE5B8B224EAA3900DB7BDF /* NDT7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */; };
+		49BE5B8D224EAA3900DB7BDF /* NDT7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* NDT7.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49BE5B98224EAB5200DB7BDF /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B97224EAB5200DB7BDF /* AUTHORS */; };
 		49BE5B9A224EAB5C00DB7BDF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B99224EAB5C00DB7BDF /* README.md */; };
 		49BE5B9C224EAB7300DB7BDF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B9B224EAB7300DB7BDF /* LICENSE */; };
-		49BE5B9F224EB9D000DB7BDF /* ndt7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* ndt7.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49BE5B9F224EB9D000DB7BDF /* NDT7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* NDT7.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49BE5BA3224EB9D000DB7BDF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B9B224EAB7300DB7BDF /* LICENSE */; };
 		49BE5BA4224EB9D000DB7BDF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B99224EAB5C00DB7BDF /* README.md */; };
 		49BE5BA5224EB9D000DB7BDF /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B97224EAB5200DB7BDF /* AUTHORS */; };
-		49BE5BAF224EB9D400DB7BDF /* ndt7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */; };
-		49BE5BB9224EBA1E00DB7BDF /* ndt7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* ndt7.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49BE5BAF224EB9D400DB7BDF /* NDT7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */; };
+		49BE5BB9224EBA1E00DB7BDF /* NDT7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* NDT7.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		49BE5BBD224EBA1E00DB7BDF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B9B224EAB7300DB7BDF /* LICENSE */; };
 		49BE5BBE224EBA1E00DB7BDF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B99224EAB5C00DB7BDF /* README.md */; };
 		49BE5BBF224EBA1E00DB7BDF /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B97224EAB5200DB7BDF /* AUTHORS */; };
-		49BE5BC9224EBA2200DB7BDF /* ndt7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */; };
-		49BE5BD6224EC1D900DB7BDF /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */; };
-		49BE5BD7224EC1F000DB7BDF /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BA9224EB9D000DB7BDF /* ndt7.framework */; };
-		49BE5BDA224ECD7700DB7BDF /* ndt7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* ndt7.swift */; };
-		49C52FF4224ED19600592C4C /* ndt7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* ndt7.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		49C52FF6224ED19600592C4C /* ndt7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* ndt7.swift */; };
+		49BE5BC9224EBA2200DB7BDF /* NDT7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */; };
+		49BE5BD6224EC1D900DB7BDF /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BC3224EBA1E00DB7BDF /* NDT7.framework */; };
+		49BE5BD7224EC1F000DB7BDF /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BA9224EB9D000DB7BDF /* NDT7.framework */; };
+		49BE5BDA224ECD7700DB7BDF /* NDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* NDT7.swift */; };
+		49C52FF4224ED19600592C4C /* NDT7.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BE5B7F224EAA3900DB7BDF /* NDT7.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49C52FF6224ED19600592C4C /* NDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* NDT7.swift */; };
 		49C52FF9224ED19600592C4C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B9B224EAB7300DB7BDF /* LICENSE */; };
 		49C52FFA224ED19600592C4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B99224EAB5C00DB7BDF /* README.md */; };
 		49C52FFB224ED19600592C4C /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B97224EAB5200DB7BDF /* AUTHORS */; };
-		49C53005224ED19900592C4C /* ndt7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */; };
-		49C53007224ED19900592C4C /* ndt7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5B7C224EAA3900DB7BDF /* ndt7.framework */; };
+		49C53005224ED19900592C4C /* NDT7Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */; };
+		49C53007224ED19900592C4C /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5B7C224EAA3900DB7BDF /* NDT7.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,48 +43,48 @@
 			containerPortal = 49BE5B73224EAA3900DB7BDF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 49BE5B7B224EAA3900DB7BDF;
-			remoteInfo = ndt7;
+			remoteInfo = NDT7;
 		};
 		49BE5BD1224EC1A300DB7BDF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 49BE5B73224EAA3900DB7BDF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 49BE5B9D224EB9D000DB7BDF;
-			remoteInfo = "ndt7 macOS";
+			remoteInfo = "NDT7 macOS";
 		};
 		49BE5BD3224EC1B800DB7BDF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 49BE5B73224EAA3900DB7BDF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 49BE5BB7224EBA1E00DB7BDF;
-			remoteInfo = "ndt7 tvOS";
+			remoteInfo = "NDT7 tvOS";
 		};
 		49C5300E224ED25000592C4C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 49BE5B73224EAA3900DB7BDF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 49C52FF2224ED19600592C4C;
-			remoteInfo = "ndt7 watchOS";
+			remoteInfo = "NDT7 watchOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		49BE5B7C224EAA3900DB7BDF /* ndt7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ndt7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE5B7F224EAA3900DB7BDF /* ndt7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ndt7.h; sourceTree = "<group>"; };
+		49BE5B7C224EAA3900DB7BDF /* NDT7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDT7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5B7F224EAA3900DB7BDF /* NDT7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDT7.h; sourceTree = "<group>"; };
 		49BE5B80224EAA3900DB7BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		49BE5B85224EAA3900DB7BDF /* ndt7 iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ndt7Tests.swift; sourceTree = "<group>"; };
+		49BE5B85224EAA3900DB7BDF /* NDT7 iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NDT7 iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Tests.swift; sourceTree = "<group>"; };
 		49BE5B8C224EAA3900DB7BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49BE5B97224EAB5200DB7BDF /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		49BE5B99224EAB5C00DB7BDF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		49BE5B9B224EAB7300DB7BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		49BE5BA9224EB9D000DB7BDF /* ndt7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ndt7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE5BB6224EB9D400DB7BDF /* ndt7 macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ndt7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE5BD0224EBA2200DB7BDF /* ndt7 tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		49BE5BD9224ECD7700DB7BDF /* ndt7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ndt7.swift; sourceTree = "<group>"; };
-		49C52FFF224ED19600592C4C /* ndt7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ndt7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		49C5300C224ED19900592C4C /* ndt7 watchOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ndt7 watchOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5BA9224EB9D000DB7BDF /* NDT7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDT7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5BB6224EB9D400DB7BDF /* NDT7 macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NDT7 macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5BC3224EBA1E00DB7BDF /* NDT7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDT7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5BD0224EBA2200DB7BDF /* NDT7 tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NDT7 tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49BE5BD9224ECD7700DB7BDF /* NDT7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7.swift; sourceTree = "<group>"; };
+		49C52FFF224ED19600592C4C /* NDT7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDT7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49C5300C224ED19900592C4C /* NDT7 watchOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NDT7 watchOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5B86224EAA3900DB7BDF /* ndt7.framework in Frameworks */,
+				49BE5B86224EAA3900DB7BDF /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5BD7224EC1F000DB7BDF /* ndt7.framework in Frameworks */,
+				49BE5BD7224EC1F000DB7BDF /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5BD6224EC1D900DB7BDF /* ndt7.framework in Frameworks */,
+				49BE5BD6224EC1D900DB7BDF /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49C53007224ED19900592C4C /* ndt7.framework in Frameworks */,
+				49C53007224ED19900592C4C /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,14 +166,14 @@
 		49BE5B7D224EAA3900DB7BDF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				49BE5B7C224EAA3900DB7BDF /* ndt7.framework */,
-				49BE5B85224EAA3900DB7BDF /* ndt7 iOS Tests.xctest */,
-				49BE5BA9224EB9D000DB7BDF /* ndt7.framework */,
-				49BE5BB6224EB9D400DB7BDF /* ndt7 macOS Tests.xctest */,
-				49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */,
-				49BE5BD0224EBA2200DB7BDF /* ndt7 tvOS Tests.xctest */,
-				49C52FFF224ED19600592C4C /* ndt7.framework */,
-				49C5300C224ED19900592C4C /* ndt7 watchOS Tests.xctest */,
+				49BE5B7C224EAA3900DB7BDF /* NDT7.framework */,
+				49BE5B85224EAA3900DB7BDF /* NDT7 iOS Tests.xctest */,
+				49BE5BA9224EB9D000DB7BDF /* NDT7.framework */,
+				49BE5BB6224EB9D400DB7BDF /* NDT7 macOS Tests.xctest */,
+				49BE5BC3224EBA1E00DB7BDF /* NDT7.framework */,
+				49BE5BD0224EBA2200DB7BDF /* NDT7 tvOS Tests.xctest */,
+				49C52FFF224ED19600592C4C /* NDT7.framework */,
+				49C5300C224ED19900592C4C /* NDT7 watchOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -179,7 +181,7 @@
 		49BE5B7E224EAA3900DB7BDF /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				49BE5BD9224ECD7700DB7BDF /* ndt7.swift */,
+				49BE5BD9224ECD7700DB7BDF /* NDT7.swift */,
 				49BE5BDB224ECD9200DB7BDF /* Supporting Files */,
 			);
 			path = Sources;
@@ -188,7 +190,7 @@
 		49BE5B89224EAA3900DB7BDF /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				49BE5B8A224EAA3900DB7BDF /* ndt7Tests.swift */,
+				49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */,
 				49BE5B8C224EAA3900DB7BDF /* Info.plist */,
 			);
 			path = Tests;
@@ -221,7 +223,7 @@
 		49BE5BDB224ECD9200DB7BDF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				49BE5B7F224EAA3900DB7BDF /* ndt7.h */,
+				49BE5B7F224EAA3900DB7BDF /* NDT7.h */,
 				49BE5B80224EAA3900DB7BDF /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -234,7 +236,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5B8D224EAA3900DB7BDF /* ndt7.h in Headers */,
+				49BE5B8D224EAA3900DB7BDF /* NDT7.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +244,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5B9F224EB9D000DB7BDF /* ndt7.h in Headers */,
+				49BE5B9F224EB9D000DB7BDF /* NDT7.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +252,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5BB9224EBA1E00DB7BDF /* ndt7.h in Headers */,
+				49BE5BB9224EBA1E00DB7BDF /* NDT7.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,16 +260,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49C52FF4224ED19600592C4C /* ndt7.h in Headers */,
+				49C52FF4224ED19600592C4C /* NDT7.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		49BE5B7B224EAA3900DB7BDF /* ndt7 iOS */ = {
+		49BE5B7B224EAA3900DB7BDF /* NDT7 iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49BE5B90224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 iOS" */;
+			buildConfigurationList = 49BE5B90224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 iOS" */;
 			buildPhases = (
 				49BE5B77224EAA3900DB7BDF /* Headers */,
 				49BE5B78224EAA3900DB7BDF /* Sources */,
@@ -278,14 +280,14 @@
 			);
 			dependencies = (
 			);
-			name = "ndt7 iOS";
-			productName = ndt7;
-			productReference = 49BE5B7C224EAA3900DB7BDF /* ndt7.framework */;
+			name = "NDT7 iOS";
+			productName = NDT7;
+			productReference = 49BE5B7C224EAA3900DB7BDF /* NDT7.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		49BE5B84224EAA3900DB7BDF /* ndt7 iOS Tests */ = {
+		49BE5B84224EAA3900DB7BDF /* NDT7 iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49BE5B93224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 iOS Tests" */;
+			buildConfigurationList = 49BE5B93224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 iOS Tests" */;
 			buildPhases = (
 				49BE5B81224EAA3900DB7BDF /* Sources */,
 				49BE5B82224EAA3900DB7BDF /* Frameworks */,
@@ -296,14 +298,14 @@
 			dependencies = (
 				49BE5B88224EAA3900DB7BDF /* PBXTargetDependency */,
 			);
-			name = "ndt7 iOS Tests";
-			productName = ndt7Tests;
-			productReference = 49BE5B85224EAA3900DB7BDF /* ndt7 iOS Tests.xctest */;
+			name = "NDT7 iOS Tests";
+			productName = NDT7Tests;
+			productReference = 49BE5B85224EAA3900DB7BDF /* NDT7 iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		49BE5B9D224EB9D000DB7BDF /* ndt7 macOS */ = {
+		49BE5B9D224EB9D000DB7BDF /* NDT7 macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49BE5BA6224EB9D000DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 macOS" */;
+			buildConfigurationList = 49BE5BA6224EB9D000DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 macOS" */;
 			buildPhases = (
 				49BE5B9E224EB9D000DB7BDF /* Headers */,
 				49BE5BA0224EB9D000DB7BDF /* Sources */,
@@ -314,14 +316,14 @@
 			);
 			dependencies = (
 			);
-			name = "ndt7 macOS";
-			productName = ndt7;
-			productReference = 49BE5BA9224EB9D000DB7BDF /* ndt7.framework */;
+			name = "NDT7 macOS";
+			productName = NDT7;
+			productReference = 49BE5BA9224EB9D000DB7BDF /* NDT7.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		49BE5BAB224EB9D400DB7BDF /* ndt7 macOS Tests */ = {
+		49BE5BAB224EB9D400DB7BDF /* NDT7 macOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49BE5BB3224EB9D400DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 macOS Tests" */;
+			buildConfigurationList = 49BE5BB3224EB9D400DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 macOS Tests" */;
 			buildPhases = (
 				49BE5BAE224EB9D400DB7BDF /* Sources */,
 				49BE5BB0224EB9D400DB7BDF /* Frameworks */,
@@ -332,14 +334,14 @@
 			dependencies = (
 				49BE5BD2224EC1A300DB7BDF /* PBXTargetDependency */,
 			);
-			name = "ndt7 macOS Tests";
-			productName = ndt7Tests;
-			productReference = 49BE5BB6224EB9D400DB7BDF /* ndt7 macOS Tests.xctest */;
+			name = "NDT7 macOS Tests";
+			productName = NDT7Tests;
+			productReference = 49BE5BB6224EB9D400DB7BDF /* NDT7 macOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		49BE5BB7224EBA1E00DB7BDF /* ndt7 tvOS */ = {
+		49BE5BB7224EBA1E00DB7BDF /* NDT7 tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49BE5BC0224EBA1E00DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 tvOS" */;
+			buildConfigurationList = 49BE5BC0224EBA1E00DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 tvOS" */;
 			buildPhases = (
 				49BE5BB8224EBA1E00DB7BDF /* Headers */,
 				49BE5BBA224EBA1E00DB7BDF /* Sources */,
@@ -350,14 +352,14 @@
 			);
 			dependencies = (
 			);
-			name = "ndt7 tvOS";
-			productName = ndt7;
-			productReference = 49BE5BC3224EBA1E00DB7BDF /* ndt7.framework */;
+			name = "NDT7 tvOS";
+			productName = NDT7;
+			productReference = 49BE5BC3224EBA1E00DB7BDF /* NDT7.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		49BE5BC5224EBA2200DB7BDF /* ndt7 tvOS Tests */ = {
+		49BE5BC5224EBA2200DB7BDF /* NDT7 tvOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49BE5BCD224EBA2200DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 tvOS Tests" */;
+			buildConfigurationList = 49BE5BCD224EBA2200DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 tvOS Tests" */;
 			buildPhases = (
 				49BE5BC8224EBA2200DB7BDF /* Sources */,
 				49BE5BCA224EBA2200DB7BDF /* Frameworks */,
@@ -368,14 +370,14 @@
 			dependencies = (
 				49BE5BD4224EC1B800DB7BDF /* PBXTargetDependency */,
 			);
-			name = "ndt7 tvOS Tests";
-			productName = ndt7Tests;
-			productReference = 49BE5BD0224EBA2200DB7BDF /* ndt7 tvOS Tests.xctest */;
+			name = "NDT7 tvOS Tests";
+			productName = NDT7Tests;
+			productReference = 49BE5BD0224EBA2200DB7BDF /* NDT7 tvOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		49C52FF2224ED19600592C4C /* ndt7 watchOS */ = {
+		49C52FF2224ED19600592C4C /* NDT7 watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49C52FFC224ED19600592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS" */;
+			buildConfigurationList = 49C52FFC224ED19600592C4C /* Build configuration list for PBXNativeTarget "NDT7 watchOS" */;
 			buildPhases = (
 				49C52FF3224ED19600592C4C /* Headers */,
 				49C52FF5224ED19600592C4C /* Sources */,
@@ -386,14 +388,14 @@
 			);
 			dependencies = (
 			);
-			name = "ndt7 watchOS";
-			productName = ndt7;
-			productReference = 49C52FFF224ED19600592C4C /* ndt7.framework */;
+			name = "NDT7 watchOS";
+			productName = NDT7;
+			productReference = 49C52FFF224ED19600592C4C /* NDT7.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		49C53001224ED19900592C4C /* ndt7 watchOS Tests */ = {
+		49C53001224ED19900592C4C /* NDT7 watchOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49C53009224ED19900592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS Tests" */;
+			buildConfigurationList = 49C53009224ED19900592C4C /* Build configuration list for PBXNativeTarget "NDT7 watchOS Tests" */;
 			buildPhases = (
 				49C53004224ED19900592C4C /* Sources */,
 				49C53006224ED19900592C4C /* Frameworks */,
@@ -404,9 +406,9 @@
 			dependencies = (
 				49C5300F224ED25000592C4C /* PBXTargetDependency */,
 			);
-			name = "ndt7 watchOS Tests";
-			productName = ndt7Tests;
-			productReference = 49C5300C224ED19900592C4C /* ndt7 watchOS Tests.xctest */;
+			name = "NDT7 watchOS Tests";
+			productName = NDT7Tests;
+			productReference = 49C5300C224ED19900592C4C /* NDT7 watchOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -428,7 +430,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 49BE5B76224EAA3900DB7BDF /* Build configuration list for PBXProject "ndt7" */;
+			buildConfigurationList = 49BE5B76224EAA3900DB7BDF /* Build configuration list for PBXProject "NDT7" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -440,14 +442,14 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				49BE5B7B224EAA3900DB7BDF /* ndt7 iOS */,
-				49BE5B84224EAA3900DB7BDF /* ndt7 iOS Tests */,
-				49BE5B9D224EB9D000DB7BDF /* ndt7 macOS */,
-				49BE5BAB224EB9D400DB7BDF /* ndt7 macOS Tests */,
-				49BE5BB7224EBA1E00DB7BDF /* ndt7 tvOS */,
-				49BE5BC5224EBA2200DB7BDF /* ndt7 tvOS Tests */,
-				49C52FF2224ED19600592C4C /* ndt7 watchOS */,
-				49C53001224ED19900592C4C /* ndt7 watchOS Tests */,
+				49BE5B7B224EAA3900DB7BDF /* NDT7 iOS */,
+				49BE5B84224EAA3900DB7BDF /* NDT7 iOS Tests */,
+				49BE5B9D224EB9D000DB7BDF /* NDT7 macOS */,
+				49BE5BAB224EB9D400DB7BDF /* NDT7 macOS Tests */,
+				49BE5BB7224EBA1E00DB7BDF /* NDT7 tvOS */,
+				49BE5BC5224EBA2200DB7BDF /* NDT7 tvOS Tests */,
+				49C52FF2224ED19600592C4C /* NDT7 watchOS */,
+				49C53001224ED19900592C4C /* NDT7 watchOS Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -528,7 +530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5BDA224ECD7700DB7BDF /* ndt7.swift in Sources */,
+				49BE5BDA224ECD7700DB7BDF /* NDT7.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,7 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5B8B224EAA3900DB7BDF /* ndt7Tests.swift in Sources */,
+				49BE5B8B224EAA3900DB7BDF /* NDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49BB5F12224FDC7200CEB9E0 /* NDT7.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,7 +554,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5BAF224EB9D400DB7BDF /* ndt7Tests.swift in Sources */,
+				49BE5BAF224EB9D400DB7BDF /* NDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +562,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49BB5F13224FDC7300CEB9E0 /* NDT7.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,7 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49BE5BC9224EBA2200DB7BDF /* ndt7Tests.swift in Sources */,
+				49BE5BC9224EBA2200DB7BDF /* NDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,7 +578,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49C52FF6224ED19600592C4C /* ndt7.swift in Sources */,
+				49C52FF6224ED19600592C4C /* NDT7.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,7 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49C53005224ED19900592C4C /* ndt7Tests.swift in Sources */,
+				49C53005224ED19900592C4C /* NDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,22 +595,22 @@
 /* Begin PBXTargetDependency section */
 		49BE5B88224EAA3900DB7BDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 49BE5B7B224EAA3900DB7BDF /* ndt7 iOS */;
+			target = 49BE5B7B224EAA3900DB7BDF /* NDT7 iOS */;
 			targetProxy = 49BE5B87224EAA3900DB7BDF /* PBXContainerItemProxy */;
 		};
 		49BE5BD2224EC1A300DB7BDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 49BE5B9D224EB9D000DB7BDF /* ndt7 macOS */;
+			target = 49BE5B9D224EB9D000DB7BDF /* NDT7 macOS */;
 			targetProxy = 49BE5BD1224EC1A300DB7BDF /* PBXContainerItemProxy */;
 		};
 		49BE5BD4224EC1B800DB7BDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 49BE5BB7224EBA1E00DB7BDF /* ndt7 tvOS */;
+			target = 49BE5BB7224EBA1E00DB7BDF /* NDT7 tvOS */;
 			targetProxy = 49BE5BD3224EC1B800DB7BDF /* PBXContainerItemProxy */;
 		};
 		49C5300F224ED25000592C4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 49C52FF2224ED19600592C4C /* ndt7 watchOS */;
+			target = 49C52FF2224ED19600592C4C /* NDT7 watchOS */;
 			targetProxy = 49C5300E224ED25000592C4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -757,8 +761,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -785,8 +789,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -804,7 +808,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -822,7 +826,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -846,8 +850,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -872,8 +876,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -884,6 +888,7 @@
 		49BE5BB4224EB9D400DB7BDF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
@@ -892,7 +897,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -903,6 +908,7 @@
 		49BE5BB5224EB9D400DB7BDF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
@@ -911,7 +917,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -936,8 +942,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -963,8 +969,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -976,6 +982,7 @@
 		49BE5BCE224EBA2200DB7BDF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
@@ -984,7 +991,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 5.0;
@@ -995,6 +1002,7 @@
 		49BE5BCF224EBA2200DB7BDF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = "$(SRCROOT)/Tests/Info.plist";
@@ -1003,7 +1011,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 5.0;
@@ -1030,8 +1038,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1060,8 +1068,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7;
-				PRODUCT_NAME = ndt7;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
+				PRODUCT_NAME = NDT7;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1081,7 +1089,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1099,7 +1107,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.ndt7Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1109,7 +1117,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		49BE5B76224EAA3900DB7BDF /* Build configuration list for PBXProject "ndt7" */ = {
+		49BE5B76224EAA3900DB7BDF /* Build configuration list for PBXProject "NDT7" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5B8E224EAA3900DB7BDF /* Debug */,
@@ -1118,7 +1126,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49BE5B90224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 iOS" */ = {
+		49BE5B90224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5B91224EAA3900DB7BDF /* Debug */,
@@ -1127,7 +1135,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49BE5B93224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 iOS Tests" */ = {
+		49BE5B93224EAA3900DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5B94224EAA3900DB7BDF /* Debug */,
@@ -1136,7 +1144,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49BE5BA6224EB9D000DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 macOS" */ = {
+		49BE5BA6224EB9D000DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5BA7224EB9D000DB7BDF /* Debug */,
@@ -1145,7 +1153,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49BE5BB3224EB9D400DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 macOS Tests" */ = {
+		49BE5BB3224EB9D400DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 macOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5BB4224EB9D400DB7BDF /* Debug */,
@@ -1154,7 +1162,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49BE5BC0224EBA1E00DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 tvOS" */ = {
+		49BE5BC0224EBA1E00DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5BC1224EBA1E00DB7BDF /* Debug */,
@@ -1163,7 +1171,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49BE5BCD224EBA2200DB7BDF /* Build configuration list for PBXNativeTarget "ndt7 tvOS Tests" */ = {
+		49BE5BCD224EBA2200DB7BDF /* Build configuration list for PBXNativeTarget "NDT7 tvOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49BE5BCE224EBA2200DB7BDF /* Debug */,
@@ -1172,7 +1180,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49C52FFC224ED19600592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS" */ = {
+		49C52FFC224ED19600592C4C /* Build configuration list for PBXNativeTarget "NDT7 watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49C52FFD224ED19600592C4C /* Debug */,
@@ -1181,7 +1189,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49C53009224ED19900592C4C /* Build configuration list for PBXNativeTarget "ndt7 watchOS Tests" */ = {
+		49C53009224ED19900592C4C /* Build configuration list for PBXNativeTarget "NDT7 watchOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49C5300A224ED19900592C4C /* Debug */,
