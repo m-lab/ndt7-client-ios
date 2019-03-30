@@ -56,7 +56,7 @@ Measure the Internet, save the data, and make it universally accessible and usef
 <a name="documentation"></a>
 # Documentation
 
-Visit the `ndt7` [documentation](http://htmlpreview.github.io/?https://github.com/m-lab/ndt7-client-ios/blob/master/docs/index.html) for instructions and browsing api references.
+Visit the `NDT7` [documentation](http://htmlpreview.github.io/?https://github.com/m-lab/ndt7-client-ios/blob/master/docs/index.html) for instructions and browsing api references.
 
 <a name="installation"></a>
 # Installation
@@ -97,4 +97,4 @@ Visit the `ndt7` [documentation](http://htmlpreview.github.io/?https://github.co
 
 # License
 
-`ndt7` iOS client is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See LICENSE for details.
+`NDT7` iOS client is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See LICENSE for details.

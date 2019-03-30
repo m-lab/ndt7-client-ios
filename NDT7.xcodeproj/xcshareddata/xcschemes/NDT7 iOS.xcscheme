@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B4A224EA90800DB7BDF"
-               BuildableName = "ndt7 iOS Example.app"
-               BlueprintName = "ndt7 iOS Example"
-               ReferencedContainer = "container:ndt7 iOS Example.xcodeproj">
+               BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
+               BuildableName = "NDT7.framework"
+               BlueprintName = "NDT7 iOS"
+               ReferencedContainer = "container:NDT7.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,16 +26,37 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 iOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "49BE5B84224EAA3900DB7BDF"
+               BuildableName = "NDT7 iOS Tests.xctest"
+               BlueprintName = "NDT7 iOS Tests"
+               ReferencedContainer = "container:NDT7.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B4A224EA90800DB7BDF"
-            BuildableName = "ndt7 iOS Example.app"
-            BlueprintName = "ndt7 iOS Example"
-            ReferencedContainer = "container:ndt7 iOS Example.xcodeproj">
+            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 iOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -51,16 +72,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B4A224EA90800DB7BDF"
-            BuildableName = "ndt7 iOS Example.app"
-            BlueprintName = "ndt7 iOS Example"
-            ReferencedContainer = "container:ndt7 iOS Example.xcodeproj">
+            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 iOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +90,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B4A224EA90800DB7BDF"
-            BuildableName = "ndt7 iOS Example.app"
-            BlueprintName = "ndt7 iOS Example"
-            ReferencedContainer = "container:ndt7 iOS Example.xcodeproj">
+            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 iOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

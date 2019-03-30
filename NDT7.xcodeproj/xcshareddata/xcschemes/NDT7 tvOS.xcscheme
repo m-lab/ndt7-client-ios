@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-               BuildableName = "ndt7.framework"
-               BlueprintName = "ndt7 iOS"
-               ReferencedContainer = "container:ndt7.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B84224EAA3900DB7BDF"
-               BuildableName = "ndt7 iOS Tests.xctest"
-               BlueprintName = "ndt7 iOS Tests"
-               ReferencedContainer = "container:ndt7.xcodeproj">
+               BlueprintIdentifier = "49BE5BB7224EBA1E00DB7BDF"
+               BuildableName = "NDT7.framework"
+               BlueprintName = "NDT7 tvOS"
+               ReferencedContainer = "container:NDT7.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,10 +32,10 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BlueprintIdentifier = "49BE5BB7224EBA1E00DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 tvOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -57,20 +43,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49BE5B84224EAA3900DB7BDF"
-               BuildableName = "ndt7 iOS Tests.xctest"
-               BlueprintName = "ndt7 iOS Tests"
-               ReferencedContainer = "container:ndt7.xcodeproj">
+               BlueprintIdentifier = "49BE5BC5224EBA2200DB7BDF"
+               BuildableName = "NDT7 tvOS Tests.xctest"
+               BlueprintName = "NDT7 tvOS Tests"
+               ReferencedContainer = "container:NDT7.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BlueprintIdentifier = "49BE5BB7224EBA1E00DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 tvOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -89,10 +75,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BlueprintIdentifier = "49BE5BB7224EBA1E00DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 tvOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -107,10 +93,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49BE5B7B224EAA3900DB7BDF"
-            BuildableName = "ndt7.framework"
-            BlueprintName = "ndt7 iOS"
-            ReferencedContainer = "container:ndt7.xcodeproj">
+            BlueprintIdentifier = "49BE5BB7224EBA1E00DB7BDF"
+            BuildableName = "NDT7.framework"
+            BlueprintName = "NDT7 tvOS"
+            ReferencedContainer = "container:NDT7.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
