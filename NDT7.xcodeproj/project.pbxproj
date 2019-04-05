@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4953B8B82257B24C00C3F002 /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5BA9224EB9D000DB7BDF /* NDT7.framework */; };
+		4953B8BB2257D30500C3F002 /* NDT7.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4953B8BA2257D30500C3F002 /* NDT7.podspec */; };
 		49BB5F12224FDC7200CEB9E0 /* NDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* NDT7.swift */; };
 		49BB5F13224FDC7300CEB9E0 /* NDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE5BD9224ECD7700DB7BDF /* NDT7.swift */; };
 		49BE5B86224EAA3900DB7BDF /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BE5B7C224EAA3900DB7BDF /* NDT7.framework */; };
@@ -60,6 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4953B8B92257D19000C3F002 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		4953B8BA2257D30500C3F002 /* NDT7.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NDT7.podspec; sourceTree = "<group>"; };
 		49BE5B7C224EAA3900DB7BDF /* NDT7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDT7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BE5B7F224EAA3900DB7BDF /* NDT7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDT7.h; sourceTree = "<group>"; };
 		49BE5B80224EAA3900DB7BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				49BE5B9B224EAB7300DB7BDF /* LICENSE */,
+				4953B8BA2257D30500C3F002 /* NDT7.podspec */,
+				4953B8B92257D19000C3F002 /* Package.swift */,
 			);
 			name = Deployment;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49BE5B9C224EAB7300DB7BDF /* LICENSE in Resources */,
+				4953B8BB2257D30500C3F002 /* NDT7.podspec in Resources */,
 				49BE5B9A224EAB5C00DB7BDF /* README.md in Resources */,
 				49BE5B98224EAB5200DB7BDF /* AUTHORS in Resources */,
 			);
