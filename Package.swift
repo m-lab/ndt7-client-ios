@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+//  swift-tools-version:5.0
 //
 //  NDT7.swift
 //  NDT7 iOS
@@ -6,7 +6,6 @@
 //  Created by Miguel on 4/5/19.
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
-
 
 import PackageDescription
 
