@@ -6,6 +6,7 @@
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
 
+import Foundation
 import XCTest
 @testable import NDT7
 

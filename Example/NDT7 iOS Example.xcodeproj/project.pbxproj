@@ -12,7 +12,67 @@
 		49BE5B54224EA90800DB7BDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B52224EA90800DB7BDF /* Main.storyboard */; };
 		49BE5B56224EA90900DB7BDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B55224EA90900DB7BDF /* Assets.xcassets */; };
 		49BE5B59224EA90900DB7BDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B57224EA90900DB7BDF /* LaunchScreen.storyboard */; };
+		8830D18E2256C55300FA109E /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8830D17F2256C51500FA109E /* NDT7.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8830D17E2256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49BE5B7C224EAA3900DB7BDF;
+			remoteInfo = "NDT7 iOS";
+		};
+		8830D1802256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49BE5B85224EAA3900DB7BDF;
+			remoteInfo = "NDT7 iOS Tests";
+		};
+		8830D1822256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49BE5BA9224EB9D000DB7BDF;
+			remoteInfo = "NDT7 macOS";
+		};
+		8830D1842256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49BE5BB6224EB9D400DB7BDF;
+			remoteInfo = "NDT7 macOS Tests";
+		};
+		8830D1862256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49BE5BC3224EBA1E00DB7BDF;
+			remoteInfo = "NDT7 tvOS";
+		};
+		8830D1882256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49BE5BD0224EBA2200DB7BDF;
+			remoteInfo = "NDT7 tvOS Tests";
+		};
+		8830D18A2256C51500FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 49C52FFF224ED19600592C4C;
+			remoteInfo = "NDT7 watchOS";
+		};
+		8830D18C2256C54C00FA109E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 49BE5B7B224EAA3900DB7BDF;
+			remoteInfo = "NDT7 iOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		49BE5B4B224EA90800DB7BDF /* NDT7 iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NDT7 iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +82,7 @@
 		49BE5B55224EA90900DB7BDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49BE5B58224EA90900DB7BDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49BE5B5A224EA90900DB7BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8830D1742256C51500FA109E /* NDT7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NDT7.xcodeproj; path = ../NDT7.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8830D18E2256C55300FA109E /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +100,7 @@
 		49BE5B42224EA90800DB7BDF = {
 			isa = PBXGroup;
 			children = (
+				8830D1742256C51500FA109E /* NDT7.xcodeproj */,
 				49BE5B4D224EA90800DB7BDF /* Sources */,
 				49BE5B4C224EA90800DB7BDF /* Products */,
 			);
@@ -64,6 +127,20 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		8830D1752256C51500FA109E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8830D17F2256C51500FA109E /* NDT7.framework */,
+				8830D1812256C51500FA109E /* NDT7 iOS Tests.xctest */,
+				8830D1832256C51500FA109E /* NDT7.framework */,
+				8830D1852256C51500FA109E /* NDT7 macOS Tests.xctest */,
+				8830D1872256C51500FA109E /* NDT7.framework */,
+				8830D1892256C51500FA109E /* NDT7 tvOS Tests.xctest */,
+				8830D18B2256C51500FA109E /* NDT7.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -78,6 +155,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8830D18D2256C54C00FA109E /* PBXTargetDependency */,
 			);
 			name = "NDT7 iOS Example";
 			productName = "NDT7 iOS Example";
@@ -110,12 +188,70 @@
 			mainGroup = 49BE5B42224EA90800DB7BDF;
 			productRefGroup = 49BE5B4C224EA90800DB7BDF /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8830D1752256C51500FA109E /* Products */;
+					ProjectRef = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				49BE5B4A224EA90800DB7BDF /* NDT7 iOS Example */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8830D17F2256C51500FA109E /* NDT7.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NDT7.framework;
+			remoteRef = 8830D17E2256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8830D1812256C51500FA109E /* NDT7 iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "NDT7 iOS Tests.xctest";
+			remoteRef = 8830D1802256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8830D1832256C51500FA109E /* NDT7.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NDT7.framework;
+			remoteRef = 8830D1822256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8830D1852256C51500FA109E /* NDT7 macOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "NDT7 macOS Tests.xctest";
+			remoteRef = 8830D1842256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8830D1872256C51500FA109E /* NDT7.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NDT7.framework;
+			remoteRef = 8830D1862256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8830D1892256C51500FA109E /* NDT7 tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "NDT7 tvOS Tests.xctest";
+			remoteRef = 8830D1882256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8830D18B2256C51500FA109E /* NDT7.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NDT7.framework;
+			remoteRef = 8830D18A2256C51500FA109E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		49BE5B49224EA90800DB7BDF /* Resources */ = {
@@ -141,6 +277,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8830D18D2256C54C00FA109E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "NDT7 iOS";
+			targetProxy = 8830D18C2256C54C00FA109E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		49BE5B52224EA90800DB7BDF /* Main.storyboard */ = {
@@ -213,13 +357,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -268,13 +416,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};

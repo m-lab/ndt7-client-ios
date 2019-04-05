@@ -26,29 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49C52FF2224ED19600592C4C"
-            BuildableName = "NDT7.framework"
-            BlueprintName = "NDT7 watchOS"
-            ReferencedContainer = "container:NDT7.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49C53001224ED19900592C4C"
-               BuildableName = "NDT7 watchOS Tests.xctest"
-               BlueprintName = "NDT7 watchOS Tests"
-               ReferencedContainer = "container:NDT7.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
