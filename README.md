@@ -2,6 +2,7 @@
 
 | branch | travis-ci | report-card | coveralls | codecov |
 |--------|-----------|-------------|-----------|---------|
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/48ec0b3ac20549069056ab2486208b7c)](https://app.codacy.com/app/miguelangelnet/ndt7-client-ios?utm_source=github.com&utm_medium=referral&utm_content=m-lab/ndt7-client-ios&utm_campaign=Badge_Grade_Dashboard)
 | develop | [![Build Status](https://travis-ci.org/m-lab/ndt7-client-ios.svg?branch=develop)](https://travis-ci.org/m-lab/ndt7-client-ios) | | [![Coverage Status](https://coveralls.io/repos/github/m-lab/ndt7-client-ios/badge.svg?branch=develop)](https://coveralls.io/github/m-lab/ndt7-client-ios?branch=develop) | [![codecov.io](https://codecov.io/github/realm/SwiftLint/ndt7-client-ios.svg?branch=develop)](https://codecov.io/github/realm/ndt7-client-ios?branch=develop) |
 | master | [![Build Status](https://travis-ci.org/m-lab/ndt7-client-ios.svg?branch=master)](https://travis-ci.org/m-lab/ndt7-client-ios) | | [![Coverage Status](https://coveralls.io/repos/github/m-lab/ndt7-client-ios/badge.svg?branch=master)](https://coveralls.io/github/m-lab/ndt7-client-ios?branch=master) | [![codecov.io](https://codecov.io/github/realm/SwiftLint/ndt7-client-ios.svg?branch=master)](https://codecov.io/github/realm/ndt7-client-ios?branch=master) |
 
