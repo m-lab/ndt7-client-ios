@@ -14,10 +14,7 @@ opt_in_rules:
   - empty_count
 disabled_rules:
   - cyclomatic_complexity
-  - conditional_binding_cascade
   - force_cast
   - force_try
   - function_body_length
-  - todo
-  - type_body_length
-  - variable_name
+  - identifier_name
