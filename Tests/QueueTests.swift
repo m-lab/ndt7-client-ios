@@ -20,7 +20,7 @@ class QueueTests: XCTestCase {
         }
         wait(for: [expectationMain], timeout: 5.0)
     }
-    
+
     func testBackgroundQueueNameWithLabel() {
         let expectationLabel = XCTestExpectation(description: "Job in background thread")
         let dispatchQueue = DispatchQueue(label: "com.ndt7.queueTest")
@@ -31,7 +31,7 @@ class QueueTests: XCTestCase {
         }
         wait(for: [expectationLabel], timeout: 5.0)
     }
-    
+
     func testBackgroundQueueNameWithNoLabel() {
         let expectationNoLabel = XCTestExpectation(description: "Job in background thread with no label")
         DispatchQueue.global().async {

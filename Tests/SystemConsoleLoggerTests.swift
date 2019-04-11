@@ -14,7 +14,7 @@ class SystemConsoleLoggerTests: XCTestCase {
     func testOsLogLevel() {
 
         let systemConsoleLogger = SystemConsoleLogger()
-        
+
         XCTAssertEqual(systemConsoleLogger.osLogLevel(.info), .info)
         XCTAssertEqual(systemConsoleLogger.osLogLevel(.debug), .debug)
         XCTAssertEqual(systemConsoleLogger.osLogLevel(.warning), .error)

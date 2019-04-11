@@ -12,16 +12,16 @@ import Foundation
 
 /// Different type of messages.
 enum LogLevel: String {
-    
+
     /// Helpful information (no error or issue).
     case info
-    
+
     /// For debugging during development process.
     case debug
-    
+
     /// It can become an error.
     case warning
-    
+
     /// Critical errors and failures.
     case error
 }
@@ -30,25 +30,25 @@ enum LogLevel: String {
 
 /// All the useful information for a log message.
 struct LogMessage {
-    
+
     /// The date and time at which the log message was created.
     let date: Date = Date()
-    
+
     /// The level of the log message.
     let level: LogLevel
-    
+
     /// The file where the log message was created.
     let file: String
-    
+
     /// The function where the log message was created.
     let function: String
-    
+
     /// The line where the log message was invoked in the source code.
     let line: Int
-    
+
     /// The text message of the log.
     let text: String
-    
+
     init(text: String, level: LogLevel, file: String, function: String, line: Int) {
         self.text = text
         self.level = level
@@ -56,7 +56,7 @@ struct LogMessage {
         self.function = function
         self.line = line
     }
-    
+
     /// log message description for NDT7.
     /// - returns: The log message description.
     func ndt7Description() -> String {
@@ -71,7 +71,7 @@ struct LogMessage {
 
 /// Classes that conform this protocol should be able to add a log message.
 protocol Logger {
-    
+
     /// Add a log message
     /// - parameter logMessage: The message to be added.
     func addLogMessage(_ logMessage: LogMessage)
@@ -81,27 +81,27 @@ protocol Logger {
 
 /// Manage log messages, loggers and log levels.
 class LogManager {
-    
+
     private static var loggers = [Logger]()
     private static var logLevels = Set<LogLevel>()
-    
+
     /// Add a logger to loggers.
     /// - parameter: The logger to be added.
     class func addLogger(_ logger: Logger) {
         loggers.append(logger)
     }
-    
+
     /// Remove all the loggers.
     class func removeAllLoggers() {
         loggers.removeAll()
     }
-    
+
     /// Add a Log Level to manage.
     /// - parameter logLevel: The log level to be added.
     class func addLogLevel(_ logLevel: LogLevel) {
         logLevels.insert(logLevel)
     }
-    
+
     /// Add all the Log Levels.
     class func addAllLogLevels() {
         logLevels.insert(.info)
@@ -109,23 +109,23 @@ class LogManager {
         logLevels.insert(.warning)
         logLevels.insert(.error)
     }
-    
+
     /// Remove Log Level to manage.
     /// - parameter logLevel: The log level to be removed.
     class func removeLogLevel(_ logLevel: LogLevel) {
         logLevels.remove(logLevel)
     }
-    
+
     /// Remove all Log Levels.
     class func removeAllLoggLevels() {
         logLevels.removeAll()
     }
-    
+
     /// Add a log message to the loggers if the log level is managed.
     /// - parameter logMessage: The log message to be added to the loggers.
     class func addLogMessage(_ logMessage: LogMessage) {
         guard logLevels.contains(logMessage.level) else { return }
-        loggers.forEach() { $0.addLogMessage(logMessage) }
+        loggers.forEach { $0.addLogMessage(logMessage) }
     }
 }
 

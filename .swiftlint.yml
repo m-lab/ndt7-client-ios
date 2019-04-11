@@ -1,7 +1,15 @@
-line_length: 150
+included:
+  - Sources
+  - Tests
+excluded:
+  - Carthage
+  - .build
+line_length: 200
 file_length: 1500
 type_body_length: 500
 function_parameter_count: 7
+type_name:
+  min_length: 2
 opt_in_rules:
   - empty_count
 disabled_rules:

@@ -16,9 +16,9 @@ import os.log
 /// and in a data store on disk.
 /// https://developer.apple.com/documentation/os/logging
 class SystemConsoleLogger: Logger {
-    
+
     static let general = OSLog(subsystem: "net.measurementlab.NDT7", category: "ndt7")
-    
+
     /// Add a log message to the system console.
     /// - Parameter logMessage: The message to be added.
     func addLogMessage(_ logMessage: LogMessage) {
@@ -33,12 +33,12 @@ class SystemConsoleLogger: Logger {
                logMessage.text
                )
     }
-    
+
     /// `LogLevel` translated to an `OSLogType` type.
     /// - parameter logLevel: The log level to be translated to `OSLogType`.
     /// - returns: A log level for the unified logging system.
     func osLogLevel(_ logLevel: LogLevel) -> OSLogType {
-        
+
         switch logLevel {
         case .info:
             return .info

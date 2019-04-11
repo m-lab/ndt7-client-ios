@@ -11,7 +11,7 @@ import Foundation
 /// Returns the current queue name.
 /// - returns: queue name.
 func queueName() -> String? {
-    
+
     if let currentOperationQueueLabel = OperationQueue.current?.underlyingQueue?.label {
         return currentOperationQueueLabel
     } else {

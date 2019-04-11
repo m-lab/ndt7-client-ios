@@ -12,17 +12,17 @@ import Foundation
 
 /// Date Extension
 extension Date {
-    
+
     /// Date and time format for log message.
     static let logStringDateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSSZ"
-    
+
     /// DateFormatter for log message.
     static let logDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = logStringDateFormat
         return dateFormatter
     }()
-    
+
     /// Convert date to string using specific date format.
     /// - parameter dateFormatter: date format as DateFormatter. Default: DateFormatter for log message.
     /// - returns: string with specific format.
