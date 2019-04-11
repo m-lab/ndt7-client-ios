@@ -1,16 +1,15 @@
 //
-//  NDT7Tests.swift
-//  NDT7Tests
+//  LogNDT7Tests.swift
+//  NDT7 iOS Tests
 //
-//  Created by Miguel on 3/29/19.
+//  Created by Miguel on 4/10/19.
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
 
-import Foundation
 import XCTest
 @testable import NDT7
 
-class NDT7Tests: XCTestCase {
+class LogNDT7Tests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

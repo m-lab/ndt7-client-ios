@@ -37,7 +37,7 @@ class SystemConsoleLogger: Logger {
     /// `LogLevel` translated to an `OSLogType` type.
     /// - parameter logLevel: The log level to be translated to `OSLogType`.
     /// - returns: A log level for the unified logging system.
-    private func osLogLevel(_ logLevel: LogLevel) -> OSLogType {
+    func osLogLevel(_ logLevel: LogLevel) -> OSLogType {
         
         switch logLevel {
         case .info:

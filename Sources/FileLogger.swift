@@ -32,8 +32,7 @@ class FileLogger: Logger {
     /// - parameter logMessage: The message to be added.
     func addLogMessage(_ logMessage: LogMessage) {
         
-        let message = "\(logMessage.ndt7Description())\n"
-        if let data = message.data(using: .utf8) {
+        if let data = "\(logMessage.ndt7Description())\n".data(using: .utf8) {
             fileHandle.write(data)
         }
     }
