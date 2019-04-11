@@ -1,8 +1,10 @@
 included:
   - Sources
   - Tests
+  - Example
 excluded:
   - Carthage
+  - docs
   - .build
 line_length: 200
 file_length: 1500
