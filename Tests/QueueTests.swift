@@ -11,9 +11,7 @@ import XCTest
 
 class QueueTests: XCTestCase {
 
-    func testQueueName() {
-        
-        // Test for main Queue
+    func testMainQueueName() {
         let expectationMain = XCTestExpectation(description: "Job in main thread")
         DispatchQueue.main.async {
             let queueNameString = queueName()
@@ -21,8 +19,9 @@ class QueueTests: XCTestCase {
             expectationMain.fulfill()
         }
         wait(for: [expectationMain], timeout: 5.0)
-        
-        // Test for background queue with label
+    }
+    
+    func testBackgroundQueueNameWithLabel() {
         let expectationLabel = XCTestExpectation(description: "Job in background thread")
         let dispatchQueue = DispatchQueue(label: "com.ndt7.queueTest")
         dispatchQueue.async {
@@ -31,8 +30,9 @@ class QueueTests: XCTestCase {
             expectationLabel.fulfill()
         }
         wait(for: [expectationLabel], timeout: 5.0)
-        
-        // Test for background queue with no label
+    }
+    
+    func testBackgroundQueueNameWithNoLabel() {
         let expectationNoLabel = XCTestExpectation(description: "Job in background thread with no label")
         DispatchQueue.global().async {
             let queueNameString = queueName()

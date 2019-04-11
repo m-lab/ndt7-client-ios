@@ -6,29 +6,50 @@
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
 
-import Foundation
 import XCTest
 @testable import NDT7
 
 class NDT7Tests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    class MockLogger: Logger {
+        
+        var logMessage: [LogMessage] = []
+        
+        func addLogMessage(_ logMessage: LogMessage) {
+            self.logMessage.append(logMessage)
         }
+    }
+    
+    var mockLogger: MockLogger!
+    
+    override func setUp() {
+        mockLogger = MockLogger()
+        NDT7.loggingEnabled = false
+    }
+    
+    override func tearDown() {
+        NDT7.loggingEnabled = false
+    }
+    
+    func testNDT7EnableAndDisableLogging() {
+        
+        LogManager.addLogger(mockLogger)
+        XCTAssertFalse(NDT7.loggingEnabled)
+        XCTAssertEqual(mockLogger.logMessage.count, 0)
+        
+        NDT7.loggingEnabled = true
+        XCTAssertTrue(NDT7.loggingEnabled)
+        
+        logNDT7("test")
+        logNDT7("test", .debug)
+        logNDT7("test", .warning)
+        logNDT7("test", .error)
+        XCTAssertEqual(mockLogger.logMessage.count, 5)
+        
+        NDT7.loggingEnabled = false
+        XCTAssertFalse(NDT7.loggingEnabled)
+        
+        logNDT7("test")
+        XCTAssertEqual(mockLogger.logMessage.count, 6)
     }
 }

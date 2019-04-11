@@ -34,16 +34,18 @@ class FileLoggerTests: XCTestCase {
         XCTAssertTrue(fileManager.fileExists(atPath: path))
         
         if let fileLogger = FileLogger(path: path) {
+            
             fileLogger.addLogMessage(LogMessage(text: "test 0", level: .info, file: #file, function: #function, line: #line))
             fileLogger.addLogMessage(LogMessage(text: "test 1", level: .info, file: "fileName 1", function: "functionName 1", line: 10))
             fileLogger.addLogMessage(LogMessage(text: "test 2", level: .debug, file: "fileName 2", function: "functionName 2", line: 22))
             fileLogger.addLogMessage(LogMessage(text: "test 3", level: .warning, file: "fileName 3", function: "functionName 3", line: 23))
             fileLogger.addLogMessage(LogMessage(text: "test 4", level: .error, file: "fileName 4", function: "functionName 4", line: 49))
-            XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [FileLoggerTests.swift-testFileLogger():37]: (info) test 0\n"))
+            XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [FileLoggerTests.swift-testFileLogger():38]: (info) test 0\n"))
             XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [fileName 1-functionName 1:10]: (info) test 1\n"))
             XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [fileName 2-functionName 2:22]: (debug) test 2\n"))
             XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [fileName 3-functionName 3:23]: (warning) test 3\n"))
             XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [fileName 4-functionName 4:49]: (error) test 4\n"))
+            
             fileLogger.addLogMessage(LogMessage(text: "test 5", level: .error, file: "fileName 5", function: "functionName 5", line: 45))
             XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [fileName 1-functionName 1:10]: (info) test 1\n"))
             XCTAssertTrue(fileLogger.readLogFile()!.contains("[ndt7] [com.apple.main-thread] [fileName 2-functionName 2:22]: (debug) test 2\n"))

@@ -21,6 +21,6 @@ class DateExtensionTests: XCTestCase {
         let date = makeDate(year: 1977, month: 3, day: 14, hr: 4, min: 28, sec: 35)
         let logStringDateFormate = date.toString()
         XCTAssertTrue(logStringDateFormate.contains("1977-03-14 04:28:35"))
-        XCTAssertTrue(logStringDateFormate.count == 31)
+        XCTAssertEqual(logStringDateFormate.count, 31)
     }
 }

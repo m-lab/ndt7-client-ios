@@ -102,10 +102,23 @@ class LogManager {
         logLevels.insert(logLevel)
     }
     
+    /// Add all the Log Levels.
+    class func addAllLogLevels() {
+        logLevels.insert(.info)
+        logLevels.insert(.debug)
+        logLevels.insert(.warning)
+        logLevels.insert(.error)
+    }
+    
     /// Remove Log Level to manage.
     /// - parameter logLevel: The log level to be removed.
     class func removeLogLevel(_ logLevel: LogLevel) {
         logLevels.remove(logLevel)
+    }
+    
+    /// Remove all Log Levels.
+    class func removeAllLoggLevels() {
+        logLevels.removeAll()
     }
     
     /// Add a log message to the loggers if the log level is managed.
@@ -119,9 +132,9 @@ class LogManager {
 /// MARK: logNDT7.
 
 func logNDT7(_ text: @autoclosure () -> Any,
-                _ logLevel: LogLevel = .info,
-                _ file: String = #file,
-                _ function: String = #function,
-                _ line: Int = #line) {
+             _ logLevel: LogLevel = .info,
+             _ file: String = #file,
+             _ function: String = #function,
+             _ line: Int = #line) {
     LogManager.addLogMessage(LogMessage(text: "\(text())", level: logLevel, file: file, function: function, line: line))
 }
