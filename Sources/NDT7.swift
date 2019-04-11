@@ -7,3 +7,21 @@
 //
 
 import Foundation
+
+/// NDT7
+open class NDT7 {
+
+    public static var loggingEnabled: Bool = false {
+        didSet {
+            if loggingEnabled {
+                LogManager.addAllLogLevels()
+                LogManager.addLogger(SystemConsoleLogger())
+                logNDT7("Logging Enabled")
+            } else {
+                logNDT7("Logging Disabled")
+                LogManager.removeAllLoggLevels()
+                LogManager.removeAllLoggers()
+            }
+        }
+    }
+}

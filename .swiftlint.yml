@@ -1,15 +1,22 @@
-line_length: 150
+included:
+  - Sources
+  - Tests
+  - Example
+excluded:
+  - Carthage
+  - docs
+  - .build
+line_length: 200
 file_length: 1500
 type_body_length: 500
 function_parameter_count: 7
+type_name:
+  min_length: 2
 opt_in_rules:
   - empty_count
 disabled_rules:
   - cyclomatic_complexity
-  - conditional_binding_cascade
   - force_cast
   - force_try
   - function_body_length
-  - todo
-  - type_body_length
-  - variable_name
+  - identifier_name
