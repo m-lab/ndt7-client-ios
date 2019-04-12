@@ -47,5 +47,5 @@ script:
 after_success:
   # Run codecov if specified
   - if [ $CODECOV_CHECK == "YES" ]; then
-      bash <(curl -s https://codecov.io/bash) -J 'Once';
+      bash <(curl -s https://codecov.io/bash);
     fi
