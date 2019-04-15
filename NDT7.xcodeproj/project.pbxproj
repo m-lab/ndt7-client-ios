@@ -400,6 +400,7 @@
 				49BE5B78224EAA3900DB7BDF /* Sources */,
 				49BE5B79224EAA3900DB7BDF /* Frameworks */,
 				49BE5B7A224EAA3900DB7BDF /* Resources */,
+				887EB1452264EEA5006EB7E7 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -436,6 +437,7 @@
 				49BE5BA0224EB9D000DB7BDF /* Sources */,
 				49BE5BA1224EB9D000DB7BDF /* Frameworks */,
 				49BE5BA2224EB9D000DB7BDF /* Resources */,
+				887EB1462264EEFA006EB7E7 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -472,6 +474,7 @@
 				49BE5BBA224EBA1E00DB7BDF /* Sources */,
 				49BE5BBB224EBA1E00DB7BDF /* Frameworks */,
 				49BE5BBC224EBA1E00DB7BDF /* Resources */,
+				887EB1472264EF12006EB7E7 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -508,6 +511,7 @@
 				49C52FF5224ED19600592C4C /* Sources */,
 				49C52FF7224ED19600592C4C /* Frameworks */,
 				49C52FF8224ED19600592C4C /* Resources */,
+				887EB1482264EF21006EB7E7 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -647,6 +651,78 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/sh\n\ndirectories=(Example Sources Tests)\n\nfor directory in \"${directories[@]}\"\ndo\necho \"Removing trailing whitespaces in directory: $directory\"\nfind $directory -iregex '.*\\.swift' -exec sed -E -i '' -e 's/[[:blank:]]*$//' {} \\;\ndone\n";
+		};
+		887EB1452264EEA5006EB7E7 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		887EB1462264EEFA006EB7E7 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		887EB1472264EF12006EB7E7 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		887EB1482264EF21006EB7E7 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
