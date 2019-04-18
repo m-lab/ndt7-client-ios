@@ -8,16 +8,37 @@
 
 import Foundation
 
+/// Settings needed for NDT7.
 public struct NDT7Settings {
+
+    /// Server to connect.
     public let hostname: String
+
+    /// Patch for download test.
     public let downloadPath: String
+
+    /// Patch for upload test.
     public let uploadPath: String
+
+    /// Define if it is wss or ws.
     public let wss: Bool
+
+    /// Skipt TLS certificate verification.
     public let skipTLSCertificateVerification: Bool
+
+    /// Define the interval between messages.
     public let measurementInterval: TimeInterval
+
+    /// Timeout for connection.
     public let timeoutRequest: TimeInterval
+
+    /// Define the max among of time used for a test before to force to finish.
     public let timeoutTest: TimeInterval
+
+    /// Define all the headers needed for NDT7 communication.
     public let headers: [String: String]
+
+    /// Initialization.
     public init(hostname: String = "35.235.104.27",
                 downloadPath: String = "/ndt/v7/download",
                 uploadPath: String = "/ndt/v7/upload",

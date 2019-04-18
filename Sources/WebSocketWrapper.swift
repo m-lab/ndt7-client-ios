@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Protocol to allow websocket interaction.
 protocol WebSocketInteraction: class {
     func open(webSocket: WebSocketWrapper)
     func close(webSocket: WebSocketWrapper)
@@ -15,6 +16,7 @@ protocol WebSocketInteraction: class {
     func error(webSocket: WebSocketWrapper, error: NSError)
 }
 
+/// WebSocket wrapper.
 class WebSocketWrapper {
 
     weak var delegate: WebSocketInteraction?
@@ -46,19 +48,19 @@ class WebSocketWrapper {
 
 extension WebSocketWrapper {
 
-    func open(_ interval: TimeInterval = 0.5, _ maxRetries: UInt = 25) {
+    func open(_ interval: TimeInterval = 0.5, _ maxRetries: UInt = 10) {
         logNDT7("WebSocket \(url.absoluteString) opening. Max retries: \(maxRetries)")
-//        if !open {
+        if !open {
             open = true
             webSocket.open()
-//        }
-//        if maxRetries > 0 && !connected {
-//            // If the connection is closed retry to open it.
-//            DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
-//                guard let strongSelf = self else { return }
-//                strongSelf.open(interval, maxRetries - 1)
-//            }
-//        }
+        }
+        if maxRetries > 0 && !connected {
+            // If the connection is closed retry to open it.
+            DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.open(interval, maxRetries - 1)
+            }
+        }
     }
 
     func close() {

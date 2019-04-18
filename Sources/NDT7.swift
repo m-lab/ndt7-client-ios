@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// NDT7
+/// NDT7.
 open class NDT7 {
 
-    /// Enable loging.
+    /// This parameter allows to enable loggins and check the log messages.
     public static var loggingEnabled: Bool = false {
         didSet {
             if loggingEnabled {

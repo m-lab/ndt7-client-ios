@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// This protocol allows to receive the test information.
 public protocol NDT7TestInteraction: class {
     func downloadTestRunning(_ running: Bool)
     func uploadTestRunning(_ running: Bool)
@@ -17,6 +18,7 @@ public protocol NDT7TestInteraction: class {
     func uploadTestError(_ error: NSError)
 }
 
+/// This extension for NDT7TestInteraction protocol allows to have optional functions.
 extension NDT7TestInteraction {
     func downloadTestRunning(_ running: Bool) { }
     func uploadTestRunning(_ running: Bool) { }
@@ -26,17 +28,25 @@ extension NDT7TestInteraction {
     func uploadTestError(_ error: NSError) { }
 }
 
-/// NDT7Test
+/// NDT7Test describes the version 7 of the Network Diagnostic Tool (NDT) protocol (ndt7).
+/// It is a redesign of the original NDT network performance measurement protocol.
+/// NDT7Test is based on WebSocket and TLS, and takes advantage of TCP BBR, where this flavour of TCP is available.
+/// This is version v0.7.0 of the ndt7 specification.
+/// https://github.com/m-lab/ndt-server/blob/master/spec/ndt7-protocol.md
 open class NDT7Test {
 
-    static var ndt7TestInstances = [WeakRef<NDT7Test>]()
+    /// ndt7TestInstances allows to run just one test, not concurrency allowed.
+    private static var ndt7TestInstances = [WeakRef<NDT7Test>]()
 
+    /// Download test running parameter. True if it is running, otherwise false.
     private var downloadTestRunning: Bool = false {
         didSet {
             logNDT7("Download test running: \(downloadTestRunning)")
             delegate?.downloadTestRunning(downloadTestRunning)
         }
     }
+
+    /// Upload test running parameter. True if it is running, otherwise false.
     private var uploadTestRunning: Bool = false {
         didSet {
             logNDT7("Upload test running: \(uploadTestRunning)")
@@ -52,9 +62,14 @@ open class NDT7Test {
     private var timerDownload: Timer?
     private var timerUpload: Timer?
 
+    /// This delegate allows to return the test interaction information (NDT7TestInteraction protocol).
     public weak var delegate: NDT7TestInteraction?
+
+    /// This parameter contains all the settings needed for ndt7 test.
     public let settings: NDT7Settings
 
+    /// Initialization.
+    /// - parameter settings: Contains all the settings needed for ndt7 test.
     public init(settings: NDT7Settings) {
         self.settings = settings
         NDT7Test.ndt7TestInstances.append(WeakRef(self))
@@ -71,8 +86,14 @@ open class NDT7Test {
     }
 }
 
+/// This extension represent the public function to interact with NDT7Test.
 extension NDT7Test {
 
+    /// Start a test
+    /// - parameter download: boolean to run download test.
+    /// - parameter upload: boolean to run upload test.
+    /// - parameter completion: A block to execute.
+    /// - parameter error: Contains an error during the tests. Can returns twice for download and uplod tests.
     public func startTest(download: Bool, upload: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
 
         logNDT7("NDT7 test started")
@@ -175,8 +196,13 @@ extension NDT7Test {
     }
 }
 
+/// This extension represent the private functions for NDT7Test.
 extension NDT7Test {
 
+    /// Start download test
+    /// - parameter start: boolean to run download test.
+    /// - parameter completion: A block to execute.
+    /// - parameter error: Contains an error during the download test.
     private func startDownload(_ start: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
         guard start else {
             completion(nil)
@@ -193,6 +219,10 @@ extension NDT7Test {
         }
     }
 
+    /// Start upload test
+    /// - parameter start: boolean to run upload test.
+    /// - parameter completion: A block to execute.
+    /// - parameter error: Contains an error during the upload test.
     private func startUpload(_ start: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
         guard start else {
             completion(nil)
@@ -203,6 +233,9 @@ extension NDT7Test {
         completion(nil)
     }
 
+    /// Handle message returned from server to convert in a NDT7Measurement object.
+    /// - parameter message: object returned from server.
+    /// - returns: NDT7Measurement with a json text translated to measurement data.
     private func handleMessage(_ message: Any) -> NDT7Measurement? {
         if let message = message as? String, let data = message.data(using: .utf8) {
             do {
@@ -216,6 +249,8 @@ extension NDT7Test {
     }
 }
 
+/// This extension provide the web socket interaction.
+/// It's used to return data via delegation through delegate object (NDT7TestInteraction).
 extension NDT7Test: WebSocketInteraction {
 
     func open(webSocket: WebSocketWrapper) {
