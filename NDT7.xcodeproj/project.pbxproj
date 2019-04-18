@@ -87,6 +87,37 @@
 		887EB13D225E8669006EB7E7 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB13B225E8669006EB7E7 /* FileLogger.swift */; };
 		887EB13E225E8669006EB7E7 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB13B225E8669006EB7E7 /* FileLogger.swift */; };
 		887EB13F225E8669006EB7E7 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB13B225E8669006EB7E7 /* FileLogger.swift */; };
+		887EB14D22653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
+		887EB14E22653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
+		887EB14F22653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
+		887EB15022653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
+		887EB15222653D20006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
+		887EB15322653D26006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
+		887EB15422653D27006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
+		887EB15522653D28006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
+		887EB15722654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
+		887EB15822654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
+		887EB15922654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
+		887EB15A22654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
+		887EB15D226680DD006EB7E7 /* NDT7Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15C226680DD006EB7E7 /* NDT7Test.swift */; };
+		887EB15E226680DD006EB7E7 /* NDT7Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15C226680DD006EB7E7 /* NDT7Test.swift */; };
+		887EB15F226680DD006EB7E7 /* NDT7Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15C226680DD006EB7E7 /* NDT7Test.swift */; };
+		887EB160226680DD006EB7E7 /* NDT7Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15C226680DD006EB7E7 /* NDT7Test.swift */; };
+		887EB16222669EAB006EB7E7 /* WeakRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16122669EAB006EB7E7 /* WeakRef.swift */; };
+		887EB16322669EAB006EB7E7 /* WeakRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16122669EAB006EB7E7 /* WeakRef.swift */; };
+		887EB16422669EAB006EB7E7 /* WeakRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16122669EAB006EB7E7 /* WeakRef.swift */; };
+		887EB16522669EAB006EB7E7 /* WeakRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16122669EAB006EB7E7 /* WeakRef.swift */; };
+		887EB1672267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
+		887EB1682267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
+		887EB1692267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
+		887EB16A2267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
+		887EB16D2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */; };
+		887EB16E2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */; };
+		887EB16F2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */; };
+		8891D9672268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
+		8891D9682268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
+		8891D9692268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
+		8891D96A2268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +173,14 @@
 		887EB12B225D18F5006EB7E7 /* SystemConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemConsoleLogger.swift; sourceTree = "<group>"; };
 		887EB131225D5048006EB7E7 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		887EB13B225E8669006EB7E7 /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
+		887EB14C22653BEE006EB7E7 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		887EB15122653D20006EB7E7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		887EB15622654535006EB7E7 /* WebSocketWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketWrapper.swift; sourceTree = "<group>"; };
+		887EB15C226680DD006EB7E7 /* NDT7Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Test.swift; sourceTree = "<group>"; };
+		887EB16122669EAB006EB7E7 /* WeakRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRef.swift; sourceTree = "<group>"; };
+		887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Measurement.swift; sourceTree = "<group>"; };
+		887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7TestMeasurementTests.swift; sourceTree = "<group>"; };
+		8891D9662268DB6A000BF913 /* NDT7Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB15222653D20006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB15322653D26006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB15422653D27006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB15522653D28006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,10 +307,12 @@
 			isa = PBXGroup;
 			children = (
 				49BE5BD9224ECD7700DB7BDF /* NDT7.swift */,
+				887EB15B226550FE006EB7E7 /* NDT7 */,
 				8830D1A8225C006900FA109E /* Extensions */,
 				887EB130225D5035006EB7E7 /* Utilities */,
 				8830D19F225BD00E00FA109E /* Log */,
 				49BE5BDB224ECD9200DB7BDF /* Supporting Files */,
+				887EB14A22653812006EB7E7 /* Lib */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -276,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				49BE5B8A224EAA3900DB7BDF /* NDT7Tests.swift */,
+				887EB16B2267DF5D006EB7E7 /* NDT7 */,
 				49610809225EB15D00678DF8 /* Extensions */,
 				49610808225EB15700678DF8 /* Utilities */,
 				496107F6225EB02800678DF8 /* Log */,
@@ -296,6 +342,7 @@
 		49BE5BD5224EC1D900DB7BDF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				887EB15122653D20006EB7E7 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -350,8 +397,44 @@
 			isa = PBXGroup;
 			children = (
 				887EB131225D5048006EB7E7 /* Queue.swift */,
+				887EB16122669EAB006EB7E7 /* WeakRef.swift */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		887EB14A22653812006EB7E7 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				887EB14B22653BDE006EB7E7 /* WebSocket */,
+			);
+			name = Lib;
+			sourceTree = "<group>";
+		};
+		887EB14B22653BDE006EB7E7 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				887EB15622654535006EB7E7 /* WebSocketWrapper.swift */,
+				887EB14C22653BEE006EB7E7 /* WebSocket.swift */,
+			);
+			name = WebSocket;
+			sourceTree = "<group>";
+		};
+		887EB15B226550FE006EB7E7 /* NDT7 */ = {
+			isa = PBXGroup;
+			children = (
+				8891D9662268DB6A000BF913 /* NDT7Settings.swift */,
+				887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */,
+				887EB15C226680DD006EB7E7 /* NDT7Test.swift */,
+			);
+			name = NDT7;
+			sourceTree = "<group>";
+		};
+		887EB16B2267DF5D006EB7E7 /* NDT7 */ = {
+			isa = PBXGroup;
+			children = (
+				887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */,
+			);
+			name = NDT7;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -732,12 +815,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8830D1A2225BF60C00FA109E /* DebugConsoleLogger.swift in Sources */,
+				887EB14D22653BEF006EB7E7 /* WebSocket.swift in Sources */,
 				8830D1AA225C00E600FA109E /* DateExtension.swift in Sources */,
+				887EB1672267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */,
 				887EB132225D5048006EB7E7 /* Queue.swift in Sources */,
+				887EB16222669EAB006EB7E7 /* WeakRef.swift in Sources */,
+				887EB15D226680DD006EB7E7 /* NDT7Test.swift in Sources */,
 				49BE5BDA224ECD7700DB7BDF /* NDT7.swift in Sources */,
+				887EB15722654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12C225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19B225BCFF700FA109E /* LogNDT7.swift in Sources */,
 				887EB13C225E8669006EB7E7 /* FileLogger.swift in Sources */,
+				8891D9672268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,6 +834,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB16D2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */,
 				49610801225EB0B700678DF8 /* SystemConsoleLoggerTests.swift in Sources */,
 				4961080B225EB17800678DF8 /* QueueTests.swift in Sources */,
 				49610805225EB0D600678DF8 /* FileLoggerTests.swift in Sources */,
@@ -759,12 +849,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8830D1A3225BF60C00FA109E /* DebugConsoleLogger.swift in Sources */,
+				887EB14E22653BEF006EB7E7 /* WebSocket.swift in Sources */,
 				8830D1AB225C00E600FA109E /* DateExtension.swift in Sources */,
+				887EB1682267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */,
 				887EB133225D5048006EB7E7 /* Queue.swift in Sources */,
+				887EB16322669EAB006EB7E7 /* WeakRef.swift in Sources */,
+				887EB15E226680DD006EB7E7 /* NDT7Test.swift in Sources */,
 				49BB5F12224FDC7200CEB9E0 /* NDT7.swift in Sources */,
+				887EB15822654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12D225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19C225BCFF700FA109E /* LogNDT7.swift in Sources */,
 				887EB13D225E8669006EB7E7 /* FileLogger.swift in Sources */,
+				8891D9682268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,6 +868,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB16E2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */,
 				49610802225EB0B700678DF8 /* SystemConsoleLoggerTests.swift in Sources */,
 				4961080C225EB17800678DF8 /* QueueTests.swift in Sources */,
 				49610806225EB0D600678DF8 /* FileLoggerTests.swift in Sources */,
@@ -786,12 +883,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8830D1A4225BF60C00FA109E /* DebugConsoleLogger.swift in Sources */,
+				887EB14F22653BEF006EB7E7 /* WebSocket.swift in Sources */,
 				8830D1AC225C00E600FA109E /* DateExtension.swift in Sources */,
+				887EB1692267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */,
 				887EB134225D5048006EB7E7 /* Queue.swift in Sources */,
+				887EB16422669EAB006EB7E7 /* WeakRef.swift in Sources */,
+				887EB15F226680DD006EB7E7 /* NDT7Test.swift in Sources */,
 				49BB5F13224FDC7300CEB9E0 /* NDT7.swift in Sources */,
+				887EB15922654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12E225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19D225BCFF700FA109E /* LogNDT7.swift in Sources */,
 				887EB13E225E8669006EB7E7 /* FileLogger.swift in Sources */,
+				8891D9692268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,6 +902,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887EB16F2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */,
 				49610803225EB0B700678DF8 /* SystemConsoleLoggerTests.swift in Sources */,
 				4961080D225EB17800678DF8 /* QueueTests.swift in Sources */,
 				49610807225EB0D600678DF8 /* FileLoggerTests.swift in Sources */,
@@ -813,12 +917,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8830D1A5225BF60C00FA109E /* DebugConsoleLogger.swift in Sources */,
+				887EB15022653BEF006EB7E7 /* WebSocket.swift in Sources */,
 				8830D1AD225C00E600FA109E /* DateExtension.swift in Sources */,
+				887EB16A2267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */,
 				887EB135225D5048006EB7E7 /* Queue.swift in Sources */,
+				887EB16522669EAB006EB7E7 /* WeakRef.swift in Sources */,
+				887EB160226680DD006EB7E7 /* NDT7Test.swift in Sources */,
 				49C52FF6224ED19600592C4C /* NDT7.swift in Sources */,
+				887EB15A22654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12F225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19E225BCFF700FA109E /* LogNDT7.swift in Sources */,
 				887EB13F225E8669006EB7E7 /* FileLogger.swift in Sources */,
+				8891D96A2268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

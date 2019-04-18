@@ -1,3 +1,4 @@
 docs/
 .git/
 .yazzy.yaml
+Sources/WebSocket.swift

@@ -11,6 +11,7 @@ import Foundation
 /// NDT7
 open class NDT7 {
 
+    /// Enable loging.
     public static var loggingEnabled: Bool = false {
         didSet {
             if loggingEnabled {

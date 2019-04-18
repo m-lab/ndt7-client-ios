@@ -2,3 +2,4 @@ coverage:
   ignore:
     - "Example/**/*"
     - "Tests/**/*"
+    - "Sources/WebSocket.swift"
