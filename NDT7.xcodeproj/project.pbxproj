@@ -63,6 +63,18 @@
 		49C52FF9224ED19600592C4C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B9B224EAB7300DB7BDF /* LICENSE */; };
 		49C52FFA224ED19600592C4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B99224EAB5C00DB7BDF /* README.md */; };
 		49C52FFB224ED19600592C4C /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B97224EAB5200DB7BDF /* AUTHORS */; };
+		49D69380226A5A8600B7277A /* WeakRefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6937F226A5A8600B7277A /* WeakRefTests.swift */; };
+		49D69381226A5A8600B7277A /* WeakRefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6937F226A5A8600B7277A /* WeakRefTests.swift */; };
+		49D69382226A5A8600B7277A /* WeakRefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6937F226A5A8600B7277A /* WeakRefTests.swift */; };
+		49D69384226A5C1E00B7277A /* NDT7SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D69383226A5C1E00B7277A /* NDT7SettingsTests.swift */; };
+		49D69385226A5C1E00B7277A /* NDT7SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D69383226A5C1E00B7277A /* NDT7SettingsTests.swift */; };
+		49D69386226A5C1E00B7277A /* NDT7SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D69383226A5C1E00B7277A /* NDT7SettingsTests.swift */; };
+		49D69388226A5C2F00B7277A /* NDT7MeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D69387226A5C2F00B7277A /* NDT7MeasurementTests.swift */; };
+		49D69389226A5C2F00B7277A /* NDT7MeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D69387226A5C2F00B7277A /* NDT7MeasurementTests.swift */; };
+		49D6938A226A5C2F00B7277A /* NDT7MeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D69387226A5C2F00B7277A /* NDT7MeasurementTests.swift */; };
+		49D6938C226A5C7300B7277A /* NDT7TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6938B226A5C7300B7277A /* NDT7TestTests.swift */; };
+		49D6938D226A5C7300B7277A /* NDT7TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6938B226A5C7300B7277A /* NDT7TestTests.swift */; };
+		49D6938E226A5C7300B7277A /* NDT7TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6938B226A5C7300B7277A /* NDT7TestTests.swift */; };
 		8830D19B225BCFF700FA109E /* LogNDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8830D19A225BCFF700FA109E /* LogNDT7.swift */; };
 		8830D19C225BCFF700FA109E /* LogNDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8830D19A225BCFF700FA109E /* LogNDT7.swift */; };
 		8830D19D225BCFF700FA109E /* LogNDT7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8830D19A225BCFF700FA109E /* LogNDT7.swift */; };
@@ -107,9 +119,6 @@
 		887EB1682267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
 		887EB1692267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
 		887EB16A2267DCBA006EB7E7 /* NDT7Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */; };
-		887EB16D2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */; };
-		887EB16E2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */; };
-		887EB16F2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */; };
 		8891D9672268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
 		8891D9682268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
 		8891D9692268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
@@ -163,6 +172,10 @@
 		49BE5BD0224EBA2200DB7BDF /* NDT7 tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NDT7 tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BE5BD9224ECD7700DB7BDF /* NDT7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7.swift; sourceTree = "<group>"; };
 		49C52FFF224ED19600592C4C /* NDT7.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDT7.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49D6937F226A5A8600B7277A /* WeakRefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefTests.swift; sourceTree = "<group>"; };
+		49D69383226A5C1E00B7277A /* NDT7SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7SettingsTests.swift; sourceTree = "<group>"; };
+		49D69387226A5C2F00B7277A /* NDT7MeasurementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7MeasurementTests.swift; sourceTree = "<group>"; };
+		49D6938B226A5C7300B7277A /* NDT7TestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7TestTests.swift; sourceTree = "<group>"; };
 		8830D19A225BCFF700FA109E /* LogNDT7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogNDT7.swift; sourceTree = "<group>"; };
 		8830D1A1225BF60C00FA109E /* DebugConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugConsoleLogger.swift; sourceTree = "<group>"; };
 		8830D1A9225C00E600FA109E /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -174,7 +187,6 @@
 		887EB15C226680DD006EB7E7 /* NDT7Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Test.swift; sourceTree = "<group>"; };
 		887EB16122669EAB006EB7E7 /* WeakRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRef.swift; sourceTree = "<group>"; };
 		887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Measurement.swift; sourceTree = "<group>"; };
-		887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7TestMeasurementTests.swift; sourceTree = "<group>"; };
 		8891D9662268DB6A000BF913 /* NDT7Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -256,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				4961080A225EB17800678DF8 /* QueueTests.swift */,
+				49D6937F226A5A8600B7277A /* WeakRefTests.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -422,7 +435,9 @@
 		887EB16B2267DF5D006EB7E7 /* NDT7 */ = {
 			isa = PBXGroup;
 			children = (
-				887EB16C2267DF7F006EB7E7 /* NDT7TestMeasurementTests.swift */,
+				49D69383226A5C1E00B7277A /* NDT7SettingsTests.swift */,
+				49D69387226A5C2F00B7277A /* NDT7MeasurementTests.swift */,
+				49D6938B226A5C7300B7277A /* NDT7TestTests.swift */,
 			);
 			name = NDT7;
 			sourceTree = "<group>";
@@ -824,12 +839,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB16D2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */,
+				49D69384226A5C1E00B7277A /* NDT7SettingsTests.swift in Sources */,
 				49610801225EB0B700678DF8 /* SystemConsoleLoggerTests.swift in Sources */,
 				4961080B225EB17800678DF8 /* QueueTests.swift in Sources */,
 				49610805225EB0D600678DF8 /* FileLoggerTests.swift in Sources */,
+				49D69388226A5C2F00B7277A /* NDT7MeasurementTests.swift in Sources */,
 				4961080F225EB18800678DF8 /* DateExtensionTests.swift in Sources */,
+				49D69380226A5A8600B7277A /* WeakRefTests.swift in Sources */,
 				49BE5B8B224EAA3900DB7BDF /* NDT7Tests.swift in Sources */,
+				49D6938C226A5C7300B7277A /* NDT7TestTests.swift in Sources */,
 				496107F9225EB04B00678DF8 /* LogNDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -858,12 +876,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB16E2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */,
+				49D69385226A5C1E00B7277A /* NDT7SettingsTests.swift in Sources */,
 				49610802225EB0B700678DF8 /* SystemConsoleLoggerTests.swift in Sources */,
 				4961080C225EB17800678DF8 /* QueueTests.swift in Sources */,
 				49610806225EB0D600678DF8 /* FileLoggerTests.swift in Sources */,
+				49D69389226A5C2F00B7277A /* NDT7MeasurementTests.swift in Sources */,
 				49610810225EB18800678DF8 /* DateExtensionTests.swift in Sources */,
+				49D69381226A5A8600B7277A /* WeakRefTests.swift in Sources */,
 				496107FE225EB0A400678DF8 /* LogNDT7Tests.swift in Sources */,
+				49D6938D226A5C7300B7277A /* NDT7TestTests.swift in Sources */,
 				49BE5BAF224EB9D400DB7BDF /* NDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -892,12 +913,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB16F2267DF80006EB7E7 /* NDT7TestMeasurementTests.swift in Sources */,
+				49D69386226A5C1E00B7277A /* NDT7SettingsTests.swift in Sources */,
 				49610803225EB0B700678DF8 /* SystemConsoleLoggerTests.swift in Sources */,
 				4961080D225EB17800678DF8 /* QueueTests.swift in Sources */,
 				49610807225EB0D600678DF8 /* FileLoggerTests.swift in Sources */,
+				49D6938A226A5C2F00B7277A /* NDT7MeasurementTests.swift in Sources */,
 				49610811225EB18800678DF8 /* DateExtensionTests.swift in Sources */,
+				49D69382226A5A8600B7277A /* WeakRefTests.swift in Sources */,
 				496107FF225EB0A500678DF8 /* LogNDT7Tests.swift in Sources */,
+				49D6938E226A5C7300B7277A /* NDT7TestTests.swift in Sources */,
 				49BE5BC9224EBA2200DB7BDF /* NDT7Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,15 +1,15 @@
 //
-//  NDT7TestMeasurementTests.swift
+//  NDT7MeasurementTests.swift
 //  NDT7
 //
-//  Created by NietoGuillen, Miguel on 4/17/19.
+//  Created by Miguel on 4/19/19.
 //  Copyright © 2019 M-Lab. All rights reserved.
 //
 
 import XCTest
 import NDT7
 
-class NDT7TestMeasurementTests: XCTestCase {
+class NDT7MeasurementTests: XCTestCase {
 
     func testNDT7TestMeasurementCorrectJSON() {
         let measurementJSON = """
