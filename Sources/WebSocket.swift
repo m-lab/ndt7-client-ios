@@ -27,6 +27,7 @@
 */
 
 import Foundation
+import zlib
 
 private let windowBufferSize = 0x2000
 
@@ -371,17 +372,6 @@ private class Delegate : NSObject, StreamDelegate {
     }
 }
 
-
-@_silgen_name("zlibVersion") private func zlibVersion() -> OpaquePointer
-@_silgen_name("deflateInit2_") private func deflateInit2(_ strm : UnsafeMutableRawPointer, level : CInt, method : CInt, windowBits : CInt, memLevel : CInt, strategy : CInt, version : OpaquePointer, stream_size : CInt) -> CInt
-@_silgen_name("deflateInit_") private func deflateInit(_ strm : UnsafeMutableRawPointer, level : CInt, version : OpaquePointer, stream_size : CInt) -> CInt
-@_silgen_name("deflateEnd") private func deflateEnd(_ strm : UnsafeMutableRawPointer) -> CInt
-@_silgen_name("deflate") private func deflate(_ strm : UnsafeMutableRawPointer, flush : CInt) -> CInt
-@_silgen_name("inflateInit2_") private func inflateInit2(_ strm : UnsafeMutableRawPointer, windowBits : CInt, version : OpaquePointer, stream_size : CInt) -> CInt
-@_silgen_name("inflateInit_") private func inflateInit(_ strm : UnsafeMutableRawPointer, version : OpaquePointer, stream_size : CInt) -> CInt
-@_silgen_name("inflate") private func inflateG(_ strm : UnsafeMutableRawPointer, flush : CInt) -> CInt
-@_silgen_name("inflateEnd") private func inflateEndG(_ strm : UnsafeMutableRawPointer) -> CInt
-
 private func zerror(_ res : CInt) -> Error? {
     var err = ""
     switch res {
@@ -399,32 +389,11 @@ private func zerror(_ res : CInt) -> Error? {
     return WebSocketError.payloadError("zlib: \(err): \(res)")
 }
 
-private struct z_stream {
-    var next_in : UnsafePointer<UInt8>? = nil
-    var avail_in : CUnsignedInt = 0
-    var total_in : CUnsignedLong = 0
-
-    var next_out : UnsafeMutablePointer<UInt8>? = nil
-    var avail_out : CUnsignedInt = 0
-    var total_out : CUnsignedLong = 0
-
-    var msg : UnsafePointer<CChar>? = nil
-    var state : OpaquePointer? = nil
-
-    var zalloc : OpaquePointer? = nil
-    var zfree : OpaquePointer? = nil
-    var opaque : OpaquePointer? = nil
-
-    var data_type : CInt = 0
-    var adler : CUnsignedLong = 0
-    var reserved : CUnsignedLong = 0
-}
-
 private class Inflater {
     var windowBits = 0
     var strm = z_stream()
     var tInput = [[UInt8]]()
-    var inflateEnd : [UInt8] = [0x00, 0x00, 0xFF, 0xFF]
+    var inflateEndG : [UInt8] = [0x00, 0x00, 0xFF, 0xFF]
     var bufferSize = windowBufferSize
     var buffer = malloc(windowBufferSize)
     init?(windowBits : Int){
@@ -432,34 +401,34 @@ private class Inflater {
             return nil
         }
         self.windowBits = windowBits
-        let ret = inflateInit2(&strm, windowBits: -CInt(windowBits), version: zlibVersion(), stream_size: CInt(MemoryLayout<z_stream>.size))
+        let ret = inflateInit2_(&strm, -CInt(windowBits), zlibVersion(), CInt(MemoryLayout<z_stream>.size))
         if ret != 0 {
             return nil
         }
     }
     deinit{
-        _ = inflateEndG(&strm)
+        _ = inflateEnd(&strm)
         free(buffer)
     }
-    func inflate(_ bufin : UnsafePointer<UInt8>, length : Int, final : Bool) throws -> (p : UnsafeMutablePointer<UInt8>, n : Int){
+    func inflateG(_ bufin : UnsafePointer<UInt8>, length : Int, final : Bool) throws -> (p : UnsafeMutablePointer<UInt8>, n : Int){
         var buf = buffer
         var bufsiz = bufferSize
         var buflen = 0
         for i in 0 ..< 2{
             if i == 0 {
                 strm.avail_in = CUnsignedInt(length)
-                strm.next_in = UnsafePointer<UInt8>(bufin)
+                strm.next_in = UnsafeMutablePointer<UInt8>(mutating: bufin)
             } else {
                 if !final {
                     break
                 }
-                strm.avail_in = CUnsignedInt(inflateEnd.count)
-                strm.next_in = UnsafePointer<UInt8>(inflateEnd)
+                strm.avail_in = CUnsignedInt(inflateEndG.count)
+                strm.next_in = UnsafeMutablePointer<UInt8>(mutating: inflateEndG)
             }
             while true {
                 strm.avail_out = CUnsignedInt(bufsiz)
                 strm.next_out = buf?.assumingMemoryBound(to: UInt8.self)
-                _ = inflateG(&strm, flush: 0)
+                _ = inflate(&strm, 0)
                 let have = bufsiz - Int(strm.avail_out)
                 bufsiz -= have
                 buflen += have
@@ -494,7 +463,7 @@ private class Deflater {
         }
         self.windowBits = windowBits
         self.memLevel = memLevel
-        let ret = deflateInit2(&strm, level: 6, method: 8, windowBits: -CInt(windowBits), memLevel: CInt(memLevel), strategy: 0, version: zlibVersion(), stream_size: CInt(MemoryLayout<z_stream>.size))
+        let ret = deflateInit2_(&strm, 6, 8, -CInt(windowBits), CInt(memLevel), 0, zlibVersion(), CInt(MemoryLayout<z_stream>.size))
         if ret != 0 {
             return nil
         }
@@ -1391,7 +1360,7 @@ private class InnerWebSocket: Hashable {
         let bytes : UnsafeMutablePointer<UInt8>
         let bytesLen : Int
         if inflate {
-            (bytes, bytesLen) = try inflater!.inflate(reader.bytes, length: rlen, final: rfin)
+            (bytes, bytesLen) = try inflater!.inflateG(reader.bytes, length: rlen, final: rfin)
         } else {
             (bytes, bytesLen) = (UnsafeMutablePointer<UInt8>.init(mutating: reader.bytes), rlen)
         }

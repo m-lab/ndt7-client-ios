@@ -91,10 +91,6 @@
 		887EB14E22653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
 		887EB14F22653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
 		887EB15022653BEF006EB7E7 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB14C22653BEE006EB7E7 /* WebSocket.swift */; };
-		887EB15222653D20006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
-		887EB15322653D26006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
-		887EB15422653D27006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
-		887EB15522653D28006EB7E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 887EB15122653D20006EB7E7 /* libz.tbd */; };
 		887EB15722654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
 		887EB15822654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
 		887EB15922654535006EB7E7 /* WebSocketWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887EB15622654535006EB7E7 /* WebSocketWrapper.swift */; };
@@ -174,7 +170,6 @@
 		887EB131225D5048006EB7E7 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		887EB13B225E8669006EB7E7 /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		887EB14C22653BEE006EB7E7 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
-		887EB15122653D20006EB7E7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		887EB15622654535006EB7E7 /* WebSocketWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketWrapper.swift; sourceTree = "<group>"; };
 		887EB15C226680DD006EB7E7 /* NDT7Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Test.swift; sourceTree = "<group>"; };
 		887EB16122669EAB006EB7E7 /* WeakRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRef.swift; sourceTree = "<group>"; };
@@ -188,7 +183,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB15222653D20006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +198,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB15322653D26006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +213,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB15422653D27006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,7 +228,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887EB15522653D28006EB7E7 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,7 +333,6 @@
 		49BE5BD5224EC1D900DB7BDF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				887EB15122653D20006EB7E7 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1116,6 +1106,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				SKIP_INSTALL = YES;
@@ -1144,6 +1136,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				SKIP_INSTALL = YES;
@@ -1206,6 +1200,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				SDKROOT = macosx;
@@ -1232,6 +1227,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				SDKROOT = macosx;
@@ -1295,6 +1291,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				SDKROOT = appletvos;
@@ -1322,6 +1319,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				SDKROOT = appletvos;
@@ -1391,6 +1389,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
@@ -1422,6 +1421,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
 				RESOURCES_TARGETED_DEVICE_FAMILY = "";
