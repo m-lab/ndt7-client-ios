@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ndt7  Reference</title>
+    <title>NDT7  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset="utf-8">
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
 
 
-    <a title="ndt7  Reference"></a>
+    <a title="NDT7  Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          ndt7 Docs
+          NDT7 Docs
         </a>
-         (0% documented)
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
       </p>
     
         <p class="header-col header-col--secondary">
@@ -32,14 +41,53 @@
     </header>
 
     <p class="breadcrumbs">
-      <a class="breadcrumb" href="index.html">ndt7 Reference</a>
+      <a class="breadcrumb" href="index.html">NDT7 Reference</a>
       <img class="carat" src="img/carat.png" />
-      ndt7  Reference
+      NDT7  Reference
     </p>
 
     <div class="content-wrapper">
       <nav class="navigation">
         <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NDT7.html">NDT7</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/NDT7Test.html">NDT7Test</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/NDT7TestInteraction.html">NDT7TestInteraction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7APPInfo.html">NDT7APPInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7Measurement.html">NDT7Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7Settings.html">NDT7Settings</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -47,14 +95,14 @@
         <section class="section">
           <div class="section-content">
             
-            <a href='#ndt7-ios' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='ndt7-ios'>NDT7 iOS</h1>
+            <h1 id='ndt7-ios' class='heading'>NDT7 iOS</h1>
 
 <table><thead>
 <tr>
 <th>branch</th>
 <th>travis-ci</th>
-<th>report-card</th>
-<th>coveralls</th>
+<th>codacy</th>
+<th>sonarcloud</th>
 <th>codecov</th>
 </tr>
 </thead><tbody>
@@ -62,23 +110,29 @@
 <td>develop</td>
 <td><a href="https://travis-ci.org/m-lab/ndt7-client-ios"><img src="https://travis-ci.org/m-lab/ndt7-client-ios.svg?branch=develop" alt="Build Status"></a></td>
 <td></td>
-<td><a href="https://coveralls.io/github/m-lab/ndt7-client-ios?branch=develop"><img src="https://coveralls.io/repos/github/m-lab/ndt7-client-ios/badge.svg?branch=develop" alt="Coverage Status"></a></td>
-<td><a href="https://codecov.io/github/realm/ndt7-client-ios?branch=develop"><img src="https://codecov.io/github/realm/SwiftLint/ndt7-client-ios.svg?branch=develop" alt="codecov.io"></a></td>
+<td></td>
+<td><a href="https://codecov.io/gh/m-lab/ndt7-client-ios/branch/develop"><img src="https://codecov.io/gh/m-lab/ndt7-client-ios/branch/develop/graphs/badge.svg" alt="Coverage Status"></a></td>
 </tr>
 <tr>
 <td>master</td>
-<td><a href="https://travis-ci.org/m-lab/ndt7-client-ios"><img src="https://travis-ci.org/m-lab/ndt7-client-ios.svg?branch=develop" alt="Build Status"></a></td>
-<td></td>
-<td><a href="https://coveralls.io/github/m-lab/ndt7-client-ios?branch=master"><img src="https://coveralls.io/repos/github/m-lab/ndt7-client-ios/badge.svg?branch=master" alt="Coverage Status"></a></td>
-<td><a href="https://codecov.io/github/realm/ndt7-client-ios?branch=master"><img src="https://codecov.io/github/realm/SwiftLint/ndt7-client-ios.svg?branch=master" alt="codecov.io"></a></td>
+<td><a href="https://travis-ci.org/m-lab/ndt7-client-ios"><img src="https://travis-ci.org/m-lab/ndt7-client-ios.svg?branch=master" alt="Build Status"></a></td>
+<td><a href="https://www.codacy.com/app/miguelangelnet/ndt7-client-ios?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=m-lab/ndt7-client-ios&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/979506f489c944348dc7d6c51586eb08" alt="Codacy Badge"></a></td>
+<td><a href="https://sonarcloud.io/dashboard/index/m-lab_ndt7-client-ios"><img src="https://sonarcloud.io/api/project_badges/measure?project=m-lab_ndt7-client-ios&metric=alert_status" alt="Quality Gate"></a></td>
+<td><a href="https://codecov.io/gh/m-lab/ndt7-client-ios/branch/master"><img src="https://codecov.io/gh/m-lab/ndt7-client-ios/branch/master/graphs/badge.svg" alt="Coverage Status"></a></td>
 </tr>
 </tbody></table>
+
+<p><a href="https://sonarcloud.io/component_measures?id=m-lab_ndt7-client-ios&metric=Reliability"><img src="https://sonarcloud.io/api/project_badges/measure?project=m-lab_ndt7-client-ios&metric=bugs" alt="Bugs"></a>
+<a href="https://sonarcloud.io/component_measures?id=m-lab_ndt7-client-ios&metric=Security"><img src="https://sonarcloud.io/api/project_badges/measure?project=m-lab_ndt7-client-ios&metric=vulnerabilities" alt="Vulnerabilities"></a>
+<a href="https://sonarcloud.io/component_measures?id=m-lab_ndt7-client-ios&metric=Maintainability"><img src="https://sonarcloud.io/api/project_badges/measure?project=m-lab_ndt7-client-ios&metric=sqale_rating" alt="Maintainability"></a>
+<a href="https://sonarcloud.io/component_measures?id=m-lab_ndt7-client-ios&metric=Reliability"><img src="https://sonarcloud.io/api/project_badges/measure?project=m-lab_ndt7-client-ios&metric=reliability_rating" alt="Reliability"></a>
+<a href="https://sonarcloud.io/component_measures?id=m-lab_ndt7-client-ios&metric=Security"><img src="https://sonarcloud.io/api/project_badges/measure?project=m-lab_ndt7-client-ios&metric=security_rating" alt="Security"></a></p>
 
 <p><a href="http://isitmaintained.com/project/m-lab/ndt7-client-ios" title="Average time to resolve an issue"><img src="http://isitmaintained.com/badge/resolution/m-lab/ndt7-client-ios.svg" alt="Average time to resolve an issue"></a>
 <a href="http://isitmaintained.com/project/m-lab/ndt7-client-ios" title="Percentage of issues still open"><img src="http://isitmaintained.com/badge/open/m-lab/ndt7-client-ios.svg" alt="Percentage of issues still open"></a>
 <a href="https://www.measurementlab.net/"><img src="https://img.shields.io/badge/Measurement%20Lab-purple.svg" alt="Measurement Lab"></a>
 <a href="http://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/github/license/m-lab/ndt7-client-ios.svg" alt="Apache License"></a></p>
-<a href='#table-of-contents' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='table-of-contents'>Table of Contents</h1>
+<h1 id='table-of-contents' class='heading'>Table of Contents</h1>
 
 <!-- MarkdownTOC -->
 
@@ -109,26 +163,23 @@
 <!-- /MarkdownTOC -->
 
 <p><a name="introduction"></a></p>
-<a href='#introduction' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='introduction'>Introduction</h1>
+<h1 id='introduction' class='heading'>Introduction</h1>
 
-<p>Measure the Internet, save the data, and make it universally accessible and useful.</p>
+<p><q>Measure the Internet, save the data, and make it universally accessible and useful.</q></p>
 
-<p><strong>Documentation in progress.</strong></p>
+<p>NDT7 provides a framework to measure the download and upload speed.</p>
 
 <p><a name="current-supported-features"></a></p>
-<a href='#current-supported-features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='current-supported-features'>Current supported features</h2>
-
-<p><strong>Documentation in progress.</strong></p>
+<h2 id='current-supported-features' class='heading'>Current supported features</h2>
 
 <ul>
+<li>[X] Download Speed Test. Beta version.</li>
 <li>[ ] Download Speed Test</li>
 <li>[ ] Upload Speed Test</li>
 </ul>
 
 <p><a name="requirements"></a></p>
-<a href='#requirements' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='requirements'>Requirements</h1>
-
-<p><strong>Documentation in progress.</strong></p>
+<h1 id='requirements' class='heading'>Requirements</h1>
 
 <ul>
 <li>iOS 10.0+ / macOS 10.14.0+ / appleTV 10.0+ / watchOS 3.0+</li>
@@ -137,49 +188,120 @@
 </ul>
 
 <p><a name="documentation"></a></p>
-<a href='#documentation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='documentation'>Documentation</h1>
+<h1 id='documentation' class='heading'>Documentation</h1>
 
-<p><strong>Documentation in progress.</strong></p>
+<p>Visit the <code><a href="Classes/NDT7.html">NDT7</a></code> <a href="http://htmlpreview.github.io/?https://github.com/m-lab/ndt7-client-ios/blob/master/docs/index.html">documentation</a> for instructions and browsing api references.</p>
 
 <p><a name="installation"></a></p>
-<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='installation'>Installation</h1>
+<h1 id='installation' class='heading'>Installation</h1>
 
 <p><a name="cocoapods"></a></p>
-<a href='#cocoapods' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='cocoapods'>CocoaPods</h2>
+<h2 id='cocoapods' class='heading'>CocoaPods</h2>
 
 <p><a href="https://cocoapods.org">CocoaPods</a> is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website.</p>
 
 <p><strong>Not supported yet.</strong></p>
 
 <p><a name="carthage"></a></p>
-<a href='#carthage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='carthage'>Carthage</h2>
+<h2 id='carthage' class='heading'>Carthage</h2>
 
 <p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.</p>
 
 <p><strong>Not supported yet.</strong></p>
 
 <p><a name="manual-installation"></a></p>
-<a href='#manual-installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='manual-installation'>Manual Installation</h2>
+<h2 id='manual-installation' class='heading'>Manual Installation</h2>
 
 <p><strong>Documentation in progress.</strong></p>
 
 <p><a name="setup-and-usage"></a></p>
-<a href='#setup-and-usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='setup-and-usage'>Setup and usage</h1>
-
-<p><strong>Documentation in progress.</strong></p>
+<h1 id='setup-and-usage' class='heading'>Setup and usage</h1>
 
 <p><a name="setup"></a></p>
-<a href='#setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='setup'>Setup</h2>
+<h2 id='setup' class='heading'>Setup</h2>
 
-<p><strong>Documentation in progress.</strong></p>
+<p>The only setup needed for debugging purpose is to enable logging if needed.</p>
+<pre class="highlight plaintext"><code>NDT7.loggingEnabled = true
+</code></pre>
+
+<p>If specific settings are needed for the testing configuration, you can define an NDT7Settings object, otherwise, use the default one with NDT7Settings().</p>
+
+<p>In the next section, <q>Start speed test</q>, we&rsquo;ll show all the steps needed to start a test.</p>
 
 <p><a name="start-speed-test"></a></p>
-<a href='#start-speed-test' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='start-speed-test'>Start speed test</h2>
+<h2 id='start-speed-test' class='heading'>Start speed test</h2>
 
-<p><strong>Documentation in progress.</strong></p>
-<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='license'>License</h1>
+<p>The next example show the whole process for a download and upload speed test.</p>
 
-<p><code>ndt7</code> iOS client is released under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. See LICENSE for details.</p>
+<ol>
+<li>Setup all the functions needed for NDT7Test delegate.</li>
+<li>Create the settings for testing. NDT7Settings.</li>
+<li>Create a NDT7Test object with NDT7Settings already created.</li>
+<li>Setup a delegation for NDT7Test to get the test information.</li>
+<li>Start speed test for download and/or upload.</li>
+</ol>
+<pre class="highlight plaintext"><code>import UIKit
+import NDT7
+
+class ViewController: UIViewController {
+
+    var ndt7Test: NDT7Test?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // For debugging purpose you can enable logs for NDT7 framework.
+        NDT7.loggingEnabled = true
+        startTest()
+    }
+
+    func startTest() {
+        // 2. Create the settings for testing. NDT7Settings.
+        let settings = NDT7Settings()
+        // 3. Create a NDT7Test object with NDT7Settings already created.
+        ndt7Test = NDT7Test(settings: settings)
+        // 4. Setup a delegation for NDT7Test to get the test information.
+        ndt7Test?.delegate = self
+        // 5. Start speed test for download and/or upload.
+        ndt7Test?.startTest(download: true, upload: true) { [weak self] (error) in
+            guard self != nil else { return }
+            if let error = error {
+                print("NDT7 iOS Example app - Error during test: \(error.localizedDescription)")
+            } else {
+                print("NDT7 iOS Example app - Test finished.")
+            }
+        }
+    }
+
+    func cancelTest() {
+        ndt7Test?.cancel()
+    }
+}
+
+// 1. Setup all the functions needed for NDT7Test delegate.
+extension ViewController: NDT7TestInteraction {
+
+    func downloadTestRunning(_ running: Bool) {
+    }
+
+    func uploadTestRunning(_ running: Bool) {
+    }
+
+    func downloadMeasurement(_ measurement: NDT7Measurement) {
+    }
+
+    func uploadMeasurement(_ measurement: NDT7Measurement) {
+    }
+
+    func downloadTestError(_ error: NSError) {
+    }
+
+    func uploadTestError(_ error: NSError) {
+    }
+}
+</code></pre>
+<h1 id='license' class='heading'>License</h1>
+
+<p><code><a href="Classes/NDT7.html">NDT7</a></code> iOS client is released under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. See LICENSE for details.</p>
 
           </div>
         </section>
@@ -188,8 +310,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-03-29)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-04-19)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
