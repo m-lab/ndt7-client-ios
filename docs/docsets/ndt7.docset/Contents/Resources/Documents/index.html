@@ -165,24 +165,21 @@
 <p><a name="introduction"></a></p>
 <h1 id='introduction' class='heading'>Introduction</h1>
 
-<p>Measure the Internet, save the data, and make it universally accessible and useful.</p>
+<p><q>Measure the Internet, save the data, and make it universally accessible and useful.</q></p>
 
-<p><strong>Documentation in progress.</strong></p>
+<p>NDT7 provides a framework to measure the download and upload speed.</p>
 
 <p><a name="current-supported-features"></a></p>
 <h2 id='current-supported-features' class='heading'>Current supported features</h2>
 
-<p><strong>Documentation in progress.</strong></p>
-
 <ul>
+<li>[X] Download Speed Test. Beta version.</li>
 <li>[ ] Download Speed Test</li>
 <li>[ ] Upload Speed Test</li>
 </ul>
 
 <p><a name="requirements"></a></p>
 <h1 id='requirements' class='heading'>Requirements</h1>
-
-<p><strong>Documentation in progress.</strong></p>
 
 <ul>
 <li>iOS 10.0+ / macOS 10.14.0+ / appleTV 10.0+ / watchOS 3.0+</li>
@@ -220,17 +217,88 @@
 <p><a name="setup-and-usage"></a></p>
 <h1 id='setup-and-usage' class='heading'>Setup and usage</h1>
 
-<p><strong>Documentation in progress.</strong></p>
-
 <p><a name="setup"></a></p>
 <h2 id='setup' class='heading'>Setup</h2>
 
-<p><strong>Documentation in progress.</strong></p>
+<p>The only setup needed for debugging purpose is to enable logging if needed.</p>
+<pre class="highlight plaintext"><code>NDT7.loggingEnabled = true
+</code></pre>
+
+<p>If specific settings are needed for the testing configuration, you can define an NDT7Settings object, otherwise, use the default one with NDT7Settings().</p>
+
+<p>In the next section, <q>Start speed test</q>, we&rsquo;ll show all the steps needed to start a test.</p>
 
 <p><a name="start-speed-test"></a></p>
 <h2 id='start-speed-test' class='heading'>Start speed test</h2>
 
-<p><strong>Documentation in progress.</strong></p>
+<p>The next example show the whole process for a download and upload speed test.</p>
+
+<ol>
+<li>Setup all the functions needed for NDT7Test delegate.</li>
+<li>Create the settings for testing. NDT7Settings.</li>
+<li>Create a NDT7Test object with NDT7Settings already created.</li>
+<li>Setup a delegation for NDT7Test to get the test information.</li>
+<li>Start speed test for download and/or upload.</li>
+</ol>
+<pre class="highlight plaintext"><code>import UIKit
+import NDT7
+
+class ViewController: UIViewController {
+
+    var ndt7Test: NDT7Test?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // For debugging purpose you can enable logs for NDT7 framework.
+        NDT7.loggingEnabled = true
+        startTest()
+    }
+
+    func startTest() {
+        // 2. Create the settings for testing. NDT7Settings.
+        let settings = NDT7Settings()
+        // 3. Create a NDT7Test object with NDT7Settings already created.
+        ndt7Test = NDT7Test(settings: settings)
+        // 4. Setup a delegation for NDT7Test to get the test information.
+        ndt7Test?.delegate = self
+        // 5. Start speed test for download and/or upload.
+        ndt7Test?.startTest(download: true, upload: true) { [weak self] (error) in
+            guard self != nil else { return }
+            if let error = error {
+                print("NDT7 iOS Example app - Error during test: \(error.localizedDescription)")
+            } else {
+                print("NDT7 iOS Example app - Test finished.")
+            }
+        }
+    }
+
+    func cancelTest() {
+        ndt7Test?.cancel()
+    }
+}
+
+// 1. Setup all the functions needed for NDT7Test delegate.
+extension ViewController: NDT7TestInteraction {
+
+    func downloadTestRunning(_ running: Bool) {
+    }
+
+    func uploadTestRunning(_ running: Bool) {
+    }
+
+    func downloadMeasurement(_ measurement: NDT7Measurement) {
+    }
+
+    func uploadMeasurement(_ measurement: NDT7Measurement) {
+    }
+
+    func downloadTestError(_ error: NSError) {
+    }
+
+    func uploadTestError(_ error: NSError) {
+    }
+}
+</code></pre>
 <h1 id='license' class='heading'>License</h1>
 
 <p><code><a href="Classes/NDT7.html">NDT7</a></code> iOS client is released under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. See LICENSE for details.</p>

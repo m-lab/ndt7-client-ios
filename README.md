@@ -38,22 +38,19 @@
 <a name="introduction"></a>
 # Introduction
 
-Measure the Internet, save the data, and make it universally accessible and useful.
+"Measure the Internet, save the data, and make it universally accessible and useful."
 
-**Documentation in progress.**
+NDT7 provides a framework to measure the download and upload speed.
 
 <a name="current-supported-features"></a>
 ## Current supported features
 
-**Documentation in progress.**
-
+- [X] Download Speed Test. Beta version.
 - [ ] Download Speed Test
 - [ ] Upload Speed Test
 
 <a name="requirements"></a>
 # Requirements
-
-**Documentation in progress.**
 
 - iOS 10.0+ / macOS 10.14.0+ / appleTV 10.0+ / watchOS 3.0+
 - Xcode 10.2+
@@ -89,17 +86,88 @@ Visit the `NDT7` [documentation](http://htmlpreview.github.io/?https://github.co
 <a name="setup-and-usage"></a>
 # Setup and usage
 
-**Documentation in progress.**
-
 <a name="setup"></a>
 ## Setup
 
-**Documentation in progress.**
+The only setup needed for debugging purpose is to enable logging if needed.
+```
+NDT7.loggingEnabled = true
+```
+
+If specific settings are needed for the testing configuration, you can define an NDT7Settings object, otherwise, use the default one with NDT7Settings().
+
+In the next section, "Start speed test", we'll show all the steps needed to start a test.
 
 <a name="start-speed-test"></a>
 ## Start speed test
 
-**Documentation in progress.**
+The next example show the whole process for a download and upload speed test.
+1. Setup all the functions needed for NDT7Test delegate.
+2. Create the settings for testing. NDT7Settings.
+3. Create a NDT7Test object with NDT7Settings already created.
+4. Setup a delegation for NDT7Test to get the test information.
+5. Start speed test for download and/or upload.
+
+```
+import UIKit
+import NDT7
+
+class ViewController: UIViewController {
+
+    var ndt7Test: NDT7Test?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // For debugging purpose you can enable logs for NDT7 framework.
+        NDT7.loggingEnabled = true
+        startTest()
+    }
+
+    func startTest() {
+        // 2. Create the settings for testing. NDT7Settings.
+        let settings = NDT7Settings()
+        // 3. Create a NDT7Test object with NDT7Settings already created.
+        ndt7Test = NDT7Test(settings: settings)
+        // 4. Setup a delegation for NDT7Test to get the test information.
+        ndt7Test?.delegate = self
+        // 5. Start speed test for download and/or upload.
+        ndt7Test?.startTest(download: true, upload: true) { [weak self] (error) in
+            guard self != nil else { return }
+            if let error = error {
+                print("NDT7 iOS Example app - Error during test: \(error.localizedDescription)")
+            } else {
+                print("NDT7 iOS Example app - Test finished.")
+            }
+        }
+    }
+
+    func cancelTest() {
+        ndt7Test?.cancel()
+    }
+}
+
+// 1. Setup all the functions needed for NDT7Test delegate.
+extension ViewController: NDT7TestInteraction {
+
+    func downloadTestRunning(_ running: Bool) {
+    }
+
+    func uploadTestRunning(_ running: Bool) {
+    }
+
+    func downloadMeasurement(_ measurement: NDT7Measurement) {
+    }
+
+    func uploadMeasurement(_ measurement: NDT7Measurement) {
+    }
+
+    func downloadTestError(_ error: NSError) {
+    }
+
+    func uploadTestError(_ error: NSError) {
+    }
+}
+```
 
 # License
 
