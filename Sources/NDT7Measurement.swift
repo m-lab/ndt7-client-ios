@@ -11,7 +11,8 @@ import Foundation
 /// For measurement, the server and client exchange JSON measurements using Textual WebSocket messages.
 /// NDT7Measurement represents such JSON measurements, which contains all the information.
 ///
-/// Example:
+/// Example of JSON to be matched with NDT7Measurement object:
+///
 /// ```
 /// {
 ///  "app_info": {
@@ -45,7 +46,7 @@ public struct NDT7Measurement: Codable, CustomStringConvertible {
     public let bbrInfo: NDT7BBRInfo?
 
     /// coding keys for codable purpose.
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case elapsed = "elapsed"
         case tcpInfo = "tcp_info"
         case appInfo = "app_info"
@@ -72,7 +73,7 @@ public struct NDT7TCPInfo: Codable, CustomStringConvertible {
     public let rttVar: Float64?
 
     /// coding keys for codable purpose.
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case smoothedRtt = "smoothed_rtt"
         case rttVar = "rtt_var"
     }
@@ -94,7 +95,7 @@ public struct NDT7APPInfo: Codable, CustomStringConvertible {
     public let numBytes: Int64?
 
     /// coding keys for codable purpose.
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case numBytes = "num_bytes"
     }
 
@@ -115,7 +116,7 @@ public struct NDT7BBRInfo: Codable, CustomStringConvertible {
     public let minRtt: Float64?
 
     /// coding keys for codable purpose.
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case bandwith = "max_bandwidth"
         case minRtt = "min_rtt"
     }

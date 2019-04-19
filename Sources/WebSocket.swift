@@ -116,30 +116,30 @@ private enum OpCode : UInt8, CustomStringConvertible {
 }
 
 /// The WebSocketEvents struct is used by the events property and manages the events for the WebSocket connection.
-public struct WebSocketEvents {
+struct WebSocketEvents {
     /// An event to be called when the WebSocket connection's readyState changes to .Open; this indicates that the connection is ready to send and receive data.
-    public var open : ()->() = {}
+    var open : ()->() = {}
     /// An event to be called when the WebSocket connection's readyState changes to .Closed.
-    public var close : (_ code : Int, _ reason : String, _ wasClean : Bool)->() = {(code, reason, wasClean) in}
+    var close : (_ code : Int, _ reason : String, _ wasClean : Bool)->() = {(code, reason, wasClean) in}
     /// An event to be called when an error occurs.
-    public var error : (_ error : Error)->() = {(error) in}
+    var error : (_ error : Error)->() = {(error) in}
     /// An event to be called when a message is received from the server.
-    public var message : (_ data : Any)->() = {(data) in}
+    var message : (_ data : Any)->() = {(data) in}
     /// An event to be called when a pong is received from the server.
-    public var pong : (_ data : Any)->() = {(data) in}
+    var pong : (_ data : Any)->() = {(data) in}
     /// An event to be called when the WebSocket process has ended; this event is guarenteed to be called once and can be used as an alternative to the "close" or "error" events.
-    public var end : (_ code : Int, _ reason : String, _ wasClean : Bool, _ error : Error?)->() = {(code, reason, wasClean, error) in}
+    var end : (_ code : Int, _ reason : String, _ wasClean : Bool, _ error : Error?)->() = {(code, reason, wasClean, error) in}
 }
 
 /// The WebSocketBinaryType enum is used by the binaryType property and indicates the type of binary data being transmitted by the WebSocket connection.
-public enum WebSocketBinaryType : CustomStringConvertible {
+enum WebSocketBinaryType : CustomStringConvertible {
     /// The WebSocket should transmit [UInt8] objects.
     case uInt8Array
     /// The WebSocket should transmit NSData objects.
     case nsData
     /// The WebSocket should transmit UnsafeBufferPointer<UInt8> objects. This buffer is only valid during the scope of the message event. Use at your own risk.
     case uInt8UnsafeBufferPointer
-    public var description : String {
+    var description : String {
         switch self {
         case .uInt8Array: return "UInt8Array"
         case .nsData: return "NSData"
@@ -149,7 +149,7 @@ public enum WebSocketBinaryType : CustomStringConvertible {
 }
 
 /// The WebSocketReadyState enum is used by the readyState property to describe the status of the WebSocket connection.
-@objc public enum WebSocketReadyState : Int, CustomStringConvertible {
+@objc enum WebSocketReadyState : Int, CustomStringConvertible {
     /// The connection is not yet open.
     case connecting = 0
     /// The connection is open and ready to communicate.
@@ -167,7 +167,7 @@ public enum WebSocketBinaryType : CustomStringConvertible {
         }
     }
     /// Returns a string that represents the ReadyState value.
-    public var description : String {
+    var description : String {
         switch self {
         case .connecting: return "Connecting"
         case .open: return "Open"
@@ -179,42 +179,42 @@ public enum WebSocketBinaryType : CustomStringConvertible {
 
 private let defaultMaxWindowBits = 15
 /// The WebSocketCompression struct is used by the compression property and manages the compression options for the WebSocket connection.
-public struct WebSocketCompression {
+struct WebSocketCompression {
     /// Used to accept compressed messages from the server. Default is true.
-    public var on = false
+    var on = false
     /// request no context takeover.
-    public var noContextTakeover = false
+    var noContextTakeover = false
     /// request max window bits.
-    public var maxWindowBits = defaultMaxWindowBits
+    var maxWindowBits = defaultMaxWindowBits
 }
 
 /// The WebSocketService options are used by the services property and manages the underlying socket services.
-public struct WebSocketService :  OptionSet {
-    public typealias RawValue = UInt
+struct WebSocketService :  OptionSet {
+    typealias RawValue = UInt
     var value: UInt = 0
     init(_ value: UInt) { self.value = value }
-    public init(rawValue value: UInt) { self.value = value }
-    public init(nilLiteral: ()) { self.value = 0 }
-    public static var allZeros: WebSocketService { return self.init(0) }
+    init(rawValue value: UInt) { self.value = value }
+    init(nilLiteral: ()) { self.value = 0 }
+    static var allZeros: WebSocketService { return self.init(0) }
     static func fromMask(_ raw: UInt) -> WebSocketService { return self.init(raw) }
-    public var rawValue: UInt { return self.value }
+    var rawValue: UInt { return self.value }
     /// No services.
-    public static var None: WebSocketService { return self.init(0) }
+    static var None: WebSocketService { return self.init(0) }
     /// Allow socket to handle VoIP.
-    public static var VoIP: WebSocketService { return self.init(1 << 0) }
+    static var VoIP: WebSocketService { return self.init(1 << 0) }
     /// Allow socket to handle video.
-    public static var Video: WebSocketService { return self.init(1 << 1) }
+    static var Video: WebSocketService { return self.init(1 << 1) }
     /// Allow socket to run in background.
-    public static var Background: WebSocketService { return self.init(1 << 2) }
+    static var Background: WebSocketService { return self.init(1 << 2) }
     /// Allow socket to handle voice.
-    public static var Voice: WebSocketService { return self.init(1 << 3) }
+    static var Voice: WebSocketService { return self.init(1 << 3) }
 }
 
 private let atEndDetails = "streamStatus.atEnd"
 private let timeoutDetails = "The operation couldn’t be completed. Operation timed out"
 private let timeoutDuration : CFTimeInterval = 30
 
-public enum WebSocketError : Error, CustomStringConvertible {
+enum WebSocketError : Error, CustomStringConvertible {
     case memory
     case needMoreInput
     case invalidHeader
@@ -225,7 +225,7 @@ public enum WebSocketError : Error, CustomStringConvertible {
     case protocolError(String)
     case invalidResponse(String)
     case invalidCompressionOptions(String)
-    public var description : String {
+    var description : String {
         switch self {
         case .memory: return "Memory"
         case .needMoreInput: return "NeedMoreInput"
@@ -239,7 +239,7 @@ public enum WebSocketError : Error, CustomStringConvertible {
         case let .network(details): return "Network(\(details))"
         }
     }
-    public var details : String {
+    var details : String {
         switch self {
         case .invalidResponse(let details): return details
         case .invalidCompressionOptions(let details): return details
@@ -478,7 +478,7 @@ private class Deflater {
 }
 
 /// WebSocketDelegate is an Objective-C alternative to WebSocketEvents and is used to delegate the events for the WebSocket connection.
-@objc public protocol WebSocketDelegate {
+@objc protocol WebSocketDelegate {
     /// A function to be called when the WebSocket connection's readyState changes to .Open; this indicates that the connection is ready to send and receive data.
     func webSocketOpen()
     /// A function to be called when the WebSocket connection's readyState changes to .Closed.
@@ -1640,35 +1640,35 @@ private let manager = Manager()
 
 /// WebSocket objects are bidirectional network streams that communicate over HTTP. RFC 6455.
 @objcMembers
-open class WebSocket: NSObject {
+class WebSocket: NSObject {
     fileprivate var ws: InnerWebSocket
     fileprivate var id = manager.nextId()
     fileprivate var opened: Bool
 
-    open override var hash: Int { return id }
-    open override func isEqual(_ other: Any?) -> Bool {
+    override var hash: Int { return id }
+    override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? WebSocket else { return false }
         return self.id == other.id
     }
 
     /// Create a WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond.
-    public convenience init(_ url: String){
+    convenience init(_ url: String){
         self.init(request: URLRequest(url: URL(string: url)!), subProtocols: [])
     }
     /// Create a WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond.
-    public convenience init(url: URL){
+    convenience init(url: URL){
         self.init(request: URLRequest(url: url), subProtocols: [])
     }
     /// Create a WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond. Also include a list of protocols.
-    public convenience init(_ url: String, subProtocols : [String]){
+    convenience init(_ url: String, subProtocols : [String]){
         self.init(request: URLRequest(url: URL(string: url)!), subProtocols: subProtocols)
     }
     /// Create a WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond. Also include a protocol.
-    public convenience init(_ url: String, subProtocol : String){
+    convenience init(_ url: String, subProtocol : String){
         self.init(request: URLRequest(url: URL(string: url)!), subProtocols: [subProtocol])
     }
     /// Create a WebSocket connection from an NSURLRequest; Also include a list of protocols.
-    public init(request: URLRequest, subProtocols : [String] = []){
+    init(request: URLRequest, subProtocols : [String] = []){
         let hasURL = request.url != nil
         opened = hasURL
         ws = InnerWebSocket(request: request, subProtocols: subProtocols, stub: !hasURL)
@@ -1683,67 +1683,67 @@ open class WebSocket: NSObject {
         }
     }
     /// Create a WebSocket object with a deferred connection; the connection is not opened until the .open() method is called.
-    public convenience override init(){
+    convenience override init(){
         var request = URLRequest(url: URL(string: "http://apple.com")!)
         request.url = nil
         self.init(request: request, subProtocols: [])
     }
     /// The URL as resolved by the constructor. This is always an absolute URL. Read only.
-    open var url : String{ return ws.url }
+    var url : String{ return ws.url }
     /// A string indicating the name of the sub-protocol the server selected; this will be one of the strings specified in the protocols parameter when creating the WebSocket object.
-    open var subProtocol : String{ return ws.subProtocol }
+    var subProtocol : String{ return ws.subProtocol }
     /// The compression options of the WebSocket.
-    open var compression : WebSocketCompression{
+    var compression : WebSocketCompression{
         get { return ws.compression }
         set { ws.compression = newValue }
     }
     /// Allow for Self-Signed SSL Certificates. Default is false.
-    open var allowSelfSignedSSL : Bool{
+    var allowSelfSignedSSL : Bool{
         get { return ws.allowSelfSignedSSL }
         set { ws.allowSelfSignedSSL = newValue }
     }
     /// The services of the WebSocket.
-    open var services : WebSocketService{
+    var services : WebSocketService{
         get { return ws.services }
         set { ws.services = newValue }
     }
     /// The events of the WebSocket.
-    open var event : WebSocketEvents{
+    var event : WebSocketEvents{
         get { return ws.event }
         set { ws.event = newValue }
     }
     /// The queue for firing off events. default is main_queue
-    open var eventQueue : DispatchQueue?{
+    var eventQueue : DispatchQueue?{
         get { return ws.eventQueue }
         set { ws.eventQueue = newValue }
     }
     /// A WebSocketBinaryType value indicating the type of binary data being transmitted by the connection. Default is .UInt8Array.
-    open var binaryType : WebSocketBinaryType{
+    var binaryType : WebSocketBinaryType{
         get { return ws.binaryType }
         set { ws.binaryType = newValue }
     }
     /// The current state of the connection; this is one of the WebSocketReadyState constants. Read only.
-    open var readyState : WebSocketReadyState{
+    var readyState : WebSocketReadyState{
         return ws.readyState
     }
     /// Opens a deferred or closed WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond.
-    open func open(_ url: String){
+    func open(_ url: String){
         open(request: URLRequest(url: URL(string: url)!), subProtocols: [])
     }
     /// Opens a deferred or closed WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond.
-    open func open(nsurl url: URL){
+    func open(nsurl url: URL){
         open(request: URLRequest(url: url), subProtocols: [])
     }
     /// Opens a deferred or closed WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond. Also include a list of protocols.
-    open func open(_ url: String, subProtocols : [String]){
+    func open(_ url: String, subProtocols : [String]){
         open(request: URLRequest(url: URL(string: url)!), subProtocols: subProtocols)
     }
     /// Opens a deferred or closed WebSocket connection to a URL; this should be the URL to which the WebSocket server will respond. Also include a protocol.
-    open func open(_ url: String, subProtocol : String){
+    func open(_ url: String, subProtocol : String){
         open(request: URLRequest(url: URL(string: url)!), subProtocols: [subProtocol])
     }
     /// Opens a deferred or closed WebSocket connection from an NSURLRequest; Also include a list of protocols.
-    open func open(request: URLRequest, subProtocols : [String] = []){
+    func open(request: URLRequest, subProtocols : [String] = []){
         if opened{
             return
         }
@@ -1751,7 +1751,7 @@ open class WebSocket: NSObject {
         ws = ws.copyOpen(request, subProtocols: subProtocols)
     }
     /// Opens a closed WebSocket connection from an NSURLRequest; Uses the same request and protocols as previously closed WebSocket
-    open func open(){
+    func open(){
         open(request: ws.request, subProtocols: ws.subProtocols)
     }
     /**
@@ -1760,7 +1760,7 @@ open class WebSocket: NSObject {
      :param: code An integer indicating the status code explaining why the connection is being closed. If this parameter is not specified, a default value of 1000 (indicating a normal closure) is assumed.
      :param: reason A human-readable string explaining why the connection is closing. This string must be no longer than 123 bytes of UTF-8 text (not characters).
      */
-    open func close(_ code : Int = 1000, reason : String = "Normal Closure"){
+    func close(_ code : Int = 1000, reason : String = "Normal Closure"){
         if !opened{
             return
         }
@@ -1772,7 +1772,7 @@ open class WebSocket: NSObject {
 
      :param: message The message to be sent to the server.
      */
-    open func send(_ message : Any){
+    func send(_ message : Any){
         if !opened{
             return
         }
@@ -1783,7 +1783,7 @@ open class WebSocket: NSObject {
 
      :param: optional message The data to be sent to the server.
      */
-    open func ping(_ message : Any){
+    func ping(_ message : Any){
         if !opened{
             return
         }
@@ -1792,7 +1792,7 @@ open class WebSocket: NSObject {
     /**
      Transmits a ping to the server over the WebSocket connection.
      */
-    open func ping(){
+    func ping(){
         if !opened{
             return
         }
@@ -1800,14 +1800,14 @@ open class WebSocket: NSObject {
     }
 }
 
-public func ==(lhs: WebSocket, rhs: WebSocket) -> Bool {
+func ==(lhs: WebSocket, rhs: WebSocket) -> Bool {
     return lhs.id == rhs.id
 }
 
 extension WebSocket {
     /// The events of the WebSocket using a delegate.
     @objc
-    public weak var delegate : WebSocketDelegate? {
+    weak var delegate : WebSocketDelegate? {
         get { return ws.eventDelegate }
         set { ws.eventDelegate = newValue }
     }
@@ -1817,7 +1817,7 @@ extension WebSocket {
      :param: text The message (string) to be sent to the server.
      */
     @objc
-    public func send(text: String){
+    func send(text: String){
         send(text)
     }
     /**
@@ -1826,7 +1826,7 @@ extension WebSocket {
      :param: data The message (binary) to be sent to the server.
      */
     @objc
-    public func send(data: Data){
+    func send(data: Data){
         send(data)
     }
 }

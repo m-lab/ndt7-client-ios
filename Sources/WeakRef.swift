@@ -8,7 +8,9 @@
 
 import Foundation
 
-/// weak reference object
+/// Weak reference object allows to "convert" object to weak object
+/// to use it for example in an array, been nil when the object
+/// is deallocated.
 struct WeakRef<Object: AnyObject> {
 
     weak var object: Object?

@@ -1,6 +1,68 @@
 {
   "warnings": [
-
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 50,
+      "symbol": "NDT7Measurement.CodingKeys.elapsed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 51,
+      "symbol": "NDT7Measurement.CodingKeys.tcpInfo",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 52,
+      "symbol": "NDT7Measurement.CodingKeys.appInfo",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 53,
+      "symbol": "NDT7Measurement.CodingKeys.bbrInfo",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 77,
+      "symbol": "NDT7TCPInfo.CodingKeys.smoothedRtt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 78,
+      "symbol": "NDT7TCPInfo.CodingKeys.rttVar",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 99,
+      "symbol": "NDT7APPInfo.CodingKeys.numBytes",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 120,
+      "symbol": "NDT7BBRInfo.CodingKeys.bandwith",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/NDT7Measurement.swift",
+      "line": 121,
+      "symbol": "NDT7BBRInfo.CodingKeys.minRtt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    }
   ],
   "source_directory": "/Users/miguel/OpenSource/ndt7-client-ios"
 }

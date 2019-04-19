@@ -10,11 +10,29 @@ import Foundation
 
 /// This protocol allows to receive the test information.
 public protocol NDT7TestInteraction: class {
+
+    /// Provide the status of download test
+    /// - parameter running: true if the download test is running, otherwise, false.
     func downloadTestRunning(_ running: Bool)
+
+    /// Provide the status of upload test
+    /// - parameter running: true if the upload test is running, otherwise, false.
     func uploadTestRunning(_ running: Bool)
+
+    /// Provide the measurement of download test
+    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
     func downloadMeasurement(_ measurement: NDT7Measurement)
+
+    /// Provide the measurement of upload test
+    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
     func uploadMeasurement(_ measurement: NDT7Measurement)
+
+    /// Error returned if something happen during a download test.
+    /// - parameter error: Error during the download test.
     func downloadTestError(_ error: NSError)
+
+    /// Error returned if something happen during an upload test.
+    /// - parameter error: Error during the upload test.
     func uploadTestError(_ error: NSError)
 }
 
@@ -32,13 +50,14 @@ extension NDT7TestInteraction {
 /// It is a redesign of the original NDT network performance measurement protocol.
 /// NDT7Test is based on WebSocket and TLS, and takes advantage of TCP BBR, where this flavour of TCP is available.
 /// This is version v0.7.0 of the ndt7 specification.
+/// For more information, please, visit the next link:
 /// https://github.com/m-lab/ndt-server/blob/master/spec/ndt7-protocol.md
 open class NDT7Test {
 
-    /// ndt7TestInstances allows to run just one test, not concurrency allowed.
+    /// ndt7TestInstances allows to run just one test. Not concurrency tests allowed.
     private static var ndt7TestInstances = [WeakRef<NDT7Test>]()
 
-    /// Download test running parameter. True if it is running, otherwise false.
+    /// Download test running parameter. True if it is running, otherwise, false.
     private var downloadTestRunning: Bool = false {
         didSet {
             logNDT7("Download test running: \(downloadTestRunning)")
@@ -46,7 +65,7 @@ open class NDT7Test {
         }
     }
 
-    /// Upload test running parameter. True if it is running, otherwise false.
+    /// Upload test running parameter. True if it is running, otherwise, false.
     private var uploadTestRunning: Bool = false {
         didSet {
             logNDT7("Upload test running: \(uploadTestRunning)")
@@ -62,14 +81,15 @@ open class NDT7Test {
     private var timerDownload: Timer?
     private var timerUpload: Timer?
 
-    /// This delegate allows to return the test interaction information (NDT7TestInteraction protocol).
+    /// This delegate allows to return the test interaction information (`NDT7TestInteraction` protocol).
     public weak var delegate: NDT7TestInteraction?
 
     /// This parameter contains all the settings needed for ndt7 test.
+    /// Please, check `NDT7Settings` for more information about the settings.
     public let settings: NDT7Settings
 
     /// Initialization.
-    /// - parameter settings: Contains all the settings needed for ndt7 test.
+    /// - parameter settings: Contains all the settings needed for ndt7 test (`NDT7Settings`).
     public init(settings: NDT7Settings) {
         self.settings = settings
         NDT7Test.ndt7TestInstances.append(WeakRef(self))
@@ -89,11 +109,11 @@ open class NDT7Test {
 /// This extension represent the public function to interact with NDT7Test.
 extension NDT7Test {
 
-    /// Start a test
+    /// Start a test for download and/or upload, returning error if something was wrong.
     /// - parameter download: boolean to run download test.
     /// - parameter upload: boolean to run upload test.
     /// - parameter completion: A block to execute.
-    /// - parameter error: Contains an error during the tests. Can returns twice for download and uplod tests.
+    /// - parameter error: Contains an error if it happens during the tests.
     public func startTest(download: Bool, upload: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
 
         logNDT7("NDT7 test started")
