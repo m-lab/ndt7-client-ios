@@ -11,13 +11,24 @@ import XCTest
 
 class WeakRefTests: XCTestCase {
 
+    func testWeakRefNil() {
+        let weakRef = WeakRef<NDT7Test>()
+        XCTAssertNil(weakRef.object)
+    }
+
     func testWeakRef() {
         var ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
         var weakRef = [WeakRef<NDT7Test>]()
-        weakRef.append(WeakRef(ndt7Test))
+        var weakRefNDT7Test = WeakRef(ndt7Test)
+        weakRefNDT7Test.object = ndt7Test
+        weakRef.append(weakRefNDT7Test)
         XCTAssertEqual(weakRef.count, 1)
         XCTAssertTrue(weakRef.first?.object! === ndt7Test!)
+        var weakRefNDT7TestDescription = weakRefNDT7Test.description
+        XCTAssertEqual(weakRefNDT7TestDescription, "Weak(NDT7.NDT7Test)")
         ndt7Test = nil
+        weakRefNDT7TestDescription = weakRefNDT7Test.description
+        XCTAssertEqual(weakRefNDT7TestDescription, "nil")
         XCTAssertEqual(weakRef.count, 1)
         XCTAssertNotNil(weakRef.first)
         XCTAssertNil(weakRef.first?.object)

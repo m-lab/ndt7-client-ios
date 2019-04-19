@@ -66,7 +66,7 @@ open class NDT7Test {
     }
 
     /// Upload test running parameter. True if it is running, otherwise, false.
-    private var uploadTestRunning: Bool = false {
+    var uploadTestRunning: Bool = false {
         didSet {
             logNDT7("Upload test running: \(uploadTestRunning)")
             delegate?.uploadTestRunning(uploadTestRunning)
@@ -97,12 +97,7 @@ open class NDT7Test {
 
     deinit {
         cancel()
-        webSocketDownload?.delegate = nil
-        webSocketUpload?.delegate = nil
-        timerDownload?.invalidate()
-        timerUpload?.invalidate()
-        timerDownload = nil
-        timerUpload = nil
+        cleanup()
     }
 }
 
@@ -119,14 +114,7 @@ extension NDT7Test {
         logNDT7("NDT7 test started")
 
         // Parameters reset.
-        downloadMeasurement.removeAll()
-        uploadMeasurement.removeAll()
-        downloadTestCompletion = nil
-        uploadTestCompletion = nil
-        timerDownload?.invalidate()
-        timerUpload?.invalidate()
-        timerDownload = nil
-        timerUpload = nil
+        cleanup()
 
         // Just one test is allowed to run. Cancel any test in progress.
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
@@ -266,6 +254,20 @@ extension NDT7Test {
             }
         }
         return nil
+    }
+
+    /// Cleanup
+    func cleanup() {
+        webSocketDownload?.delegate = nil
+        webSocketUpload?.delegate = nil
+        downloadMeasurement.removeAll()
+        uploadMeasurement.removeAll()
+        downloadTestCompletion = nil
+        uploadTestCompletion = nil
+        timerDownload?.invalidate()
+        timerUpload?.invalidate()
+        timerDownload = nil
+        timerUpload = nil
     }
 }
 
