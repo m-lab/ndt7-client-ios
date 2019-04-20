@@ -56,4 +56,17 @@ class FileLoggerTests: XCTestCase {
             XCTFail("FileLogger not created with path: \(path)")
         }
     }
+
+    func testWrongPathFileLogger() {
+
+        let wrongPath = "wrongPath.log"
+        XCTAssertTrue(!fileManager.fileExists(atPath: wrongPath))
+        if FileLogger(path: wrongPath) == nil {
+            let fileLogger = FileLogger(path: wrongPath)
+            fileLogger?.addLogMessage(LogMessage(text: "test 0", level: .info, file: #file, function: #function, line: #line))
+            XCTAssertNil(fileLogger?.readLogFile())
+        } else {
+            XCTFail("FileLogger not created with path: \(path)")
+        }
+    }
 }

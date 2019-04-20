@@ -209,4 +209,30 @@ class LogNDT7Tests: XCTestCase {
         XCTAssertTrue(mockLogger1.logMessage.contains(where: { $0.text == "test error log level" }))
         XCTAssertTrue(mockLogger2.logMessage.contains(where: { $0.text == "test error log level" }))
     }
+
+    func testLogMessageWithLogManagerWithLoggerAndRemovingLogLevel() {
+
+        LogManager.addLogger(mockLogger1)
+        LogManager.addLogger(mockLogger2)
+
+        LogManager.addLogLevel(.info)
+        LogManager.addLogLevel(.error)
+
+        logNDT7("test log level")
+        logNDT7("test info log level", .info)
+        logNDT7("test info log level", .info)
+        logNDT7("test error log level", .error)
+
+        XCTAssertEqual(mockLogger1.logMessage.count, 4)
+        XCTAssertEqual(mockLogger2.logMessage.count, 4)
+
+        LogManager.removeLogLevel(.info)
+        logNDT7("test log level")
+        logNDT7("test info log level", .info)
+        logNDT7("test info log level", .info)
+        logNDT7("test error log level", .error)
+
+        XCTAssertEqual(mockLogger1.logMessage.count, 5)
+        XCTAssertEqual(mockLogger2.logMessage.count, 5)
+    }
 }

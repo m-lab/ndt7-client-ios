@@ -6,6 +6,7 @@ excluded:
   - Carthage
   - docs
   - .build
+  - Sources/WebSocket.swift
 line_length: 200
 file_length: 1500
 type_body_length: 500
