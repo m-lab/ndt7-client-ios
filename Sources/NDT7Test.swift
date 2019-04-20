@@ -38,11 +38,29 @@ public protocol NDT7TestInteraction: class {
 
 /// This extension for NDT7TestInteraction protocol allows to have optional functions.
 extension NDT7TestInteraction {
+
+    /// Convert protocol downloadTestRunning function in optional
+    /// - parameter running: true if the download test is running, otherwise, false.
     func downloadTestRunning(_ running: Bool) { }
+
+    /// Convert protocol uploadTestRunning function in optional
+    /// - parameter running: true if the upload test is running, otherwise, false.
     func uploadTestRunning(_ running: Bool) { }
+
+    /// Convert protocol downloadMeasurement function in optional
+    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
     func downloadMeasurement(_ measurement: NDT7Measurement) { }
+
+    /// Convert protocol uploadMeasurement function in optional
+    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
     func uploadMeasurement(_ measurement: NDT7Measurement) { }
+
+    /// Convert protocol downloadTestError function in optional
+    /// - parameter error: Error during the download test.
     func downloadTestError(_ error: NSError) { }
+
+    /// Convert protocol uploadTestError function in optional
+    /// - parameter error: Error during the upload test.
     func uploadTestError(_ error: NSError) { }
 }
 
