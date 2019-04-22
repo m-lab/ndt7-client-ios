@@ -126,6 +126,10 @@
 		8891D9682268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
 		8891D9692268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
 		8891D96A2268DB6A000BF913 /* NDT7Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D9662268DB6A000BF913 /* NDT7Settings.swift */; };
+		88E34DA2226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
+		88E34DA3226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
+		88E34DA4226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
+		88E34DA5226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +196,7 @@
 		887EB16122669EAB006EB7E7 /* WeakRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRef.swift; sourceTree = "<group>"; };
 		887EB1662267DCBA006EB7E7 /* NDT7Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Measurement.swift; sourceTree = "<group>"; };
 		8891D9662268DB6A000BF913 /* NDT7Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Settings.swift; sourceTree = "<group>"; };
+		88E34DA1226E720900067D4F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +409,7 @@
 		887EB130225D5035006EB7E7 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				88E34DA1226E720900067D4F /* Constants.swift */,
 				887EB131225D5048006EB7E7 /* Queue.swift */,
 				887EB16122669EAB006EB7E7 /* WeakRef.swift */,
 			);
@@ -835,6 +841,7 @@
 				887EB15722654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12C225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19B225BCFF700FA109E /* LogNDT7.swift in Sources */,
+				88E34DA2226E720900067D4F /* Constants.swift in Sources */,
 				887EB13C225E8669006EB7E7 /* FileLogger.swift in Sources */,
 				8891D9672268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
@@ -873,6 +880,7 @@
 				887EB15822654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12D225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19C225BCFF700FA109E /* LogNDT7.swift in Sources */,
+				88E34DA3226E720900067D4F /* Constants.swift in Sources */,
 				887EB13D225E8669006EB7E7 /* FileLogger.swift in Sources */,
 				8891D9682268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
@@ -911,6 +919,7 @@
 				887EB15922654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12E225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19D225BCFF700FA109E /* LogNDT7.swift in Sources */,
+				88E34DA4226E720900067D4F /* Constants.swift in Sources */,
 				887EB13E225E8669006EB7E7 /* FileLogger.swift in Sources */,
 				8891D9692268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
@@ -949,6 +958,7 @@
 				887EB15A22654535006EB7E7 /* WebSocketWrapper.swift in Sources */,
 				887EB12F225D18F5006EB7E7 /* SystemConsoleLogger.swift in Sources */,
 				8830D19E225BCFF700FA109E /* LogNDT7.swift in Sources */,
+				88E34DA5226E720900067D4F /* Constants.swift in Sources */,
 				887EB13F225E8669006EB7E7 /* FileLogger.swift in Sources */,
 				8891D96A2268DB6A000BF913 /* NDT7Settings.swift in Sources */,
 			);
