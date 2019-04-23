@@ -12,6 +12,36 @@ import Foundation
 /// Can be used with default values: NDT7Settings()
 public struct NDT7Settings {
 
+    /// URL for Web Socket.
+    public let url: NDT7URL
+
+    /// Timeouts
+    public let timeout: NDT7Timeouts
+
+    /// Skipt TLS certificate verification.
+    public let skipTLSCertificateVerification: Bool
+
+    /// Define all the headers needed for NDT7 request.
+    public let headers: [String: String]
+
+    /// Initialization.
+    public init(url: NDT7URL = NDT7URL(),
+                timeout: NDT7Timeouts = NDT7Timeouts(),
+                skipTLSCertificateVerification: Bool = true,
+                headers: [String: String] = [NDT7Constants.WebSocket.headerProtocolKey: NDT7Constants.WebSocket.headerProtocolValue,
+                                             NDT7Constants.WebSocket.headerAcceptKey: NDT7Constants.WebSocket.headerAcceptValue,
+                                             NDT7Constants.WebSocket.headerVersionKey: NDT7Constants.WebSocket.headerVersionValue,
+                                             NDT7Constants.WebSocket.headerKey: NDT7Constants.WebSocket.headerValue]) {
+        self.url = url
+        self.skipTLSCertificateVerification = skipTLSCertificateVerification
+        self.timeout = timeout
+        self.headers = headers
+    }
+}
+
+/// URL settings.
+public struct NDT7URL {
+
     /// Server to connect.
     public let hostname: String
 
@@ -24,8 +54,30 @@ public struct NDT7Settings {
     /// Define if it is wss or ws.
     public let wss: Bool
 
-    /// Skipt TLS certificate verification.
-    public let skipTLSCertificateVerification: Bool
+    /// Download URL
+    public var download: String {
+        return "\(wss ? "wss" : "ws")\("://")\(hostname)\(downloadPath)"
+    }
+
+    /// Upload URL
+    public var upload: String {
+        return "\(wss ? "wss" : "ws")\("://")\(hostname)\(uploadPath)"
+    }
+
+    /// Initialization.
+    public init(hostname: String = NDT7Constants.WebSocket.hostname,
+                downloadPath: String = NDT7Constants.WebSocket.downloadPath,
+                uploadPath: String = NDT7Constants.WebSocket.uploadPath,
+                wss: Bool = true) {
+        self.hostname = hostname
+        self.downloadPath = downloadPath
+        self.uploadPath = uploadPath
+        self.wss = wss
+    }
+}
+
+/// Timeout settings.
+public struct NDT7Timeouts {
 
     /// Define the interval between messages.
     /// When downloading, the server is expected to send measurement to the client,
@@ -33,38 +85,20 @@ public struct NDT7Settings {
     /// Measurements SHOULD NOT be sent more frequently than every 250 ms
     /// This parameter deine the frequent to send messages.
     /// If it is initialize with less than 250 ms, it's going to be overwritten to 250 ms
-    public let measurementInterval: TimeInterval
+    public let measurement: TimeInterval
 
     /// Timeout for connection.
-    public let timeoutRequest: TimeInterval
+    public let request: TimeInterval
 
     /// Define the max among of time used for a test before to force to finish.
-    public let timeoutTest: TimeInterval
-
-    /// Define all the headers needed for NDT7 request.
-    public let headers: [String: String]
+    public let test: TimeInterval
 
     /// Initialization.
-    public init(hostname: String = "35.235.104.27",
-                downloadPath: String = "/ndt/v7/download",
-                uploadPath: String = "/ndt/v7/upload",
-                wss: Bool = true,
-                skipTLSCertificateVerification: Bool = true,
-                measurementInterval: TimeInterval = 0.25,
-                timeoutRequest: TimeInterval = 5,
-                timeoutTest: TimeInterval = 15,
-                headers: [String: String] = ["Sec-WebSocket-Protocol": "net.measurementlab.ndt.v7",
-                                             "Sec-WebSocket-Accept": "Nhz+x95YebD6Uvd4nqPC2fomoUQ=",
-                                             "Sec-WebSocket-Version": "13",
-                                             "Sec-WebSocket-Key": "DOdm+5/Cm3WwvhfcAlhJoQ=="]) {
-        self.hostname = hostname
-        self.downloadPath = downloadPath
-        self.uploadPath = uploadPath
-        self.wss = wss
-        self.skipTLSCertificateVerification = skipTLSCertificateVerification
-        self.measurementInterval = measurementInterval >= 0.25 ? measurementInterval : 0.25
-        self.timeoutRequest = timeoutRequest
-        self.timeoutTest = timeoutTest
-        self.headers = headers
+    public init(measurement: TimeInterval = 0.25,
+                request: TimeInterval = 5,
+                test: TimeInterval = 15) {
+        self.measurement = measurement >= 0.25 ? measurement : 0.25
+        self.request = request
+        self.test = test
     }
 }
