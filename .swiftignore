@@ -1,5 +1,9 @@
 docs/**/*
-*.js
+docs/js/typeahead.jquery.js
+docs/js/lunr.min.js
+docs/docsets/ndt7.docset
+docs/docsets/ndt7.docset/Contents/Resources/Documents/js/typeahead.jquery.js
+docs/docsets/ndt7.docset/Contents/Resources/Documents/js/lunr.min.js
 .git/
 .yazzy.yaml
 Sources/WebSocket.swift
