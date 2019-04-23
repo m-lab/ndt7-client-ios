@@ -90,16 +90,20 @@ open class NDT7Test {
     /// Download test running parameter. True if it is running, otherwise, false.
     var downloadTestRunning: Bool = false {
         didSet {
-            logNDT7("Download test running: \(downloadTestRunning)")
-            delegate?.downloadTestRunning(downloadTestRunning)
+            if downloadTestRunning != oldValue {
+                logNDT7("Download test running: \(downloadTestRunning)")
+                delegate?.downloadTestRunning(downloadTestRunning)
+            }
         }
     }
 
     /// Upload test running parameter. True if it is running, otherwise, false.
     var uploadTestRunning: Bool = false {
         didSet {
-            logNDT7("Upload test running: \(uploadTestRunning)")
-            delegate?.uploadTestRunning(uploadTestRunning)
+            if uploadTestRunning != oldValue {
+                logNDT7("Upload test running: \(uploadTestRunning)")
+                delegate?.uploadTestRunning(uploadTestRunning)
+            }
         }
     }
     var webSocketDownload: WebSocketWrapper?
@@ -145,18 +149,16 @@ extension NDT7Test {
 
         // Cleanup and cancel any test in progress.
         cleanup()
+        downloadMeasurement.removeAll()
+        uploadMeasurement.removeAll()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
 
         // Download test start.
         startDownload(download) { [weak self] (error) in
-            self?.timerDownload?.invalidate()
-            self?.timerDownload = nil
-            self?.webSocketDownload = nil
-            if download {
-                self?.downloadTestRunning = false
-                if let measurement = self?.downloadMeasurement.last {
-                    self?.delegate?.downloadMeasurement(measurement)
-                }
+            self?.cleanup()
+            self?.downloadTestRunning = false
+            if download, let measurement = self?.downloadMeasurement.last {
+                self?.delegate?.downloadMeasurement(measurement)
             }
             if let error = error {
                 if error.localizedDescription == NDT7TestConstants.cancelled {
@@ -169,14 +171,10 @@ extension NDT7Test {
 
             // Upload test start.
             self?.startUpload(upload) { (error) in
-                self?.timerUpload?.invalidate()
-                self?.timerUpload = nil
-                self?.webSocketUpload = nil
-                if upload {
-                    self?.uploadTestRunning = false
-                    if let measurement = self?.uploadMeasurement.last {
-                        self?.delegate?.uploadMeasurement(measurement)
-                    }
+                self?.cleanup()
+                self?.uploadTestRunning = false
+                if upload, let measurement = self?.uploadMeasurement.last {
+                    self?.delegate?.uploadMeasurement(measurement)
                 }
                 logNDT7("NDT7 test \(error?.localizedDescription == NDT7TestConstants.cancelled ? "cancelled" : "finished")")
                 completion(error)
@@ -192,19 +190,17 @@ extension NDT7Test {
         if downloadTestRunning {
             downloadTestCompletion?(error)
             downloadTestCompletion = nil
-            webSocketDownload?.close()
         }
         if uploadTestRunning {
             uploadTestCompletion?(error)
             uploadTestCompletion = nil
-            webSocketUpload?.close()
         }
+        webSocketDownload = nil
+        webSocketUpload = nil
         timerDownload?.invalidate()
         timerDownload = nil
         timerUpload?.invalidate()
         timerUpload = nil
-        webSocketDownload = nil
-        webSocketUpload = nil
     }
 }
 
@@ -272,8 +268,8 @@ extension NDT7Test {
     func cleanup() {
         webSocketDownload?.delegate = nil
         webSocketUpload?.delegate = nil
-        downloadMeasurement.removeAll()
-        uploadMeasurement.removeAll()
+        webSocketDownload = nil
+        webSocketUpload = nil
         downloadTestCompletion = nil
         uploadTestCompletion = nil
         timerDownload?.invalidate()

@@ -12,11 +12,10 @@ import XCTest
 class NDT7TestTests: XCTestCase {
 
     func testNdt7TestInstances() {
-        var ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
+        let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
         let instances = NDT7Test.ndt7TestInstances
         XCTAssertTrue(!instances.isEmpty)
         XCTAssertTrue(instances.contains(where: { $0.object === ndt7Test }))
-        ndt7Test = nil
     }
 
     func testNdt7TestStartTest() {
@@ -207,8 +206,8 @@ elapsed: 1,
         }
         ndt7Test?.downloadTestCompletion = downloadCompletion
         ndt7Test?.uploadTestCompletion = uploadCompletion
-        ndt7Test?.timerDownload = Timer(timeInterval: 1, repeats: false, block: { (_) in })
-        ndt7Test?.timerUpload = Timer(timeInterval: 1, repeats: false, block: { (_) in })
+        ndt7Test?.timerDownload = Timer(timeInterval: 3, repeats: false, block: { (_) in })
+        ndt7Test?.timerUpload = Timer(timeInterval: 3, repeats: false, block: { (_) in })
         ndt7Test?.downloadTestRunning = true
         ndt7Test?.uploadTestRunning = true
         XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
