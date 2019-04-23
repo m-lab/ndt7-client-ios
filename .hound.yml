@@ -1,7 +1,3 @@
 swiftlint:
   config_file: .swiftlint.yml
   ignore_file: .swiftignore
-  exclude:
-  - docs/
-exclude:
-  - docs/
