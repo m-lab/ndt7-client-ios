@@ -1,4 +1,6 @@
 docs/
+docs/js/
+docs/docsets/
 .git/
 .yazzy.yaml
 Sources/WebSocket.swift
