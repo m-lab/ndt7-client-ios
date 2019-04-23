@@ -38,12 +38,42 @@ public protocol NDT7TestInteraction: class {
 
 /// This extension for NDT7TestInteraction protocol allows to have optional functions.
 extension NDT7TestInteraction {
-    func downloadTestRunning(_ running: Bool) { }
-    func uploadTestRunning(_ running: Bool) { }
-    func downloadMeasurement(_ measurement: NDT7Measurement) { }
-    func uploadMeasurement(_ measurement: NDT7Measurement) { }
-    func downloadTestError(_ error: NSError) { }
-    func uploadTestError(_ error: NSError) { }
+
+    /// Convert protocol downloadTestRunning function in optional
+    /// - parameter running: true if the download test is running, otherwise, false.
+    public func downloadTestRunning(_ running: Bool) {
+        // Empty function for default implementation.
+    }
+
+    /// Convert protocol uploadTestRunning function in optional
+    /// - parameter running: true if the upload test is running, otherwise, false.
+    public func uploadTestRunning(_ running: Bool) {
+        // Empty function for default implementation.
+    }
+
+    /// Convert protocol downloadMeasurement function in optional
+    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
+    public func downloadMeasurement(_ measurement: NDT7Measurement) {
+        // Empty function for default implementation.
+    }
+
+    /// Convert protocol uploadMeasurement function in optional
+    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
+    public func uploadMeasurement(_ measurement: NDT7Measurement) {
+        // Empty function for default implementation.
+    }
+
+    /// Convert protocol downloadTestError function in optional
+    /// - parameter error: Error during the download test.
+    public func downloadTestError(_ error: NSError) {
+        // Empty function for default implementation.
+    }
+
+    /// Convert protocol uploadTestError function in optional
+    /// - parameter error: Error during the upload test.
+    public func uploadTestError(_ error: NSError) {
+        // Empty function for default implementation.
+    }
 }
 
 /// NDT7Test describes the version 7 of the Network Diagnostic Tool (NDT) protocol (ndt7).
@@ -60,16 +90,20 @@ open class NDT7Test {
     /// Download test running parameter. True if it is running, otherwise, false.
     var downloadTestRunning: Bool = false {
         didSet {
-            logNDT7("Download test running: \(downloadTestRunning)")
-            delegate?.downloadTestRunning(downloadTestRunning)
+            if downloadTestRunning != oldValue {
+                logNDT7("Download test running: \(downloadTestRunning)")
+                delegate?.downloadTestRunning(downloadTestRunning)
+            }
         }
     }
 
     /// Upload test running parameter. True if it is running, otherwise, false.
     var uploadTestRunning: Bool = false {
         didSet {
-            logNDT7("Upload test running: \(uploadTestRunning)")
-            delegate?.uploadTestRunning(uploadTestRunning)
+            if uploadTestRunning != oldValue {
+                logNDT7("Upload test running: \(uploadTestRunning)")
+                delegate?.uploadTestRunning(uploadTestRunning)
+            }
         }
     }
     var webSocketDownload: WebSocketWrapper?
@@ -95,6 +129,7 @@ open class NDT7Test {
         NDT7Test.ndt7TestInstances.append(WeakRef(self))
     }
 
+    /// Deinit
     deinit {
         cancel()
         cleanup()
@@ -113,37 +148,21 @@ extension NDT7Test {
 
         logNDT7("NDT7 test started")
 
-        // Parameters reset.
+        // Cleanup and cancel any test in progress.
         cleanup()
-
-        // Just one test is allowed to run. Cancel any test in progress.
+        downloadMeasurement.removeAll()
+        uploadMeasurement.removeAll()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
-
-        // This timer is a timeout for download test (defined in NDT7Settings).
-        timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeoutTest, repeats: false, block: { [weak self] (_) in
-            guard let strongSelf = self else { return }
-            strongSelf.downloadTestCompletion?(nil)
-            strongSelf.downloadTestCompletion = nil
-        })
-        if let timer = timerDownload {
-            RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
-        }
 
         // Download test start.
         startDownload(download) { [weak self] (error) in
-            guard let strongSelf = self else { return }
-            if download, let measurement = strongSelf.downloadMeasurement.last {
-                strongSelf.delegate?.downloadMeasurement(measurement)
+            self?.cleanup()
+            self?.downloadTestRunning = false
+            if download, let measurement = self?.downloadMeasurement.last {
+                self?.delegate?.downloadMeasurement(measurement)
             }
-            if download { strongSelf.downloadTestRunning = false }
-            strongSelf.timerDownload?.invalidate()
-            strongSelf.timerDownload = nil
-            strongSelf.webSocketDownload = nil
-            // If the test is cancelled, returns an error with "Test cancelled" and finish the tests.
-            // If the test has an error, but is not cancelled, continue with upload test if needed
-            // and returns the specific error for download test.
             if let error = error {
-                if error.localizedDescription == "Test cancelled" {
+                if error.localizedDescription == NDT7Constants.Test.cancelled {
                     logNDT7("NDT7 test cancelled")
                     completion(error)
                     return
@@ -151,30 +170,14 @@ extension NDT7Test {
                 completion(error)
             }
 
-            // this timer is a timeout for upload test (defined in NDT7Settings)
-            strongSelf.timerUpload = Timer.scheduledTimer(withTimeInterval: strongSelf.settings.timeoutTest, repeats: false, block: { [weak self] (_) in
-                guard let strongSelf = self else { return }
-                strongSelf.uploadTestCompletion?(nil)
-                strongSelf.uploadTestCompletion = nil
-            })
-            if let timer = strongSelf.timerUpload {
-                RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
-            }
-
             // Upload test start.
-            strongSelf.startUpload(upload) { (error) in
-                if upload, let measurement = strongSelf.uploadMeasurement.last {
-                    strongSelf.delegate?.uploadMeasurement(measurement)
+            self?.startUpload(upload) { (error) in
+                self?.cleanup()
+                self?.uploadTestRunning = false
+                if upload, let measurement = self?.uploadMeasurement.last {
+                    self?.delegate?.uploadMeasurement(measurement)
                 }
-                if upload { strongSelf.uploadTestRunning = false }
-                strongSelf.timerUpload?.invalidate()
-                strongSelf.timerUpload = nil
-                if let error = error, error.localizedDescription == "Test cancelled" {
-                    logNDT7("NDT7 test cancelled")
-                } else {
-                    logNDT7("NDT7 test finished")
-                }
-                strongSelf.webSocketUpload = nil
+                logNDT7("NDT7 test \(error?.localizedDescription == NDT7Constants.Test.cancelled ? "cancelled" : "finished")")
                 completion(error)
             }
         }
@@ -182,25 +185,23 @@ extension NDT7Test {
 
     /// Cancel test running.
     public func cancel() {
-        let error = NSError(domain: "net.measurementlab.NDT7",
+        let error = NSError(domain: NDT7Constants.domain,
                             code: 0,
-                            userInfo: [ NSLocalizedDescriptionKey: "Test cancelled"])
+                            userInfo: [ NSLocalizedDescriptionKey: NDT7Constants.Test.cancelled])
         if downloadTestRunning {
             downloadTestCompletion?(error)
             downloadTestCompletion = nil
-            webSocketDownload?.close()
         }
         if uploadTestRunning {
             uploadTestCompletion?(error)
             uploadTestCompletion = nil
-            webSocketUpload?.close()
         }
+        webSocketDownload = nil
+        webSocketUpload = nil
         timerDownload?.invalidate()
         timerDownload = nil
         timerUpload?.invalidate()
         timerUpload = nil
-        webSocketDownload = nil
-        webSocketUpload = nil
     }
 }
 
@@ -218,8 +219,16 @@ extension NDT7Test {
         }
         downloadTestCompletion = completion
         logNDT7("Download test setup")
-        let url = "\(settings.wss ? "wss" : "ws")\("://")\(settings.hostname)\(settings.downloadPath)"
+        let url = settings.url.download
         if let downloadURL = URL(string: url) {
+            timerDownload?.invalidate()
+            timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.test,
+                                                 repeats: false,
+                                                 block: { [weak self] (_) in
+                                                    self?.downloadTestCompletion?(nil)
+                                                    self?.downloadTestCompletion = nil
+            })
+            RunLoop.main.add(timerDownload!, forMode: RunLoop.Mode.common)
             webSocketDownload = WebSocketWrapper(settings: settings, url: downloadURL)
             webSocketDownload?.delegate = self
         } else {
@@ -260,8 +269,8 @@ extension NDT7Test {
     func cleanup() {
         webSocketDownload?.delegate = nil
         webSocketUpload?.delegate = nil
-        downloadMeasurement.removeAll()
-        uploadMeasurement.removeAll()
+        webSocketDownload = nil
+        webSocketUpload = nil
         downloadTestCompletion = nil
         uploadTestCompletion = nil
         timerDownload?.invalidate()

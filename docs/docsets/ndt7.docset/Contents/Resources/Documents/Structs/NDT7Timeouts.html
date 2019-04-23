@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>NDT7Settings Structure Reference</title>
+    <title>NDT7Timeouts Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Struct/NDT7Settings" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Struct/NDT7Timeouts" class="dashAnchor"></a>
 
-    <a title="NDT7Settings Structure Reference"></a>
+    <a title="NDT7Timeouts Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">NDT7 Reference</a>
       <img class="carat" src="../img/carat.png" />
-      NDT7Settings Structure Reference
+      NDT7Timeouts Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -110,15 +110,14 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>NDT7Settings</h1>
+            <h1>NDT7Timeouts</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Settings</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Timeouts</span></code></pre>
 
                 </div>
               </div>
-            <p>Settings needed for NDT7.
-Can be used with default values: NDT7Settings()</p>
+            <p>Timeout settings.</p>
 
           </div>
         </section>
@@ -130,9 +129,9 @@ Can be used with default values: NDT7Settings()</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8SettingsV3urlAA0A3URLVvp"></a>
-                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8SettingsV3urlAA0A3URLVvp">url</a>
+                    <a name="/s:4NDT70A8TimeoutsV11measurementSdvp"></a>
+                    <a name="//apple_ref/swift/Property/measurement" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV11measurementSdvp">measurement</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -140,14 +139,19 @@ Can be used with default values: NDT7Settings()</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>URL for Web Socket.</p>
+                        <p>Define the interval between messages.
+When downloading, the server is expected to send measurement to the client,
+and when uploading, conversely, the client is expected to send measurements to the server.
+Measurements SHOULD NOT be sent more frequently than every 250 ms
+This parameter deine the frequent to send messages.
+If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to 250 ms</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">measurement</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
 
                         </div>
                       </div>
@@ -157,9 +161,9 @@ Can be used with default values: NDT7Settings()</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8SettingsV7timeoutAA0A8TimeoutsVvp"></a>
-                    <a name="//apple_ref/swift/Property/timeout" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8SettingsV7timeoutAA0A8TimeoutsVvp">timeout</a>
+                    <a name="/s:4NDT70A8TimeoutsV7requestSdvp"></a>
+                    <a name="//apple_ref/swift/Property/request" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV7requestSdvp">request</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -167,14 +171,14 @@ Can be used with default values: NDT7Settings()</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Timeouts</p>
+                        <p>Timeout for connection.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">timeout</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
 
                         </div>
                       </div>
@@ -184,9 +188,9 @@ Can be used with default values: NDT7Settings()</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8SettingsV30skipTLSCertificateVerificationSbvp"></a>
-                    <a name="//apple_ref/swift/Property/skipTLSCertificateVerification" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8SettingsV30skipTLSCertificateVerificationSbvp">skipTLSCertificateVerification</a>
+                    <a name="/s:4NDT70A8TimeoutsV4testSdvp"></a>
+                    <a name="//apple_ref/swift/Property/test" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV4testSdvp">test</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -194,14 +198,14 @@ Can be used with default values: NDT7Settings()</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Skipt TLS certificate verification.</p>
+                        <p>Define the max among of time used for a test before to force to finish.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">skipTLSCertificateVerification</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">test</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
 
                         </div>
                       </div>
@@ -211,36 +215,9 @@ Can be used with default values: NDT7Settings()</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8SettingsV7headersSDyS2SGvp"></a>
-                    <a name="//apple_ref/swift/Property/headers" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8SettingsV7headersSDyS2SGvp">headers</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Define all the headers needed for NDT7 request.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">headers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:4NDT70A8SettingsV3url7timeout30skipTLSCertificateVerification7headersAcA0A3URLV_AA0A8TimeoutsVSbSDyS2SGtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(url:timeout:skipTLSCertificateVerification:headers:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8SettingsV3url7timeout30skipTLSCertificateVerification7headersAcA0A3URLV_AA0A8TimeoutsVSbSDyS2SGtcfc">init(url:timeout:skipTLSCertificateVerification:headers:)</a>
+                    <a name="/s:4NDT70A8TimeoutsV11measurement7request4testACSd_S2dtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(measurement:request:test:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV11measurement7request4testACSd_S2dtcfc">init(measurement:request:test:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -255,13 +232,9 @@ Can be used with default values: NDT7Settings()</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span><span class="p">(),</span>
-            <span class="nv">timeout</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a></span><span class="p">(),</span>
-            <span class="nv">skipTLSCertificateVerification</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nv">headers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerProtocolKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerProtocolValue</span><span class="p">,</span>
-                                         <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerAcceptKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerAcceptValue</span><span class="p">,</span>
-                                         <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerVersionKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerVersionValue</span><span class="p">,</span>
-                                         <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerValue</span><span class="p">])</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">measurement</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
+            <span class="nv">request</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="nv">test</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

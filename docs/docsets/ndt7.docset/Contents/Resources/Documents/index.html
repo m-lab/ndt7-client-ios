@@ -78,6 +78,15 @@
                 <a class="nav-group-task-link" href="Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7Constants.html">NDT7Constants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7Constants/Test.html">– Test</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/NDT7Measurement.html">NDT7Measurement</a>
               </li>
               <li class="nav-group-task">
@@ -85,6 +94,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7Timeouts.html">NDT7Timeouts</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7URL.html">NDT7URL</a>
               </li>
             </ul>
           </li>
@@ -221,7 +236,7 @@
 <h2 id='setup' class='heading'>Setup</h2>
 
 <p>The only setup needed for debugging purpose is to enable logging if needed.</p>
-<pre class="highlight plaintext"><code>NDT7.loggingEnabled = true
+<pre class="highlight swift"><code><span class="kt">NDT7</span><span class="o">.</span><span class="n">loggingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
 </code></pre>
 
 <p>If specific settings are needed for the testing configuration, you can define an NDT7Settings object, otherwise, use the default one with NDT7Settings().</p>
@@ -240,64 +255,64 @@
 <li>Setup a delegation for NDT7Test to get the test information.</li>
 <li>Start speed test for download and/or upload.</li>
 </ol>
-<pre class="highlight plaintext"><code>import UIKit
-import NDT7
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">UIKit</span>
+<span class="kd">import</span> <span class="kt">NDT7</span>
 
-class ViewController: UIViewController {
+<span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
 
-    var ndt7Test: NDT7Test?
+    <span class="k">var</span> <span class="nv">ndt7Test</span><span class="p">:</span> <span class="kt">NDT7Test</span><span class="p">?</span>
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // For debugging purpose you can enable logs for NDT7 framework.
-        NDT7.loggingEnabled = true
-        startTest()
-    }
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="c1">// For debugging purpose you can enable logs for NDT7 framework.</span>
+        <span class="kt">NDT7</span><span class="o">.</span><span class="n">loggingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="nf">startTest</span><span class="p">()</span>
+    <span class="p">}</span>
 
-    func startTest() {
-        // 2. Create the settings for testing. NDT7Settings.
-        let settings = NDT7Settings()
-        // 3. Create a NDT7Test object with NDT7Settings already created.
-        ndt7Test = NDT7Test(settings: settings)
-        // 4. Setup a delegation for NDT7Test to get the test information.
-        ndt7Test?.delegate = self
-        // 5. Start speed test for download and/or upload.
-        ndt7Test?.startTest(download: true, upload: true) { [weak self] (error) in
-            guard self != nil else { return }
-            if let error = error {
-                print("NDT7 iOS Example app - Error during test: \(error.localizedDescription)")
-            } else {
-                print("NDT7 iOS Example app - Test finished.")
-            }
-        }
-    }
+    <span class="kd">func</span> <span class="nf">startTest</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 2. Create the settings for testing. NDT7Settings.</span>
+        <span class="k">let</span> <span class="nv">settings</span> <span class="o">=</span> <span class="kt">NDT7Settings</span><span class="p">()</span>
+        <span class="c1">// 3. Create a NDT7Test object with NDT7Settings already created.</span>
+        <span class="n">ndt7Test</span> <span class="o">=</span> <span class="kt">NDT7Test</span><span class="p">(</span><span class="nv">settings</span><span class="p">:</span> <span class="n">settings</span><span class="p">)</span>
+        <span class="c1">// 4. Setup a delegation for NDT7Test to get the test information.</span>
+        <span class="n">ndt7Test</span><span class="p">?</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+        <span class="c1">// 5. Start speed test for download and/or upload.</span>
+        <span class="n">ndt7Test</span><span class="p">?</span><span class="o">.</span><span class="nf">startTest</span><span class="p">(</span><span class="nv">download</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">upload</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="k">in</span>
+            <span class="k">guard</span> <span class="k">self</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">error</span> <span class="p">{</span>
+                <span class="nf">print</span><span class="p">(</span><span class="s">"NDT7 iOS Example app - Error during test: </span><span class="se">\(</span><span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nf">print</span><span class="p">(</span><span class="s">"NDT7 iOS Example app - Test finished."</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    func cancelTest() {
-        ndt7Test?.cancel()
-    }
-}
+    <span class="kd">func</span> <span class="nf">cancelTest</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">ndt7Test</span><span class="p">?</span><span class="o">.</span><span class="nf">cancel</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// 1. Setup all the functions needed for NDT7Test delegate.
-extension ViewController: NDT7TestInteraction {
+<span class="c1">// 1. Setup all the functions needed for NDT7Test delegate.</span>
+<span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">NDT7TestInteraction</span> <span class="p">{</span>
 
-    func downloadTestRunning(_ running: Bool) {
-    }
+    <span class="kd">func</span> <span class="nf">downloadTestRunning</span><span class="p">(</span><span class="n">_</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-    func uploadTestRunning(_ running: Bool) {
-    }
+    <span class="kd">func</span> <span class="nf">uploadTestRunning</span><span class="p">(</span><span class="n">_</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-    func downloadMeasurement(_ measurement: NDT7Measurement) {
-    }
+    <span class="kd">func</span> <span class="nf">downloadMeasurement</span><span class="p">(</span><span class="n">_</span> <span class="nv">measurement</span><span class="p">:</span> <span class="kt">NDT7Measurement</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-    func uploadMeasurement(_ measurement: NDT7Measurement) {
-    }
+    <span class="kd">func</span> <span class="nf">uploadMeasurement</span><span class="p">(</span><span class="n">_</span> <span class="nv">measurement</span><span class="p">:</span> <span class="kt">NDT7Measurement</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-    func downloadTestError(_ error: NSError) {
-    }
+    <span class="kd">func</span> <span class="nf">downloadTestError</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-    func uploadTestError(_ error: NSError) {
-    }
-}
+    <span class="kd">func</span> <span class="nf">uploadTestError</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 <h1 id='license' class='heading'>License</h1>
 
@@ -310,8 +325,8 @@ extension ViewController: NDT7TestInteraction {
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-04-19)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-04-23)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

@@ -90,7 +90,7 @@ Visit the `NDT7` [documentation](http://htmlpreview.github.io/?https://github.co
 ## Setup
 
 The only setup needed for debugging purpose is to enable logging if needed.
-```
+```swift
 NDT7.loggingEnabled = true
 ```
 
@@ -108,7 +108,7 @@ The next example show the whole process for a download and upload speed test.
 4. Setup a delegation for NDT7Test to get the test information.
 5. Start speed test for download and/or upload.
 
-```
+```swift
 import UIKit
 import NDT7
 

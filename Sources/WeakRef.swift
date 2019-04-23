@@ -11,9 +11,9 @@ import Foundation
 /// Weak reference object allows to "convert" object to weak object
 /// to use it for example in an array, been nil when the object
 /// is deallocated.
-struct WeakRef<Object: AnyObject> {
+struct WeakRef<T: AnyObject> {
 
-    weak var object: Object?
+    weak var object: T?
 
     var description: String {
         if let object = object {
@@ -23,7 +23,7 @@ struct WeakRef<Object: AnyObject> {
         }
     }
 
-    init(_ object: Object?) {
+    init(_ object: T?) {
         self.object = object
     }
 

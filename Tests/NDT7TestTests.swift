@@ -12,16 +12,15 @@ import XCTest
 class NDT7TestTests: XCTestCase {
 
     func testNdt7TestInstances() {
-        var ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
+        let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
         let instances = NDT7Test.ndt7TestInstances
         XCTAssertTrue(!instances.isEmpty)
         XCTAssertTrue(instances.contains(where: { $0.object === ndt7Test }))
-        ndt7Test = nil
     }
 
     func testNdt7TestStartTest() {
 
-        let settings = NDT7Settings(hostname: "", downloadPath: "", timeoutTest: 2)
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
@@ -95,7 +94,7 @@ class NDT7TestTests: XCTestCase {
 
     func testNDT7TestCleanup() {
 
-        let settings = NDT7Settings(hostname: "", downloadPath: "", timeoutTest: 2)
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
             XCTAssertNil(error)
@@ -161,7 +160,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartDownloadTrue() {
-        let settings = NDT7Settings(hostname: "", downloadPath: "$5^7~c` ")
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "$5^7~c` "))
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -182,7 +181,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartUploadTrue() {
-        let settings = NDT7Settings(hostname: "", downloadPath: "")
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startUploadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -207,8 +206,8 @@ elapsed: 1,
         }
         ndt7Test?.downloadTestCompletion = downloadCompletion
         ndt7Test?.uploadTestCompletion = uploadCompletion
-        ndt7Test?.timerDownload = Timer(timeInterval: 1, repeats: false, block: { (_) in })
-        ndt7Test?.timerUpload = Timer(timeInterval: 1, repeats: false, block: { (_) in })
+        ndt7Test?.timerDownload = Timer(timeInterval: 3, repeats: false, block: { (_) in })
+        ndt7Test?.timerUpload = Timer(timeInterval: 3, repeats: false, block: { (_) in })
         ndt7Test?.downloadTestRunning = true
         ndt7Test?.uploadTestRunning = true
         XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
@@ -231,27 +230,27 @@ elapsed: 1,
     }
 
     func testNDT7SettingsMeasurementInterval() {
-        let defaultSettings = NDT7Settings(measurementInterval: 5.5)
-        XCTAssertEqual(defaultSettings.hostname, "35.235.104.27")
-        XCTAssertEqual(defaultSettings.downloadPath, "/ndt/v7/download")
-        XCTAssertEqual(defaultSettings.uploadPath, "/ndt/v7/upload")
-        XCTAssertTrue(defaultSettings.wss)
-        XCTAssertTrue(defaultSettings.skipTLSCertificateVerification)
-        XCTAssertEqual(defaultSettings.measurementInterval, 5.5)
-        XCTAssertEqual(defaultSettings.timeoutRequest, 5)
-        XCTAssertEqual(defaultSettings.timeoutTest, 15)
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Accept"], "Nhz+x95YebD6Uvd4nqPC2fomoUQ=")
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Version"], "13")
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Key"], "DOdm+5/Cm3WwvhfcAlhJoQ==")
+        let settings = NDT7Settings(timeout: NDT7Timeouts(measurement: 5.5))
+        XCTAssertEqual(settings.url.hostname, "35.235.104.27")
+        XCTAssertEqual(settings.url.downloadPath, "/ndt/v7/download")
+        XCTAssertEqual(settings.url.uploadPath, "/ndt/v7/upload")
+        XCTAssertTrue(settings.url.wss)
+        XCTAssertTrue(settings.skipTLSCertificateVerification)
+        XCTAssertEqual(settings.timeout.measurement, 5.5)
+        XCTAssertEqual(settings.timeout.request, 5)
+        XCTAssertEqual(settings.timeout.test, 15)
+        XCTAssertEqual(settings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
+        XCTAssertEqual(settings.headers["Sec-WebSocket-Accept"], "Nhz+x95YebD6Uvd4nqPC2fomoUQ=")
+        XCTAssertEqual(settings.headers["Sec-WebSocket-Version"], "13")
+        XCTAssertEqual(settings.headers["Sec-WebSocket-Key"], "DOdm+5/Cm3WwvhfcAlhJoQ==")
     }
 
     func testWebSocketInteraction() {
-        let ndt7Settings = NDT7Settings(hostname: "", downloadPath: "", uploadPath: "")
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "", uploadPath: ""))
         let url = URL.init(string: "127.0.0.1")
-        let webSocketDownload = WebSocketWrapper(settings: ndt7Settings, url: url!)!
-        let webSocketUpload = WebSocketWrapper(settings: ndt7Settings, url: url!)!
-        let ndt7Test = NDT7Test(settings: ndt7Settings)
+        let webSocketDownload = WebSocketWrapper(settings: settings, url: url!)!
+        let webSocketUpload = WebSocketWrapper(settings: settings, url: url!)!
+        let ndt7Test = NDT7Test(settings: settings)
         var startDownloadCheck = false
         var startUploadCheck = false
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
