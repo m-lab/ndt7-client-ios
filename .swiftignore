@@ -1,4 +1,4 @@
-docs/**/*
+docs/
 docs/js/*
 docs/js/typeahead.jquery.js
 docs/js/lunr.min.js
