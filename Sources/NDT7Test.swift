@@ -129,6 +129,7 @@ open class NDT7Test {
         NDT7Test.ndt7TestInstances.append(WeakRef(self))
     }
 
+    /// Deinit
     deinit {
         cancel()
         cleanup()
@@ -161,7 +162,7 @@ extension NDT7Test {
                 self?.delegate?.downloadMeasurement(measurement)
             }
             if let error = error {
-                if error.localizedDescription == NDT7TestConstants.cancelled {
+                if error.localizedDescription == NDT7Constants.Test.cancelled {
                     logNDT7("NDT7 test cancelled")
                     completion(error)
                     return
@@ -176,7 +177,7 @@ extension NDT7Test {
                 if upload, let measurement = self?.uploadMeasurement.last {
                     self?.delegate?.uploadMeasurement(measurement)
                 }
-                logNDT7("NDT7 test \(error?.localizedDescription == NDT7TestConstants.cancelled ? "cancelled" : "finished")")
+                logNDT7("NDT7 test \(error?.localizedDescription == NDT7Constants.Test.cancelled ? "cancelled" : "finished")")
                 completion(error)
             }
         }
@@ -186,7 +187,7 @@ extension NDT7Test {
     public func cancel() {
         let error = NSError(domain: NDT7Constants.domain,
                             code: 0,
-                            userInfo: [ NSLocalizedDescriptionKey: NDT7TestConstants.cancelled])
+                            userInfo: [ NSLocalizedDescriptionKey: NDT7Constants.Test.cancelled])
         if downloadTestRunning {
             downloadTestCompletion?(error)
             downloadTestCompletion = nil

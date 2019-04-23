@@ -28,10 +28,10 @@ public struct NDT7Settings {
     public init(url: NDT7URL = NDT7URL(),
                 timeout: NDT7Timeouts = NDT7Timeouts(),
                 skipTLSCertificateVerification: Bool = true,
-                headers: [String: String] = [NDT7WebSocketConstants.headerProtocolKey: NDT7WebSocketConstants.headerProtocolValue,
-                                             NDT7WebSocketConstants.headerAcceptKey: NDT7WebSocketConstants.headerAcceptValue,
-                                             NDT7WebSocketConstants.headerVersionKey: NDT7WebSocketConstants.headerVersionValue,
-                                             NDT7WebSocketConstants.headerKey: NDT7WebSocketConstants.headerValue]) {
+                headers: [String: String] = [NDT7Constants.WebSocket.headerProtocolKey: NDT7Constants.WebSocket.headerProtocolValue,
+                                             NDT7Constants.WebSocket.headerAcceptKey: NDT7Constants.WebSocket.headerAcceptValue,
+                                             NDT7Constants.WebSocket.headerVersionKey: NDT7Constants.WebSocket.headerVersionValue,
+                                             NDT7Constants.WebSocket.headerKey: NDT7Constants.WebSocket.headerValue]) {
         self.url = url
         self.skipTLSCertificateVerification = skipTLSCertificateVerification
         self.timeout = timeout
@@ -65,9 +65,9 @@ public struct NDT7URL {
     }
 
     /// Initialization.
-    public init(hostname: String = NDT7WebSocketConstants.hostname,
-                downloadPath: String = NDT7WebSocketConstants.downloadPath,
-                uploadPath: String = NDT7WebSocketConstants.uploadPath,
+    public init(hostname: String = NDT7Constants.WebSocket.hostname,
+                downloadPath: String = NDT7Constants.WebSocket.downloadPath,
+                uploadPath: String = NDT7Constants.WebSocket.uploadPath,
                 wss: Bool = true) {
         self.hostname = hostname
         self.downloadPath = downloadPath
