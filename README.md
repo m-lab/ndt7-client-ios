@@ -69,7 +69,31 @@ Visit the `NDT7` [documentation](http://htmlpreview.github.io/?https://github.co
 
 [CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website.
 
-**Not supported yet.**
+```ruby
+platform :ios, '10.0'
+use_frameworks!
+
+target 'NDT7 example' do
+  # From folder if you download the project
+  # pod 'NDT7', :path => '~/ndt7-client-ios'
+
+  # From branch
+  pod 'NDT7',
+  :git => 'https://github.com/m-lab/ndt7-client-ios.git',
+  :branch => 'master'
+
+  # From tag (not enabled yet)
+  # pod 'NDT7',
+  # :git => 'https://github.com/m-lab/ndt7-client-ios.git',
+  # :tag => '0.0.1-beta.1'
+end
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
 
 <a name="carthage"></a>
 ## Carthage
@@ -81,7 +105,27 @@ Visit the `NDT7` [documentation](http://htmlpreview.github.io/?https://github.co
 <a name="manual-installation"></a>
 ## Manual Installation
 
-**Documentation in progress.**
+### Adding all swift files
+
+Add all `*.swift` files from `Sources` directory into your project.
+
+### Embedded Framework
+
+#### Step 1. Add as a git Submodule
+
+Add NDT7 as a submodule to your local git repo with the following command:
+
+```bash
+$ git submodule add git@github.com:m-lab/ndt7-client-ios
+```
+
+#### Step 2. Drag NDT7.xcodeproj to your project
+
+Drag the `NDT7.xcodeproj` into the Project Navigator of you application's Xcode project.
+
+#### Step 3. Embed the framework
+
+Under "General" tab from your project, add the NDT7 framework as an embedded binary. You'll see different frameworks depending if you need it for iOS, macOS or appleTV.
 
 <a name="setup-and-usage"></a>
 # Setup and usage
