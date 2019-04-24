@@ -51,7 +51,7 @@ script:
 after_success:
   # Run codecov if specified
   - if [ $CODECOV_CHECK == "YES" ]; then
-      bash <(curl -s https://codecov.io/bash);
+      bash <(curl -s https://codecov.io/bash) -D Build;
     fi
   # Run Sonar scanner
   - if [ $SONAR_SCANNER == "YES" ]; then
