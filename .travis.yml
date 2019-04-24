@@ -55,5 +55,6 @@ after_success:
     fi
   # Run Sonar scanner
   - if [ $SONAR_SCANNER == "YES" ]; then
+      bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/*_Test/*.xccovarchive/ > sonarqube-generic-coverage.xml;
       sonar-scanner;
     fi
