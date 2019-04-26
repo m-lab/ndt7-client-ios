@@ -15,6 +15,9 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/m-lab/ndt7-client-ios.svg)](http://isitmaintained.com/project/m-lab/ndt7-client-ios "Percentage of issues still open")
 [![Measurement Lab](https://img.shields.io/badge/Measurement%20Lab-purple.svg)](https://www.measurementlab.net/)
 [![Apache License](https://img.shields.io/github/license/m-lab/ndt7-client-ios.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Platform](https://img.shields.io/cocoapods/p/NDT7.svg?style=flat)](http://htmlpreview.github.io/?https://github.com/m-lab/ndt7-client-ios/blob/master/docs/index.html)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods Compatible](http://img.shields.io/cocoapods/v/NDT7.svg)](https://cocoapods.org/pods/NDT7)
 
 # Table of Contents
 
@@ -74,18 +77,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'NDT7 example' do
-  # From folder if you download the project
-  # pod 'NDT7', :path => '~/ndt7-client-ios'
-
-  # From branch
-  pod 'NDT7',
-  :git => 'https://github.com/m-lab/ndt7-client-ios.git',
-  :branch => 'master'
-
-  # From tag (not enabled yet)
-  # pod 'NDT7',
-  # :git => 'https://github.com/m-lab/ndt7-client-ios.git',
-  # :tag => '0.0.1-beta.1'
+  pod 'NDT7', '0.0.1-beta.1'
 end
 ```
 
@@ -100,7 +92,19 @@ $ pod install
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
 
-**Not supported yet.**
+Create a `Cartfile` and add the following line:
+
+```
+github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.1
+```
+
+Next, run the following command:
+
+```bash
+$ carthage update
+```
+
+Check out the **[Carthage docs »](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos)** for more info.
 
 <a name="manual-installation"></a>
 ## Manual Installation
