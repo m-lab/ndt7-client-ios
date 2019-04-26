@@ -15,6 +15,9 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/m-lab/ndt7-client-ios.svg)](http://isitmaintained.com/project/m-lab/ndt7-client-ios "Percentage of issues still open")
 [![Measurement Lab](https://img.shields.io/badge/Measurement%20Lab-purple.svg)](https://www.measurementlab.net/)
 [![Apache License](https://img.shields.io/github/license/m-lab/ndt7-client-ios.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Platform](https://img.shields.io/cocoapods/p/NDT7.svg?style=flat)](http://htmlpreview.github.io/?https://github.com/m-lab/ndt7-client-ios/blob/master/docs/index.html)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods Compatible](http://img.shields.io/cocoapods/v/NDT7.svg)](https://cocoapods.org/pods/NDT7)
 
 # Table of Contents
 
