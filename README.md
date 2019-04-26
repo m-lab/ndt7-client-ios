@@ -74,18 +74,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'NDT7 example' do
-  # From folder if you download the project
-  # pod 'NDT7', :path => '~/ndt7-client-ios'
-
-  # From branch
-  pod 'NDT7',
-  :git => 'https://github.com/m-lab/ndt7-client-ios.git',
-  :branch => 'master'
-
-  # From tag (not enabled yet)
-  # pod 'NDT7',
-  # :git => 'https://github.com/m-lab/ndt7-client-ios.git',
-  # :tag => '0.0.1-beta.1'
+  pod 'NDT7', '0.0.1-beta.1'
 end
 ```
 
@@ -100,7 +89,19 @@ $ pod install
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
 
-**Not supported yet.**
+Create a `Cartfile` and add the following line:
+
+```
+github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.1
+```
+
+Next, run the following command:
+
+```bash
+$ carthage update
+```
+
+Check out the **[Carthage docs »](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos)** for more info.
 
 <a name="manual-installation"></a>
 ## Manual Installation
