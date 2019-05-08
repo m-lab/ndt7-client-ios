@@ -69,7 +69,8 @@ extension WebSocketWrapper {
     }
 
     func send(_ message: Any) {
-        if open && connected {
+//        if open && connected {
+        if open {
             logNDT7("WebSocket \(url.absoluteString) did send message")
             webSocket.send(message)
         } else {

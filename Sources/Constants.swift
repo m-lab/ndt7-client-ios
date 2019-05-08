@@ -18,7 +18,7 @@ public struct NDT7Constants {
     public struct WebSocket {
 
         /// Hostname.
-        public static let hostname = "35.235.104.27"
+        public static let hostname = "ndt-iupui-mlab4-lax04.measurement-lab.org"
 
         /// Download Path.
         public static let downloadPath = "/ndt/v7/download"

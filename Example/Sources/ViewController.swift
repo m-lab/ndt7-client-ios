@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         print("NDT7 iOS Example app - download and upload test started")
         ndt7Test = NDT7Test(settings: NDT7Settings())
         ndt7Test?.delegate = self
-        ndt7Test?.startTest(download: true, upload: true) { [weak self] (error) in
+        ndt7Test?.startTest(download: false, upload: true) { [weak self] (error) in
             guard self != nil else { return }
             if let error = error {
                 print("NDT7 iOS Example app - error during test: \(error.localizedDescription)")

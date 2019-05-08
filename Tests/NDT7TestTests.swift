@@ -231,7 +231,7 @@ elapsed: 1,
 
     func testNDT7SettingsMeasurementInterval() {
         let settings = NDT7Settings(timeout: NDT7Timeouts(measurement: 5.5))
-        XCTAssertEqual(settings.url.hostname, "35.235.104.27")
+        XCTAssertEqual(settings.url.hostname, "ndt-iupui-mlab4-lax04.measurement-lab.org")
         XCTAssertEqual(settings.url.downloadPath, "/ndt/v7/download")
         XCTAssertEqual(settings.url.uploadPath, "/ndt/v7/upload")
         XCTAssertTrue(settings.url.wss)
@@ -286,12 +286,8 @@ elapsed: 1,
         XCTAssertTrue(startDownloadCheck)
         XCTAssertTrue(startUploadCheck)
 
-        XCTAssertTrue(ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(ndt7Test.uploadMeasurement.isEmpty)
         ndt7Test.message(webSocket: webSocketDownload, message: "..")
         ndt7Test.message(webSocket: webSocketUpload, message: "..")
-        XCTAssertTrue(ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(ndt7Test.uploadMeasurement.isEmpty)
 
         let measurementJSON = """
 {
@@ -301,12 +297,8 @@ elapsed: 1,
 "bbr_info": { "max_bandwidth" : 5, "min_rtt": 6 }
 }
 """
-        XCTAssertTrue(ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(ndt7Test.uploadMeasurement.isEmpty)
         ndt7Test.message(webSocket: webSocketDownload, message: measurementJSON)
         ndt7Test.message(webSocket: webSocketUpload, message: measurementJSON)
-        XCTAssertTrue(!ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(!ndt7Test.uploadMeasurement.isEmpty)
 
         let error = NSError(domain: "net.measurementlab.NDT7",
                             code: 0,
