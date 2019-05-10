@@ -68,36 +68,15 @@ extension WebSocketWrapper {
         webSocket.close()
     }
 
-    func send(_ message: Any) {
-//        if open && connected {
+    func send(_ message: Any, maxBuffer: Int) -> Int? {
+        let buffer = webSocket.ws.outputBytesLength
+        guard buffer < maxBuffer else { return nil }
         if open {
-            DispatchQueue.global().async { [weak self] in
-                for _ in 1...100 {
-                    //            for _ in 0...50000000 {
-                    print("miguel test date start: \(Date())")
-                    //                print("miguel test 1: \(webSocket.ws.outputBytes)")
-                    //                print("miguel test 2: \(webSocket.ws.outputBytesSize)") // should be the windowBufferSize: 8192
-                    //                print("miguel test 3: \(webSocket.ws.outputBytesStart)")
-                    //                print("miguel test 4: \(webSocket.ws.outputBytesLength)")
-                    print("outputBytesLength send message: \(message)")
-                    self?.webSocket.send(message)
-                    print("miguel test date end: \(Date())")
-                    print("miguel angel \(self?.webSocket.ws.wr.hasSpaceAvailable) - \(self?.webSocket.ws.wr.debugDescription))")
-                    print("miguel test 5: \(self?.webSocket.ws.outputBytes)")
-                                    print("miguel test 6: \(self?.webSocket.ws.outputBytesSize)") // should be the windowBufferSize: 8192
-                                    print("miguel test 7: \(self?.webSocket.ws.outputBytesStart)")
-                                    print("miguel test 8: \(self?.webSocket.ws.outputBytesLength) - \(Date())")
-                    logNDT7("WebSocket \(self?.url.absoluteString) did send message")
-//                    if self?.webSocket.ws.wr.hasSpaceAvailable {
-//                        print("miguel space: 1")
-//                    } else {
-//                        print("miguel space: 2")
-//                    }
-                }
-            }
-            
+            webSocket.send(message)
+            return buffer
         } else {
             logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")
+            return nil
         }
     }
 }

@@ -368,17 +368,6 @@ class Frame {
 
 class Delegate : NSObject, StreamDelegate {
     @objc func stream(_ aStream: Stream, handle eventCode: Stream.Event){
-        print("angel eventCode: \(eventCode) - \(Date()) - \(aStream.streamStatus.rawValue)")
-
-//        public static var openCompleted: Stream.Event { get } 0
-//
-//        public static var hasBytesAvailable: Stream.Event { get } 1
-//
-//        public static var hasSpaceAvailable: Stream.Event { get } 2
-//
-//        public static var errorOccurred: Stream.Event { get } 3
-//
-//        public static var endEncountered: Stream.Event { get } 4
         manager.signal()
     }
 }
@@ -859,25 +848,16 @@ class InnerWebSocket: Hashable {
                 }
             }
         }
-        print("Angel 0: \(Date())")
         if wr != nil && wr.hasSpaceAvailable && outputBytesLength > 0 {
-            let date = Date()
-            print("Angel 1: \(outputBytes) - \(outputBytesStart) - \(outputBytesLength) = \(date) -  wr: \(wr.hasSpaceAvailable)")
             let n = wr.write(outputBytes!+outputBytesStart, maxLength: outputBytesLength)
-            print("Angel 2: \(n) = \(Date().timeIntervalSince1970 - date.timeIntervalSince1970) - wr: \(wr.hasSpaceAvailable)")
             if n > 0 {
-                print("Angel 3")
                 outputBytesLength -= n
-                print("Angel 4: \(outputBytesLength)")
                 if outputBytesLength == 0 {
-                    print("Angel 5")
                     outputBytesStart = 0
                 } else {
-                    print("Angel 6")
                     outputBytesStart += n
                 }
             }
-            print("Angel 7: wr: \(wr.hasSpaceAvailable)")
         }
     }
     func stepStreamErrors() throws {
@@ -1110,11 +1090,9 @@ class InnerWebSocket: Hashable {
     func write(_ bytes: UnsafePointer<UInt8>, length: Int) throws {
         if outputBytesStart+outputBytesLength+length > outputBytesSize {
             var size = outputBytesSize
-            print("angel check 1: \(size) - wr: \(wr.hasSpaceAvailable)")
             while outputBytesStart+outputBytesLength+length > size {
                 size *= 2
             }
-            print("angel check 2: \(size) - wr: \(wr.hasSpaceAvailable)")
             let ptr = realloc(outputBytes, size)
             if ptr == nil {
                 throw WebSocketError.memory
@@ -1124,7 +1102,6 @@ class InnerWebSocket: Hashable {
         }
         memcpy(outputBytes!+outputBytesStart+outputBytesLength, bytes, length)
         outputBytesLength += length
-        print("outputBytesLength: \(outputBytesLength) - outputBytes: \(outputBytes) - outputBytesStart: \(outputBytesStart) - length: \(length)")
     }
 
     func readResponse() throws {
@@ -1502,8 +1479,6 @@ class InnerWebSocket: Hashable {
                 }
             }
         }
-        print("count check 1: \(head) - \(hlen)")
-        print("count check 2: \(payloadBytes) - \(payloadBytes.count)")
         try write(head, length: hlen)
         try write(payloadBytes, length: payloadBytes.count)
     }
@@ -1515,15 +1490,12 @@ class InnerWebSocket: Hashable {
         sendFrame(f)
     }
     func sendFrame(_ f : Frame) {
-        print("cheaa 2")
         lock()
         frames += [f]
         unlock()
         manager.signal()
-        print("cheaa 3")
     }
     func send(_ message : Any) {
-        print("cheaa 1")
         let f = Frame()
         if let message = message as? String {
             f.code = .text
@@ -1607,10 +1579,7 @@ private class Manager {
                     self.checkForConnectionTimeout(ws)
                     if ws.dirty {
                         pthread_mutex_unlock(&self.mutex)
-                        let date = Date()
-                        print("jaaaa 1 START: \(Date()), \(ws.wr)")
                         ws.step()
-                        print("jaaaa 2 END: \(Date()), \(ws.wr.streamStatus.rawValue) - \(Date().timeIntervalSince1970 - date.timeIntervalSince1970)")
                         pthread_mutex_lock(&self.mutex)
                         wait = false
                     }
