@@ -31,7 +31,7 @@ import zlib
 
 private let windowBufferSize = 0x2000
 
-private class Payload {
+class Payload {
     var ptr : UnsafeMutableRawPointer
     var cap : Int
     var len : Int
@@ -93,7 +93,7 @@ private class Payload {
     }
 }
 
-private enum OpCode : UInt8, CustomStringConvertible {
+enum OpCode : UInt8, CustomStringConvertible {
     case `continue` = 0x0, text = 0x1, binary = 0x2, close = 0x8, ping = 0x9, pong = 0xA
     var isControl : Bool {
         switch self {
@@ -252,7 +252,7 @@ enum WebSocketError : Error, CustomStringConvertible {
     }
 }
 
-private class UTF8 {
+class UTF8 {
     var text : String = ""
     var count : UInt32 = 0          // number of bytes
     var procd : UInt32 = 0          // number of bytes processed
@@ -340,7 +340,7 @@ private class UTF8 {
     }
 }
 
-private class Frame {
+class Frame {
     var inflate = false
     var code = OpCode.continue
     var utf8 = UTF8()
@@ -366,8 +366,19 @@ private class Frame {
     }
 }
 
-private class Delegate : NSObject, StreamDelegate {
+class Delegate : NSObject, StreamDelegate {
     @objc func stream(_ aStream: Stream, handle eventCode: Stream.Event){
+        print("angel eventCode: \(eventCode) - \(Date()) - \(aStream.streamStatus.rawValue)")
+
+//        public static var openCompleted: Stream.Event { get } 0
+//
+//        public static var hasBytesAvailable: Stream.Event { get } 1
+//
+//        public static var hasSpaceAvailable: Stream.Event { get } 2
+//
+//        public static var errorOccurred: Stream.Event { get } 3
+//
+//        public static var endEncountered: Stream.Event { get } 4
         manager.signal()
     }
 }
@@ -389,7 +400,7 @@ private func zerror(_ res : CInt) -> Error? {
     return WebSocketError.payloadError("zlib: \(err): \(res)")
 }
 
-private class Inflater {
+class Inflater {
     var windowBits = 0
     var strm = z_stream()
     var tInput = [[UInt8]]()
@@ -451,7 +462,7 @@ private class Inflater {
     }
 }
 
-private class Deflater {
+class Deflater {
     var windowBits = 0
     var memLevel = 0
     var strm = z_stream()
@@ -496,7 +507,7 @@ private class Deflater {
 }
 
 /// WebSocket objects are bidirectional network streams that communicate over HTTP. RFC 6455.
-private class InnerWebSocket: Hashable {
+class InnerWebSocket: Hashable {
     var id : Int
     var mutex = pthread_mutex_t()
     let request : URLRequest!
@@ -848,16 +859,25 @@ private class InnerWebSocket: Hashable {
                 }
             }
         }
+        print("Angel 0: \(Date())")
         if wr != nil && wr.hasSpaceAvailable && outputBytesLength > 0 {
+            let date = Date()
+            print("Angel 1: \(outputBytes) - \(outputBytesStart) - \(outputBytesLength) = \(date) -  wr: \(wr.hasSpaceAvailable)")
             let n = wr.write(outputBytes!+outputBytesStart, maxLength: outputBytesLength)
+            print("Angel 2: \(n) = \(Date().timeIntervalSince1970 - date.timeIntervalSince1970) - wr: \(wr.hasSpaceAvailable)")
             if n > 0 {
+                print("Angel 3")
                 outputBytesLength -= n
+                print("Angel 4: \(outputBytesLength)")
                 if outputBytesLength == 0 {
+                    print("Angel 5")
                     outputBytesStart = 0
                 } else {
+                    print("Angel 6")
                     outputBytesStart += n
                 }
             }
+            print("Angel 7: wr: \(wr.hasSpaceAvailable)")
         }
     }
     func stepStreamErrors() throws {
@@ -1090,9 +1110,11 @@ private class InnerWebSocket: Hashable {
     func write(_ bytes: UnsafePointer<UInt8>, length: Int) throws {
         if outputBytesStart+outputBytesLength+length > outputBytesSize {
             var size = outputBytesSize
+            print("angel check 1: \(size) - wr: \(wr.hasSpaceAvailable)")
             while outputBytesStart+outputBytesLength+length > size {
                 size *= 2
             }
+            print("angel check 2: \(size) - wr: \(wr.hasSpaceAvailable)")
             let ptr = realloc(outputBytes, size)
             if ptr == nil {
                 throw WebSocketError.memory
@@ -1102,6 +1124,7 @@ private class InnerWebSocket: Hashable {
         }
         memcpy(outputBytes!+outputBytesStart+outputBytesLength, bytes, length)
         outputBytesLength += length
+        print("outputBytesLength: \(outputBytesLength) - outputBytes: \(outputBytes) - outputBytesStart: \(outputBytesStart) - length: \(length)")
     }
 
     func readResponse() throws {
@@ -1479,6 +1502,8 @@ private class InnerWebSocket: Hashable {
                 }
             }
         }
+        print("count check 1: \(head) - \(hlen)")
+        print("count check 2: \(payloadBytes) - \(payloadBytes.count)")
         try write(head, length: hlen)
         try write(payloadBytes, length: payloadBytes.count)
     }
@@ -1490,12 +1515,15 @@ private class InnerWebSocket: Hashable {
         sendFrame(f)
     }
     func sendFrame(_ f : Frame) {
+        print("cheaa 2")
         lock()
         frames += [f]
         unlock()
         manager.signal()
+        print("cheaa 3")
     }
     func send(_ message : Any) {
+        print("cheaa 1")
         let f = Frame()
         if let message = message as? String {
             f.code = .text
@@ -1537,7 +1565,7 @@ private class InnerWebSocket: Hashable {
         sendFrame(f)
     }
 }
-private func ==(lhs: InnerWebSocket, rhs: InnerWebSocket) -> Bool {
+func ==(lhs: InnerWebSocket, rhs: InnerWebSocket) -> Bool {
     return lhs.id == rhs.id
 }
 
@@ -1579,7 +1607,10 @@ private class Manager {
                     self.checkForConnectionTimeout(ws)
                     if ws.dirty {
                         pthread_mutex_unlock(&self.mutex)
+                        let date = Date()
+                        print("jaaaa 1 START: \(Date()), \(ws.wr)")
                         ws.step()
+                        print("jaaaa 2 END: \(Date()), \(ws.wr.streamStatus.rawValue) - \(Date().timeIntervalSince1970 - date.timeIntervalSince1970)")
                         pthread_mutex_lock(&self.mutex)
                         wait = false
                     }
@@ -1641,7 +1672,7 @@ private let manager = Manager()
 /// WebSocket objects are bidirectional network streams that communicate over HTTP. RFC 6455.
 @objcMembers
 class WebSocket: NSObject {
-    fileprivate var ws: InnerWebSocket
+    var ws: InnerWebSocket
     fileprivate var id = manager.nextId()
     fileprivate var opened: Bool
 

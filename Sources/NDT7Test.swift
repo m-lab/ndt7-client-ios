@@ -253,9 +253,8 @@ extension NDT7Test {
             logNDT7("Error with ndt7 upload settings", .error)
         }
     }
-    
+
     func uploader() {
-        
 //        webSocketUpload?.send(<#T##message: Any##Any#>)
     }
 
@@ -296,13 +295,18 @@ extension NDT7Test: WebSocketInteraction {
     func open(webSocket: WebSocketWrapper) {
         if webSocket === webSocketDownload {
             downloadTestRunning = true
-        } else if webSocket === webSocketUpload {
+        } else if webSocket === webSocketUpload && uploadTestRunning == false {
             uploadTestRunning = true
             let dataArray: [UInt8] = (0..<(1 << 13)).map { _ in
                 UInt8.random(in: 1...255)
             }
             let data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
-            webSocket.send(data)
+//            let timer = Timer.scheduledTimer(withTimeInterval: 0.250, repeats: true) { (_) in
+//                print("angel 1: \(Date())")
+            print("outputBytesLength data: \(data)")
+                webSocket.send(data)
+//                print("angel 2: \(Date())")
+//            }
         }
     }
 
