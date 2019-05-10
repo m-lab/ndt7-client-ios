@@ -274,7 +274,7 @@ extension NDT7Test {
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
-        let every: Double = 1.0
+        let every: Double = 0.250
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
