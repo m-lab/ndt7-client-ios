@@ -13,7 +13,7 @@ class ConstantsTests: XCTestCase {
 
     func testNDT7Constants() {
         XCTAssertEqual(NDT7Constants.domain, "net.measurementlab.NDT7")
-        XCTAssertEqual(NDT7Constants.WebSocket.hostname, "35.235.104.27")
+        XCTAssertEqual(NDT7Constants.WebSocket.hostname, "ndt-iupui-mlab4-lax04.measurement-lab.org")
         XCTAssertEqual(NDT7Constants.WebSocket.downloadPath, "/ndt/v7/download")
         XCTAssertEqual(NDT7Constants.WebSocket.uploadPath, "/ndt/v7/upload")
         XCTAssertEqual(NDT7Constants.WebSocket.headerProtocolKey, "Sec-WebSocket-Protocol")

@@ -68,12 +68,15 @@ extension WebSocketWrapper {
         webSocket.close()
     }
 
-    func send(_ message: Any) {
-        if open && connected {
-            logNDT7("WebSocket \(url.absoluteString) did send message")
+    func send(_ message: Any, maxBuffer: Int) -> Int? {
+        let buffer = webSocket.ws.outputBytesLength
+        guard buffer < maxBuffer else { return nil }
+        if open {
             webSocket.send(message)
+            return buffer
         } else {
             logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")
+            return nil
         }
     }
 }
