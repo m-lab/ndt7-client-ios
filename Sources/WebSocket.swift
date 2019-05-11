@@ -31,7 +31,7 @@ import zlib
 
 private let windowBufferSize = 0x2000
 
-private class Payload {
+class Payload {
     var ptr : UnsafeMutableRawPointer
     var cap : Int
     var len : Int
@@ -93,7 +93,7 @@ private class Payload {
     }
 }
 
-private enum OpCode : UInt8, CustomStringConvertible {
+enum OpCode : UInt8, CustomStringConvertible {
     case `continue` = 0x0, text = 0x1, binary = 0x2, close = 0x8, ping = 0x9, pong = 0xA
     var isControl : Bool {
         switch self {
@@ -252,7 +252,7 @@ enum WebSocketError : Error, CustomStringConvertible {
     }
 }
 
-private class UTF8 {
+class UTF8 {
     var text : String = ""
     var count : UInt32 = 0          // number of bytes
     var procd : UInt32 = 0          // number of bytes processed
@@ -340,7 +340,7 @@ private class UTF8 {
     }
 }
 
-private class Frame {
+class Frame {
     var inflate = false
     var code = OpCode.continue
     var utf8 = UTF8()
@@ -366,7 +366,7 @@ private class Frame {
     }
 }
 
-private class Delegate : NSObject, StreamDelegate {
+class Delegate : NSObject, StreamDelegate {
     @objc func stream(_ aStream: Stream, handle eventCode: Stream.Event){
         manager.signal()
     }
@@ -389,7 +389,7 @@ private func zerror(_ res : CInt) -> Error? {
     return WebSocketError.payloadError("zlib: \(err): \(res)")
 }
 
-private class Inflater {
+class Inflater {
     var windowBits = 0
     var strm = z_stream()
     var tInput = [[UInt8]]()
@@ -451,7 +451,7 @@ private class Inflater {
     }
 }
 
-private class Deflater {
+class Deflater {
     var windowBits = 0
     var memLevel = 0
     var strm = z_stream()
@@ -496,7 +496,7 @@ private class Deflater {
 }
 
 /// WebSocket objects are bidirectional network streams that communicate over HTTP. RFC 6455.
-private class InnerWebSocket: Hashable {
+class InnerWebSocket: Hashable {
     var id : Int
     var mutex = pthread_mutex_t()
     let request : URLRequest!
@@ -1537,7 +1537,7 @@ private class InnerWebSocket: Hashable {
         sendFrame(f)
     }
 }
-private func ==(lhs: InnerWebSocket, rhs: InnerWebSocket) -> Bool {
+func ==(lhs: InnerWebSocket, rhs: InnerWebSocket) -> Bool {
     return lhs.id == rhs.id
 }
 
@@ -1641,7 +1641,7 @@ private let manager = Manager()
 /// WebSocket objects are bidirectional network streams that communicate over HTTP. RFC 6455.
 @objcMembers
 class WebSocket: NSObject {
-    fileprivate var ws: InnerWebSocket
+    var ws: InnerWebSocket
     fileprivate var id = manager.nextId()
     fileprivate var opened: Bool
 

@@ -11,6 +11,19 @@ import XCTest
 
 class NDT7TestTests: XCTestCase {
 
+    class TestInteractionMock: NDT7TestInteraction {
+        var count: Int? = 0
+        var elapsed: Float64? = 0.0
+        var measurement: NDT7Measurement?
+        func uploadMeasurement(_ measurement: NDT7Measurement) {
+            self.measurement = measurement
+            elapsed = self.measurement?.elapsed
+            if let count = measurement.appInfo?.numBytes {
+                self.count = Int(count)
+            }
+        }
+    }
+
     func testNdt7TestInstances() {
         let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
         let instances = NDT7Test.ndt7TestInstances
@@ -85,9 +98,9 @@ class NDT7TestTests: XCTestCase {
             XCTAssertNil(error)
         })
         XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
+        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
         XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
+        XCTAssertNotNil(ndt7Test?.timerUpload)
         XCTAssertFalse(startDownloadCheck)
         XCTAssertFalse(startUploadCheck)
     }
@@ -116,6 +129,42 @@ class NDT7TestTests: XCTestCase {
         XCTAssertNil(ndt7Test?.downloadTestCompletion)
         XCTAssertNil(ndt7Test?.timerDownload)
         XCTAssertNil(ndt7Test?.timerUpload)
+    }
+
+    func testNDT7TestUploader() {
+
+        let dataArray: [UInt8] = (0..<(1 << 13)).map { _ in
+            UInt8.random(in: 1...255)
+        }
+        let data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
+        let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", attributes: .concurrent)
+        let t0 = Date().addingTimeInterval(-10000000)
+        let tlast = Date().addingTimeInterval(-10000000)
+        let count = 123456
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "", uploadPath: ""))
+        let url = URL.init(string: "127.0.0.1")
+        let webSocketUpload = WebSocketWrapper(settings: settings, url: url!)!
+
+        let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
+        ndt7Test!.webSocketUpload = webSocketUpload
+        let testInteractionMock = TestInteractionMock()
+        ndt7Test?.delegate = testInteractionMock
+
+        ndt7Test?.uploader(socket: webSocketUpload, message: data, t0: t0, tlast: tlast, count: count, queue: dispatchQueue)
+        XCTAssertEqual(testInteractionMock.count, count)
+        XCTAssertNotNil(testInteractionMock.elapsed)
+    }
+
+    func testNDT7TestUploadMessage() {
+        let t0 = Date()
+        let t1 = Date()
+        let count = 123456
+        let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
+        let testInteractionMock = TestInteractionMock()
+        ndt7Test?.delegate = testInteractionMock
+        ndt7Test?.uploadMessage(t0: t0, t1: t1, count: count)
+        XCTAssertEqual(testInteractionMock.count, count)
+        XCTAssertEqual(testInteractionMock.elapsed, t1.timeIntervalSince1970 - t0.timeIntervalSince1970)
     }
 
     func testNDT7TestHhandleMessage() {
@@ -181,7 +230,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartUploadTrue() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
+        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "$5^7~c` "))
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startUploadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -189,8 +238,8 @@ elapsed: 1,
             XCTAssertNil(error)
         }
         ndt7Test?.startUpload(true, completion)
-        XCTAssertTrue(startUploadCheck)
-        ndt7Test?.downloadTestCompletion?(nil)
+        XCTAssertFalse(startUploadCheck)
+        ndt7Test?.uploadTestCompletion?(nil)
         XCTAssertTrue(startUploadCheck)
     }
 
@@ -231,7 +280,7 @@ elapsed: 1,
 
     func testNDT7SettingsMeasurementInterval() {
         let settings = NDT7Settings(timeout: NDT7Timeouts(measurement: 5.5))
-        XCTAssertEqual(settings.url.hostname, "35.235.104.27")
+        XCTAssertEqual(settings.url.hostname, "ndt-iupui-mlab4-lax04.measurement-lab.org")
         XCTAssertEqual(settings.url.downloadPath, "/ndt/v7/download")
         XCTAssertEqual(settings.url.uploadPath, "/ndt/v7/upload")
         XCTAssertTrue(settings.url.wss)
@@ -286,12 +335,8 @@ elapsed: 1,
         XCTAssertTrue(startDownloadCheck)
         XCTAssertTrue(startUploadCheck)
 
-        XCTAssertTrue(ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(ndt7Test.uploadMeasurement.isEmpty)
         ndt7Test.message(webSocket: webSocketDownload, message: "..")
         ndt7Test.message(webSocket: webSocketUpload, message: "..")
-        XCTAssertTrue(ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(ndt7Test.uploadMeasurement.isEmpty)
 
         let measurementJSON = """
 {
@@ -301,12 +346,8 @@ elapsed: 1,
 "bbr_info": { "max_bandwidth" : 5, "min_rtt": 6 }
 }
 """
-        XCTAssertTrue(ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(ndt7Test.uploadMeasurement.isEmpty)
         ndt7Test.message(webSocket: webSocketDownload, message: measurementJSON)
         ndt7Test.message(webSocket: webSocketUpload, message: measurementJSON)
-        XCTAssertTrue(!ndt7Test.downloadMeasurement.isEmpty)
-        XCTAssertTrue(!ndt7Test.uploadMeasurement.isEmpty)
 
         let error = NSError(domain: "net.measurementlab.NDT7",
                             code: 0,
