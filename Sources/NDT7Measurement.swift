@@ -40,7 +40,7 @@ public struct NDT7Measurement: Codable, CustomStringConvertible {
     public let tcpInfo: NDT7TCPInfo?
 
     /// appInfo is an optional object only included in the measurement when an application-level measurement is available.
-    public let appInfo: NDT7APPInfo?
+    public var appInfo: NDT7APPInfo?
 
     /// bbrInfo is an optional object only included in the measurement when it is possible to access TCP_CC_INFO stats for BBR.
     public let bbrInfo: NDT7BBRInfo?
@@ -92,7 +92,7 @@ public struct NDT7APPInfo: Codable, CustomStringConvertible {
     /// numBytes (a int64) is the number of bytes sent (or received) since the beginning of the specific subtest.
     /// Note that this counter tracks the amount of data sent at application level.
     /// It does not account for the protocol overheaded of WebSockets, TLS, TCP, IP, and link layer.
-    public let numBytes: Int64?
+    public var numBytes: Int64?
 
     /// coding keys for codable purpose.
     enum CodingKeys: String, CodingKey {

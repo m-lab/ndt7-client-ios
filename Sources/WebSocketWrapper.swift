@@ -25,6 +25,12 @@ class WebSocketWrapper {
     let webSocket: WebSocket
     let url: URL
     let settings: NDT7Settings
+    var outputBytesLengthAccumulated: Int {
+        return webSocket.ws.outputBytesLengthAccumulated
+    }
+    var inputBytesLengthAccumulated: Int {
+        return webSocket.ws.inputBytesLengthAccumulated
+    }
 
     init?(settings: NDT7Settings, url: URL) {
         self.url = url
@@ -87,6 +93,8 @@ extension WebSocketWrapper: WebSocketDelegate {
         logNDT7("WebSocket \(url.absoluteString) open")
         open = true
         delegate?.open(webSocket: self)
+        webSocket.ws.outputBytesLengthAccumulated = 0
+        webSocket.ws.inputBytesLengthAccumulated = 0
     }
 
     func webSocketClose(_ code: Int, reason: String, wasClean: Bool) {
