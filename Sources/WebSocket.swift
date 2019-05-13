@@ -509,10 +509,12 @@ class InnerWebSocket: Hashable {
     var outputBytesSize : Int = 0
     var outputBytesStart : Int = 0
     var outputBytesLength : Int = 0
+    var outputBytesLengthAccumulated: Int = 0
     var inputBytes : UnsafeMutablePointer<UInt8>?
     var inputBytesSize : Int = 0
     var inputBytesStart : Int = 0
     var inputBytesLength : Int = 0
+    var inputBytesLengthAccumulated: Int = 0
     var createdAt = CFAbsoluteTimeGetCurrent()
     var connectionTimeout = false
     var eclose : ()->() = {}
@@ -844,6 +846,7 @@ class InnerWebSocket: Hashable {
                     let n = rd.read(inputBytes!+inputBytesStart+inputBytesLength, maxLength: inputBytesSize-inputBytesStart-inputBytesLength)
                     if n > 0 {
                         inputBytesLength += n
+                        inputBytesLengthAccumulated += n
                     }
                 }
             }
@@ -852,6 +855,7 @@ class InnerWebSocket: Hashable {
             let n = wr.write(outputBytes!+outputBytesStart, maxLength: outputBytesLength)
             if n > 0 {
                 outputBytesLength -= n
+                outputBytesLengthAccumulated += n
                 if outputBytesLength == 0 {
                     outputBytesStart = 0
                 } else {
