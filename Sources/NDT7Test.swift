@@ -369,8 +369,10 @@ extension NDT7Test: WebSocketInteraction {
     }
 
     func message(webSocket: WebSocketWrapper, message: Any) {
-        guard let measurement = handleMessage(message) else { return }
+        guard var measurement = handleMessage(message) else { return }
         if webSocket === webSocketDownload {
+            let appInfo = NDT7APPInfo(numBytes: Int64(webSocket.inputBytesLengthAccumulated))
+            measurement.appInfo = appInfo
             logNDT7("Download test \(measurement)")
             delegate?.downloadMeasurement(measurement)
         } else if webSocket === webSocketUpload {
