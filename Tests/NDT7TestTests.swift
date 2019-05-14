@@ -159,10 +159,12 @@ class NDT7TestTests: XCTestCase {
         let t0 = Date()
         let t1 = Date()
         let count = 123456
-        let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
+        let settings = NDT7Settings()
+        let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let testInteractionMock = TestInteractionMock()
         ndt7Test?.delegate = testInteractionMock
-        ndt7Test?.uploadMessage(t0: t0, t1: t1, count: count)
+        ndt7Test?.webSocketUpload = WebSocketWrapper(settings: settings, url: URL(string: settings.url.uploadPath)!)
+        ndt7Test?.uploadMessage(socket: ndt7Test!.webSocketUpload!, t0: t0, t1: t1, count: count)
         XCTAssertEqual(testInteractionMock.count, count)
         XCTAssertEqual(testInteractionMock.elapsed, t1.timeIntervalSince1970 - t0.timeIntervalSince1970)
     }
