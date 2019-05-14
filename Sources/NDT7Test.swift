@@ -355,7 +355,6 @@ extension NDT7Test: WebSocketInteraction {
                 UInt8.random(in: 1...255)
             }
             let data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
-//            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test")
             let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInitiated)
             dispatchQueue.async { [weak self] in
                 self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
