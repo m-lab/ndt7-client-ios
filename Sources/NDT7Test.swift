@@ -157,7 +157,7 @@ extension NDT7Test {
             if let error = error {
                 if error.localizedDescription == NDT7Constants.Test.cancelled {
                     logNDT7("NDT7 test cancelled")
-                    completion(error)
+                    completion(nil)
                     return
                 }
                 completion(error)
@@ -167,8 +167,9 @@ extension NDT7Test {
             self?.startUpload(upload) { (error) in
                 self?.cleanup()
                 self?.uploadTestRunning = false
-                logNDT7("NDT7 test \(error?.localizedDescription == NDT7Constants.Test.cancelled ? "cancelled" : "finished")")
-                completion(error)
+                let testCancelled = error?.localizedDescription == NDT7Constants.Test.cancelled
+                logNDT7("NDT7 test \(testCancelled ? "cancelled" : "finished")")
+                completion(error == nil || testCancelled ? nil : error)
             }
         }
     }
@@ -186,6 +187,10 @@ extension NDT7Test {
             uploadTestCompletion?(error)
             uploadTestCompletion = nil
         }
+        webSocketDownload?.delegate = nil
+        webSocketUpload?.delegate = nil
+        webSocketDownload?.close()
+        webSocketUpload?.close()
         webSocketDownload = nil
         webSocketUpload = nil
         timerDownload?.invalidate()
@@ -267,22 +272,24 @@ extension NDT7Test {
         var tlast = tlast
         var t1 = Date()
         let duration: TimeInterval = 10.0
-        guard t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration else {
-            uploadMessage(t0: t0, t1: t1, count: count)
+        guard t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true else {
+            uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
+            uploadTestCompletion?(nil)
+            uploadTestCompletion = nil
             return
         }
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
         let every: Double = 0.250
-        while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration {
+        while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
                 count += message.count
                 t1 = Date()
                 if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > every {
                     tlast = t1
-                    uploadMessage(t0: t0, t1: t1, count: count)
+                    uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
                 }
             }
         }
@@ -296,7 +303,8 @@ extension NDT7Test {
     /// - parameter t0: Initial date time.
     /// - parameter t1: Current date time.
     /// - parameter count: Number of transmitted bytes.
-    func uploadMessage(t0: Date, t1: Date, count: Int) {
+    func uploadMessage(socket: WebSocketWrapper, t0: Date, t1: Date, count: Int) {
+        guard socket === webSocketUpload else { return }
         let message = "{\"elapsed\": \(t1.timeIntervalSince1970 - t0.timeIntervalSince1970), \"app_info\": { \"num_bytes\": \(count)}}"
         if let measurement = handleMessage(message) {
             logNDT7("Upload test \(measurement)")
@@ -347,7 +355,10 @@ extension NDT7Test: WebSocketInteraction {
                 UInt8.random(in: 1...255)
             }
             let data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
-            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", attributes: .concurrent)
+            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInitiated)
+            dispatchQueue.async { [weak self] in
+                self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
+            }
             dispatchQueue.async { [weak self] in
                 self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
             }
@@ -375,9 +386,6 @@ extension NDT7Test: WebSocketInteraction {
             measurement.appInfo = appInfo
             logNDT7("Download test \(measurement)")
             delegate?.downloadMeasurement(measurement)
-        } else if webSocket === webSocketUpload {
-            logNDT7("Upload test \(measurement)")
-            delegate?.uploadMeasurement(measurement)
         }
     }
 
