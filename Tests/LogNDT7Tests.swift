@@ -36,8 +36,8 @@ class LogMessageTests: XCTestCase {
 
     func testLogMessageNDT7Description() {
 
-        XCTAssertTrue(logMessage.ndt7Description().contains("[ndt7] [com.apple.main-thread] [LogNDT7Tests.swift-setUp():24]: (debug) text"))
-        XCTAssertTrue(logMessageWithSlash.ndt7Description().contains("[ndt7] [com.apple.main-thread] [file.swift-setUp():24]: (debug) text"))
+        XCTAssertTrue(logMessage.ndt7Description().contains("[ndt7] [Operation queue: com.apple.main-thread-thread] [LogNDT7Tests.swift-setUp():24]: (debug) text"))
+        XCTAssertTrue(logMessageWithSlash.ndt7Description().contains("[ndt7] [Operation queue: com.apple.main-thread-thread] [file.swift-setUp():24]: (debug) text"))
     }
 }
 

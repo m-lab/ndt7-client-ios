@@ -21,13 +21,13 @@ class NDT7SettingsTests: XCTestCase {
     }
 
     func testNDT7URLDefault() {
-        let defaultURL = NDT7URL()
-        XCTAssertEqual(defaultURL.hostname, "ndt-iupui-mlab4-lax04.measurement-lab.org")
+        let defaultURL = NDT7URL(hostname: "")
+        XCTAssertEqual(defaultURL.hostname, "")
         XCTAssertEqual(defaultURL.downloadPath, "/ndt/v7/download")
         XCTAssertEqual(defaultURL.uploadPath, "/ndt/v7/upload")
         XCTAssertTrue(defaultURL.wss)
-        XCTAssertEqual(defaultURL.download, "wss://ndt-iupui-mlab4-lax04.measurement-lab.org/ndt/v7/download")
-        XCTAssertEqual(defaultURL.upload, "wss://ndt-iupui-mlab4-lax04.measurement-lab.org/ndt/v7/upload")
+        XCTAssertEqual(defaultURL.download, "wss:///ndt/v7/download")
+        XCTAssertEqual(defaultURL.upload, "wss:///ndt/v7/upload")
     }
 
     func testNDT7TimeoutsDefault() {

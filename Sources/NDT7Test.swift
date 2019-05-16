@@ -118,7 +118,7 @@ open class NDT7Test {
 
     /// This parameter contains all the settings needed for ndt7 test.
     /// Please, check `NDT7Settings` for more information about the settings.
-    public let settings: NDT7Settings
+    public var settings: NDT7Settings
 
     /// Initialization.
     /// - parameter settings: Contains all the settings needed for ndt7 test (`NDT7Settings`).
@@ -150,28 +150,37 @@ extension NDT7Test {
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
 
-        // Download test start.
-        startDownload(download) { [weak self] (error) in
-            self?.cleanup()
-            self?.downloadTestRunning = false
-            if let error = error {
-                if error.localizedDescription == NDT7Constants.Test.cancelled {
-                    logNDT7("NDT7 test cancelled")
-                    completion(nil)
+        settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
+            guard let hostname = server?.fqdn, error == nil else {
+                completion(error)
+                return
+            }
+            OperationQueue.current?.name = "net.measurementlab.NDT7.test"
+            self?.settings.url.hostname = hostname
+            self?.settings.url.server = server
+            // Download test start.
+            self?.startDownload(download) { (error) in
+                self?.cleanup()
+                self?.downloadTestRunning = false
+                if let error = error {
+                    if error.localizedDescription == NDT7Constants.Test.cancelled {
+                        logNDT7("NDT7 test cancelled")
+                        completion(nil)
+                        return
+                    }
+                    completion(error)
                     return
                 }
-                completion(error)
+                // Upload test start.
+                self?.startUpload(upload) { (error) in
+                    self?.cleanup()
+                    self?.uploadTestRunning = false
+                    let testCancelled = error?.localizedDescription == NDT7Constants.Test.cancelled
+                    logNDT7("NDT7 test \(testCancelled ? "cancelled" : "finished")")
+                    completion(error == nil || testCancelled ? nil : error)
+                }
             }
-
-            // Upload test start.
-            self?.startUpload(upload) { (error) in
-                self?.cleanup()
-                self?.uploadTestRunning = false
-                let testCancelled = error?.localizedDescription == NDT7Constants.Test.cancelled
-                logNDT7("NDT7 test \(testCancelled ? "cancelled" : "finished")")
-                completion(error == nil || testCancelled ? nil : error)
-            }
-        }
+        })
     }
 
     /// Cancel test running.
@@ -262,15 +271,16 @@ extension NDT7Test {
     /// Uploader is a function to upload messages to the server to meassure the upload speed.
     /// - parameter socket: WebSocket object in charge of the upload.
     /// - parameter message: Data message to upload.
-    /// - parameter t0: Initial date time.
-    /// - parameter tlast: Last date time.
+    /// - parameter t0: Initial date time or nil to indicate the first iteration.
+    /// - parameter tlast: Last date time or nil to indicate the first iteration.
     /// - parameter count: Number of transmitted bytes.
     /// - parameter queue: Dispatch queue for upload.
-    func uploader(socket: WebSocketWrapper, message: Data, t0: Date, tlast: Date, count: Int, queue: DispatchQueue) {
+    func uploader(socket: WebSocketWrapper, message: Data, t0: Date?, tlast: Date?, count: Int, queue: DispatchQueue) {
 
-        var count = count
-        var tlast = tlast
+        let t0 = t0 ?? Date()
         var t1 = Date()
+        var tlast = tlast ?? Date()
+        var count = count
         let duration: TimeInterval = 10.0
         guard t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true else {
             uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
@@ -281,16 +291,15 @@ extension NDT7Test {
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
-        let every: Double = 0.250
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
                 count += message.count
-                t1 = Date()
-                if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > every {
-                    tlast = t1
-                    uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
-                }
+            }
+            t1 = Date()
+            if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25 {
+                tlast = t1
+                uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
             }
         }
         queue.asyncAfter(deadline: .now()) { [weak self] in
@@ -351,16 +360,9 @@ extension NDT7Test: WebSocketInteraction {
             downloadTestRunning = true
         } else if webSocket === webSocketUpload {
             uploadTestRunning = true
-            let dataArray: [UInt8] = (0..<(1 << 13)).map { _ in
-                UInt8.random(in: 1...255)
-            }
-            let data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
             let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInitiated)
             dispatchQueue.async { [weak self] in
-                self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
-            }
-            dispatchQueue.async { [weak self] in
-                self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
+                self?.uploader(socket: webSocket, message: Data.randomDataNetworkElement(), t0: nil, tlast: nil, count: 0, queue: dispatchQueue)
             }
         }
     }
@@ -390,15 +392,18 @@ extension NDT7Test: WebSocketInteraction {
     }
 
     func error(webSocket: WebSocketWrapper, error: NSError) {
+        let mlabServerError = NSError(domain: NDT7Constants.domain,
+                                      code: 0,
+                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.url.hostname) has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
-            delegate?.downloadTestError(error)
-            downloadTestCompletion?(error)
+            delegate?.downloadTestError(mlabServerError)
+            downloadTestCompletion?(mlabServerError)
             downloadTestCompletion = nil
         } else if webSocket === webSocketUpload {
             logNDT7("Upload test error: \(error.localizedDescription)", .error)
-            delegate?.uploadTestError(error)
-            uploadTestCompletion?(error)
+            delegate?.uploadTestError(mlabServerError)
+            uploadTestCompletion?(mlabServerError)
             uploadTestCompletion = nil
         }
     }
