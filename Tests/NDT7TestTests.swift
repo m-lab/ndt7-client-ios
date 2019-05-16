@@ -33,7 +33,7 @@ class NDT7TestTests: XCTestCase {
 
     func testNdt7TestStartTest() {
 
-        let settings = NDT7Settings(url: NDT7URL(hostname: "hostname", downloadPath: ""))
+        let settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com", downloadPath: ""), timeout: NDT7Timeouts(measurement: 1.0, request: 1.0, test: 1.0))
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
@@ -54,9 +54,12 @@ class NDT7TestTests: XCTestCase {
         XCTAssertNil(ndt7Test?.timerUpload)
         XCTAssertFalse(startDownloadCheck)
         XCTAssertFalse(startUploadCheck)
+        let expectationFalseFalse = XCTestExpectation(description: "Job in main thread")
         ndt7Test?.startTest(download: false, upload: false, { (error) in
             XCTAssertNil(error)
+            expectationFalseFalse.fulfill()
         })
+        wait(for: [expectationFalseFalse], timeout: 5.0)
         XCTAssertNil(ndt7Test?.downloadTestCompletion)
         XCTAssertNil(ndt7Test?.uploadTestCompletion)
         XCTAssertNil(ndt7Test?.timerDownload)
@@ -72,12 +75,15 @@ class NDT7TestTests: XCTestCase {
         XCTAssertNil(ndt7Test?.timerUpload)
         XCTAssertFalse(startDownloadCheck)
         XCTAssertFalse(startUploadCheck)
+        let expectationTrueTrue = XCTestExpectation(description: "Job in main thread")
         ndt7Test?.startTest(download: true, upload: true, { (error) in
             XCTAssertNotNil(error)
+            expectationTrueTrue.fulfill()
         })
-        XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
+        wait(for: [expectationTrueTrue], timeout: 5.0)
+        XCTAssertNil(ndt7Test?.downloadTestCompletion)
         XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.timerDownload)
+        XCTAssertNil(ndt7Test?.timerDownload)
         XCTAssertNil(ndt7Test?.timerUpload)
         XCTAssertFalse(startDownloadCheck)
         XCTAssertFalse(startUploadCheck)
@@ -94,13 +100,16 @@ class NDT7TestTests: XCTestCase {
         XCTAssertNil(ndt7Test?.timerUpload)
         XCTAssertFalse(startDownloadCheck)
         XCTAssertFalse(startUploadCheck)
+        let expectationFalseTrue = XCTestExpectation(description: "Job in main thread")
         ndt7Test?.startTest(download: false, upload: true, { (error) in
-            XCTAssertNil(error)
+            XCTAssertNotNil(error)
+            expectationFalseTrue.fulfill()
         })
+        wait(for: [expectationFalseTrue], timeout: 2.0)
         XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
+        XCTAssertNil(ndt7Test?.uploadTestCompletion)
         XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNotNil(ndt7Test?.timerUpload)
+        XCTAssertNil(ndt7Test?.timerUpload)
         XCTAssertFalse(startDownloadCheck)
         XCTAssertFalse(startUploadCheck)
     }

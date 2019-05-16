@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import NDT7
+@testable import NDT7
 
 class NDT7MeasurementTests: XCTestCase {
 

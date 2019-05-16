@@ -149,15 +149,23 @@ extension NDT7Test {
         // Cleanup and cancel any test in progress.
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
+        let dg = DispatchGroup()
 
-        settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
-            guard let hostname = server?.fqdn, error == nil else {
-                completion(error)
-                return
-            }
+        if settings.url.hostname.isEmpty {
+            dg.enter()
+            settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
+                guard let hostname = server?.fqdn, error == nil else {
+                    completion(error)
+                    return
+                }
+                self?.settings.url.hostname = hostname
+                self?.settings.url.server = server
+                dg.leave()
+            })
+        }
+
+        dg.notify(queue: .global(qos: .userInteractive)) { [weak self] in
             OperationQueue.current?.name = "net.measurementlab.NDT7.test"
-            self?.settings.url.hostname = hostname
-            self?.settings.url.server = server
             // Download test start.
             self?.startDownload(download) { (error) in
                 self?.cleanup()
@@ -180,7 +188,7 @@ extension NDT7Test {
                     completion(error == nil || testCancelled ? nil : error)
                 }
             }
-        })
+        }
     }
 
     /// Cancel test running.
@@ -360,7 +368,7 @@ extension NDT7Test: WebSocketInteraction {
             downloadTestRunning = true
         } else if webSocket === webSocketUpload {
             uploadTestRunning = true
-            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInitiated)
+            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInteractive)
             dispatchQueue.async { [weak self] in
                 self?.uploader(socket: webSocket, message: Data.randomDataNetworkElement(), t0: nil, tlast: nil, count: 0, queue: dispatchQueue)
             }
