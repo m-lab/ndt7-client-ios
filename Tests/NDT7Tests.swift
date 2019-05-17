@@ -20,24 +20,17 @@ class NDT7Tests: XCTestCase {
         }
     }
 
-    var mockLogger: MockLogger!
-
-    override func setUp() {
-        mockLogger = MockLogger()
-        NDT7.loggingEnabled = false
-    }
-
-    override func tearDown() {
-        NDT7.loggingEnabled = false
-    }
-
     func testNDT7EnableAndDisableLogging() {
 
+        NDT7.loggingEnabled = false
+
+        let mockLogger = MockLogger()
         LogManager.addLogger(mockLogger)
         XCTAssertFalse(NDT7.loggingEnabled)
         XCTAssertEqual(mockLogger.logMessage.count, 0)
 
         NDT7.loggingEnabled = true
+
         XCTAssertTrue(NDT7.loggingEnabled)
 
         logNDT7("test")
@@ -47,6 +40,7 @@ class NDT7Tests: XCTestCase {
         XCTAssertTrue(mockLogger.logMessage.count >= 5)
 
         NDT7.loggingEnabled = false
+
         XCTAssertFalse(NDT7.loggingEnabled)
 
         logNDT7("test")

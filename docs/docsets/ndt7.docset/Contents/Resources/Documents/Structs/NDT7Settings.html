@@ -82,6 +82,9 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
               </li>
               <li class="nav-group-task">
@@ -89,6 +92,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7Server.html">NDT7Server</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Settings.html">NDT7Settings</a>
@@ -147,7 +153,7 @@ Can be used with default values: NDT7Settings()</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span></code></pre>
 
                         </div>
                       </div>
@@ -211,6 +217,33 @@ Can be used with default values: NDT7Settings()</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:4NDT70A8SettingsV13useGeoOptionsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/useGeoOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8SettingsV13useGeoOptionsSbvp">useGeoOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Use geo options to get a list of Mlab servers vs the closer one with false.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">useGeoOptions</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:4NDT70A8SettingsV7headersSDyS2SGvp"></a>
                     <a name="//apple_ref/swift/Property/headers" class="dashAnchor"></a>
                     <a class="token" href="#/s:4NDT70A8SettingsV7headersSDyS2SGvp">headers</a>
@@ -238,9 +271,9 @@ Can be used with default values: NDT7Settings()</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8SettingsV3url7timeout30skipTLSCertificateVerification7headersAcA0A3URLV_AA0A8TimeoutsVSbSDyS2SGtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(url:timeout:skipTLSCertificateVerification:headers:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8SettingsV3url7timeout30skipTLSCertificateVerification7headersAcA0A3URLV_AA0A8TimeoutsVSbSDyS2SGtcfc">init(url:timeout:skipTLSCertificateVerification:headers:)</a>
+                    <a name="/s:4NDT70A8SettingsV3url7timeout30skipTLSCertificateVerification13useGeoOptions7headersAcA0A3URLV_AA0A8TimeoutsVS2bSDyS2SGtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(url:timeout:skipTLSCertificateVerification:useGeoOptions:headers:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8SettingsV3url7timeout30skipTLSCertificateVerification13useGeoOptions7headersAcA0A3URLV_AA0A8TimeoutsVS2bSDyS2SGtcfc">init(url:timeout:skipTLSCertificateVerification:useGeoOptions:headers:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -255,13 +288,14 @@ Can be used with default values: NDT7Settings()</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span><span class="p">(),</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7URL.html">NDT7URL</a></span><span class="p">(</span><span class="nv">hostname</span><span class="p">:</span> <span class="s">""</span><span class="p">),</span>
             <span class="nv">timeout</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a></span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a></span><span class="p">(),</span>
             <span class="nv">skipTLSCertificateVerification</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="nv">useGeoOptions</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
             <span class="nv">headers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerProtocolKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerProtocolValue</span><span class="p">,</span>
-                                         <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerAcceptKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerAcceptValue</span><span class="p">,</span>
-                                         <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerVersionKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerVersionValue</span><span class="p">,</span>
-                                         <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerValue</span><span class="p">])</span></code></pre>
+                                 <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerAcceptKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerAcceptValue</span><span class="p">,</span>
+                                 <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerVersionKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerVersionValue</span><span class="p">,</span>
+                                 <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="nv">headerKey</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7Constants.html">NDT7Constants</a></span><span class="o">.</span><span class="kt">WebSocket</span><span class="o">.</span><span class="n">headerValue</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -276,7 +310,7 @@ Can be used with default values: NDT7Settings()</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-04-26)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

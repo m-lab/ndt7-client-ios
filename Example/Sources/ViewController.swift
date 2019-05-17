@@ -40,16 +40,19 @@ class ViewController: UIViewController {
         let settings = NDT7Settings()
         ndt7Test = NDT7Test(settings: settings)
         ndt7Test?.delegate = self
-        serverLabel.text = settings.url.hostname
         statusUpdate(downloadTestRunning: true, uploadTestRunning: true)
-        ndt7Test?.startTest(download: true, upload: true) { [weak self] (_) in
-            guard self != nil else { return }
-            self?.statusUpdate(downloadTestRunning: false, uploadTestRunning: false)
+        ndt7Test?.startTest(download: true, upload: true) { [weak self] (error) in
+            guard let strongSelf = self else { return }
+            if let error = error {
+                strongSelf.errorAlert(title: "Error during tests", message: "\(error.localizedDescription)")
+            }
+            strongSelf.statusUpdate(downloadTestRunning: false, uploadTestRunning: false)
         }
     }
 
     func cancelTest() {
         ndt7Test?.cancel()
+        statusUpdate(downloadTestRunning: false, uploadTestRunning: false)
     }
 
     func clearData() {
@@ -84,17 +87,19 @@ extension ViewController {
         }
         if self.downloadTestRunning == false && self.uploadTestRunning == false {
             DispatchQueue.main.async { [weak self] in
-                self?.cancelButton.alpha = 0
-                self?.cancelButton.isEnabled = false
-                self?.startButton.alpha = 1
-                self?.startButton.isEnabled = true
+                guard let strongSelf = self else { return }
+                strongSelf.cancelButton.alpha = 0
+                strongSelf.cancelButton.isEnabled = false
+                strongSelf.startButton.alpha = 1
+                strongSelf.startButton.isEnabled = true
             }
         } else {
             DispatchQueue.main.async { [weak self] in
-                self?.cancelButton.alpha = 1
-                self?.cancelButton.isEnabled = true
-                self?.startButton.alpha = 0
-                self?.startButton.isEnabled = false
+                guard let strongSelf = self else { return }
+                strongSelf.cancelButton.alpha = 1
+                strongSelf.cancelButton.isEnabled = true
+                strongSelf.startButton.alpha = 0
+                strongSelf.startButton.isEnabled = false
             }
         }
     }
@@ -113,58 +118,62 @@ extension ViewController: NDT7TestInteraction {
 
     func downloadMeasurement(_ measurement: NDT7Measurement) {
         DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            if let url = strongSelf.ndt7Test?.settings.url.hostname {
+                strongSelf.serverLabel.text = url
+            }
             if let elapsedTime = measurement.elapsed {
-                self?.downloadTime.text = "\(String(Int(elapsedTime))) s"
+                strongSelf.downloadTime.text = "\(String(Int(elapsedTime))) s"
                 if let maxBandwidth = measurement.bbrInfo?.bandwith {
                     let rounded = Double(Float64(maxBandwidth)/elapsedTime/125000).rounded(toPlaces: 3)
-                    self?.maxBandwidthLabel.text = "\(rounded) Mbit/s"
+                    strongSelf.maxBandwidthLabel.text = "\(rounded) Mbit/s"
                 }
                 if let downloadSpeed = measurement.appInfo?.numBytes {
                     let rounded = Double(Float64(downloadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
-                    self?.downloadSpeedLabel.text = "\(rounded) Mbit/s"
+                    strongSelf.downloadSpeedLabel.text = "\(rounded) Mbit/s"
                 }
             }
             if let minRTT = measurement.bbrInfo?.minRtt {
-                self?.minRTTLabel.text = "\(minRTT) ms"
+                strongSelf.minRTTLabel.text = "\(minRTT) ms"
             }
             if let smoothedRTT = measurement.tcpInfo?.smoothedRtt {
-                self?.smoothedRTTLabel.text = "\(smoothedRTT) ms"
+                strongSelf.smoothedRTTLabel.text = "\(smoothedRTT) ms"
             }
             if let rttVariance = measurement.tcpInfo?.rttVar {
-                self?.rttVarianceLabel.text = "\(rttVariance) ms"
+                strongSelf.rttVarianceLabel.text = "\(rttVariance) ms"
             }
         }
     }
 
     func uploadMeasurement(_ measurement: NDT7Measurement) {
         DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            if let url = strongSelf.ndt7Test?.settings.url.hostname {
+                strongSelf.serverLabel.text = url
+            }
             if let elapsedTime = measurement.elapsed, let uploadSpeed = measurement.appInfo?.numBytes {
-                self?.uploadTime.text = "\(String(Int(elapsedTime))) s"
+                strongSelf.uploadTime.text = "\(String(Int(elapsedTime))) s"
                 let rounded = Double(Float64(uploadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
-                self?.uploadSpeedLabel.text = "\(rounded) Mbit/s"
+                strongSelf.uploadSpeedLabel.text = "\(rounded) Mbit/s"
             }
         }
     }
 
     func downloadTestError(_ error: NSError) {
-        DispatchQueue.main.async { [weak self] in
-            self?.errorAlert(title: "Download Test Error", message: error.localizedDescription)
-        }
+        cancelTest()
     }
 
     func uploadTestError(_ error: NSError) {
-        DispatchQueue.main.async { [weak self] in
-            self?.errorAlert(title: "Upload Test Error", message: error.localizedDescription)
-        }
+        cancelTest()
     }
 
     func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: "Download Test Error", message: "\(message)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Cancel Test", style: .default, handler: { [weak self] (_) in
-            self?.cancelTest()
-        }))
-        self.present(alert, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            let alert = UIAlertController(title: title, message: "\(message)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            strongSelf.present(alert, animated: true)
+        }
     }
 }
 

@@ -110,13 +110,11 @@ extension WebSocketWrapper: WebSocketDelegate {
     }
 
     func webSocketMessageText(_ text: String) {
-        logNDT7("WebSocket \(url.absoluteString) did get message text")
         connected = true
         delegate?.message(webSocket: self, message: text)
     }
 
     func webSocketMessageData(_ data: Data) {
-        logNDT7("WebSocket \(url.absoluteString) did get message data \(data)")
         connected = true
         delegate?.message(webSocket: self, message: data)
     }

@@ -8,9 +8,7 @@
 
 import Foundation
 
-// MARK: Date Extensions
-
-/// Date Extension
+/// Date Extension.
 extension Date {
 
     /// Date and time format for log message.

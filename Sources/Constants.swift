@@ -11,8 +11,32 @@ import Foundation
 /// Websocket constants definition.
 public struct NDT7Constants {
 
-    /// Test cancelled.
+    /// Domain.
     public static let domain = "net.measurementlab.NDT7"
+
+    /// MLab Server discover constants.
+    public struct MlabServerDiscover {
+
+        /// Discover closer server hostname url.
+        public static let hostname = "locate-dot-mlab-staging.appspot.com"
+
+        /// Discover server path.
+        public static let path = "ndt_ssl"
+
+        /// Geo options.
+        public static let geoOption = "geo_options"
+
+        /// Discover list of Mlab Servers with Geo Options
+        public static let urlWithGeoOption = "https://\(hostname)/\(path)?policy=\(geoOption)"
+
+        /// Discover closer Mlab Server
+        public static let url = "https://\(hostname)/\(path)"
+
+        /// Cannot find a suitable mlab server error
+        public static let noMlabServerError = NSError(domain: NDT7Constants.domain,
+                                                        code: 0,
+                                                        userInfo: [NSLocalizedDescriptionKey: "Cannot find a suitable mlab server"])
+    }
 
     /// Websocket constants definition.
     public struct WebSocket {
@@ -56,5 +80,10 @@ public struct NDT7Constants {
 
         /// Test cancelled.
         public static let cancelled = "Test cancelled"
+
+        /// Test cancelled error.
+        public static let cancelledError = NSError(domain: NDT7Constants.domain,
+                                                   code: 0,
+                                                   userInfo: [NSLocalizedDescriptionKey: cancelled])
     }
 }

@@ -112,13 +112,14 @@ open class NDT7Test {
     var uploadTestCompletion: ((_ error: NSError?) -> Void)?
     var timerDownload: Timer?
     var timerUpload: Timer?
+    var discoverServerTask: URLSessionTask?
 
     /// This delegate allows to return the test interaction information (`NDT7TestInteraction` protocol).
     public weak var delegate: NDT7TestInteraction?
 
     /// This parameter contains all the settings needed for ndt7 test.
     /// Please, check `NDT7Settings` for more information about the settings.
-    public let settings: NDT7Settings
+    public var settings: NDT7Settings
 
     /// Initialization.
     /// - parameter settings: Contains all the settings needed for ndt7 test (`NDT7Settings`).
@@ -137,54 +138,67 @@ open class NDT7Test {
 /// This extension represent the public function to interact with NDT7Test.
 extension NDT7Test {
 
-    /// Start a test for download and/or upload, returning error if something was wrong.
+    /// MLab server setup for testing and
+    /// start a test for download and/or upload, returning error if something was wrong.
     /// - parameter download: boolean to run download test.
     /// - parameter upload: boolean to run upload test.
     /// - parameter completion: A block to execute.
     /// - parameter error: Contains an error if it happens during the tests.
     public func startTest(download: Bool, upload: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
-
         logNDT7("NDT7 test started")
-
-        // Cleanup and cancel any test in progress.
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
+        serverSetup { [weak self] (error) in
+            OperationQueue.current?.name = "net.measurementlab.NDT7.test"
+            self?.test(download: download, upload: upload, error: error, completion)
+        }
+    }
 
-        // Download test start.
-        startDownload(download) { [weak self] (error) in
+    /// Server setup discover a MLab server for testing if there is not hostname deffined in settings.
+    /// - parameter completion: closure for callback.
+    /// - parameter error: returns an error if exist.
+    func serverSetup(_ completion: @escaping (_ error: NSError?) -> Void) {
+        guard settings.url.hostname.isEmpty else {
+            completion(nil)
+            return
+        }
+        discoverServerTask = settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
+            guard let strongSelf = self else { return }
+            strongSelf.settings.url.hostname = server?.fqdn ?? ""
+            strongSelf.settings.url.server = server
+            completion(error)
+        })
+    }
+
+    /// Start a test for download and/or upload, returning error if something was wrong.
+    /// - parameter download: boolean to run download test.
+    /// - parameter upload: boolean to run upload test.
+    /// - parameter completion: A block to execute.
+    /// - parameter error: Contains an error if it happens during the tests.
+    func test(download: Bool, upload: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
+        startDownload(download, error: error) { [weak self] (error) in
             self?.cleanup()
             self?.downloadTestRunning = false
-            if let error = error {
-                if error.localizedDescription == NDT7Constants.Test.cancelled {
-                    logNDT7("NDT7 test cancelled")
-                    completion(nil)
-                    return
-                }
-                completion(error)
-            }
-
-            // Upload test start.
-            self?.startUpload(upload) { (error) in
+            self?.startUpload(upload, error: error) { (error) in
                 self?.cleanup()
                 self?.uploadTestRunning = false
-                let testCancelled = error?.localizedDescription == NDT7Constants.Test.cancelled
-                logNDT7("NDT7 test \(testCancelled ? "cancelled" : "finished")")
-                completion(error == nil || testCancelled ? nil : error)
+                logNDT7("NDT7 test finished")
+                completion(error)
             }
         }
     }
 
     /// Cancel test running.
     public func cancel() {
-        let error = NSError(domain: NDT7Constants.domain,
-                            code: 0,
-                            userInfo: [ NSLocalizedDescriptionKey: NDT7Constants.Test.cancelled])
+        if discoverServerTask?.state == URLSessionTask.State.running {
+            discoverServerTask?.cancel()
+        }
         if downloadTestRunning {
-            downloadTestCompletion?(error)
+            downloadTestCompletion?(NDT7Constants.Test.cancelledError)
             downloadTestCompletion = nil
         }
         if uploadTestRunning {
-            uploadTestCompletion?(error)
+            uploadTestCompletion?(NDT7Constants.Test.cancelledError)
             uploadTestCompletion = nil
         }
         webSocketDownload?.delegate = nil
@@ -205,11 +219,12 @@ extension NDT7Test {
 
     /// Start download test
     /// - parameter start: boolean to run download test.
+    /// - parameter error: error to return if exist.
     /// - parameter completion: A block to execute.
     /// - parameter error: Contains an error during the download test.
-    func startDownload(_ start: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
-        guard start else {
-            completion(nil)
+    func startDownload(_ start: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
+        guard start && error == nil else {
+            completion(error)
             return
         }
         downloadTestCompletion = completion
@@ -233,11 +248,12 @@ extension NDT7Test {
 
     /// Start upload test
     /// - parameter start: boolean to run upload test.
+    /// - parameter error: error to return if exist.
     /// - parameter completion: A block to execute.
     /// - parameter error: Contains an error during the upload test.
-    func startUpload(_ start: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
-        guard start else {
-            completion(nil)
+    func startUpload(_ start: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
+        guard start && error == nil else {
+            completion(error)
             return
         }
         uploadTestCompletion = completion
@@ -262,15 +278,16 @@ extension NDT7Test {
     /// Uploader is a function to upload messages to the server to meassure the upload speed.
     /// - parameter socket: WebSocket object in charge of the upload.
     /// - parameter message: Data message to upload.
-    /// - parameter t0: Initial date time.
-    /// - parameter tlast: Last date time.
+    /// - parameter t0: Initial date time or nil to indicate the first iteration.
+    /// - parameter tlast: Last date time or nil to indicate the first iteration.
     /// - parameter count: Number of transmitted bytes.
     /// - parameter queue: Dispatch queue for upload.
-    func uploader(socket: WebSocketWrapper, message: Data, t0: Date, tlast: Date, count: Int, queue: DispatchQueue) {
+    func uploader(socket: WebSocketWrapper, message: Data, t0: Date?, tlast: Date?, count: Int, queue: DispatchQueue) {
 
-        var count = count
-        var tlast = tlast
+        let t0 = t0 ?? Date()
         var t1 = Date()
+        var tlast = tlast ?? Date()
+        var count = count
         let duration: TimeInterval = 10.0
         guard t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true else {
             uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
@@ -281,16 +298,15 @@ extension NDT7Test {
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
-        let every: Double = 0.250
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
                 count += message.count
-                t1 = Date()
-                if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > every {
-                    tlast = t1
-                    uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
-                }
+            }
+            t1 = Date()
+            if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25 {
+                tlast = t1
+                uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
             }
         }
         queue.asyncAfter(deadline: .now()) { [weak self] in
@@ -351,16 +367,9 @@ extension NDT7Test: WebSocketInteraction {
             downloadTestRunning = true
         } else if webSocket === webSocketUpload {
             uploadTestRunning = true
-            let dataArray: [UInt8] = (0..<(1 << 13)).map { _ in
-                UInt8.random(in: 1...255)
-            }
-            let data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
-            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInitiated)
+            let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInteractive)
             dispatchQueue.async { [weak self] in
-                self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
-            }
-            dispatchQueue.async { [weak self] in
-                self?.uploader(socket: webSocket, message: data, t0: Date(), tlast: Date(), count: 0, queue: dispatchQueue)
+                self?.uploader(socket: webSocket, message: Data.randomDataNetworkElement(), t0: nil, tlast: nil, count: 0, queue: dispatchQueue)
             }
         }
     }
@@ -390,15 +399,18 @@ extension NDT7Test: WebSocketInteraction {
     }
 
     func error(webSocket: WebSocketWrapper, error: NSError) {
+        let mlabServerError = NSError(domain: NDT7Constants.domain,
+                                      code: 0,
+                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.url.hostname) has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
-            delegate?.downloadTestError(error)
-            downloadTestCompletion?(error)
+            delegate?.downloadTestError(mlabServerError)
+            downloadTestCompletion?(mlabServerError)
             downloadTestCompletion = nil
         } else if webSocket === webSocketUpload {
             logNDT7("Upload test error: \(error.localizedDescription)", .error)
-            delegate?.uploadTestError(error)
-            uploadTestCompletion?(error)
+            delegate?.uploadTestError(mlabServerError)
+            uploadTestCompletion?(mlabServerError)
             uploadTestCompletion = nil
         }
     }
