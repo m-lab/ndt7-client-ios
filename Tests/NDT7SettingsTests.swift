@@ -42,7 +42,7 @@ class NDT7SettingsTests: XCTestCase {
         let defaultURL = NDT7URL(hostname: "")
         var result = false
         let expectation = XCTestExpectation(description: "Job in main thread")
-        defaultURL.discoverServer(withGeoOptions: false) { (server, error) in
+        _ = defaultURL.discoverServer(withGeoOptions: false) { (server, error) in
             XCTAssertNotNil(server)
             XCTAssertNotNil(server?.ip)
             XCTAssertNotNil(server?.city)
@@ -57,7 +57,7 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertTrue(result)
         var resultWithGeoOptions = false
         let expectationGeoOptions = XCTestExpectation(description: "Job in main thread")
-        defaultURL.discoverServer(withGeoOptions: false) { (server, error) in
+        _ = defaultURL.discoverServer(withGeoOptions: false) { (server, error) in
             XCTAssertNotNil(server)
             XCTAssertNotNil(server?.ip)
             XCTAssertNotNil(server?.city)
@@ -70,6 +70,18 @@ class NDT7SettingsTests: XCTestCase {
         }
         wait(for: [expectationGeoOptions], timeout: 10.0)
         XCTAssertTrue(resultWithGeoOptions)
+        var resultWithTaskCancelled = false
+        let expectationWithTaskCancelled = XCTestExpectation(description: "Job in main thread")
+        let task = defaultURL.discoverServer(withGeoOptions: false) { (server, error) in
+            XCTAssertNil(server)
+            XCTAssertNotNil(error)
+            XCTAssertEqual(error, NDT7Constants.Test.cancelledError)
+            resultWithTaskCancelled = true
+            expectationWithTaskCancelled.fulfill()
+        }
+        task.cancel()
+        wait(for: [expectationWithTaskCancelled], timeout: 10.0)
+        XCTAssertTrue(resultWithTaskCancelled)
     }
 
     func testDecodeServer() {

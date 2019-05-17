@@ -11,7 +11,7 @@ import Foundation
 /// Websocket constants definition.
 public struct NDT7Constants {
 
-    /// Test cancelled.
+    /// Domain.
     public static let domain = "net.measurementlab.NDT7"
 
     public struct MlabServerDiscover {
@@ -34,7 +34,7 @@ public struct NDT7Constants {
         /// Cannot find a suitable mlab server error
         public static let noMlabServerError = NSError(domain: NDT7Constants.domain,
                                                         code: 0,
-                                                        userInfo: [ NSLocalizedDescriptionKey: "Cannot find a suitable mlab server"])
+                                                        userInfo: [NSLocalizedDescriptionKey: "Cannot find a suitable mlab server"])
     }
 
     /// Websocket constants definition.
@@ -79,5 +79,10 @@ public struct NDT7Constants {
 
         /// Test cancelled.
         public static let cancelled = "Test cancelled"
+
+        /// Test cancelled error.
+        public static let cancelledError = NSError(domain: NDT7Constants.domain,
+                                                   code: 0,
+                                                   userInfo: [NSLocalizedDescriptionKey: cancelled])
     }
 }

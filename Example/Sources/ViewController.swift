@@ -52,6 +52,7 @@ class ViewController: UIViewController {
 
     func cancelTest() {
         ndt7Test?.cancel()
+        statusUpdate(downloadTestRunning: false, uploadTestRunning: false)
     }
 
     func clearData() {

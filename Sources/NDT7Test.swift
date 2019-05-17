@@ -112,6 +112,7 @@ open class NDT7Test {
     var uploadTestCompletion: ((_ error: NSError?) -> Void)?
     var timerDownload: Timer?
     var timerUpload: Timer?
+    var discoverServerTask: URLSessionTask?
 
     /// This delegate allows to return the test interaction information (`NDT7TestInteraction` protocol).
     public weak var delegate: NDT7TestInteraction?
@@ -137,71 +138,67 @@ open class NDT7Test {
 /// This extension represent the public function to interact with NDT7Test.
 extension NDT7Test {
 
-    /// Start a test for download and/or upload, returning error if something was wrong.
+    /// MLab server setup for testing and
+    /// start a test for download and/or upload, returning error if something was wrong.
     /// - parameter download: boolean to run download test.
     /// - parameter upload: boolean to run upload test.
     /// - parameter completion: A block to execute.
     /// - parameter error: Contains an error if it happens during the tests.
     public func startTest(download: Bool, upload: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
-
         logNDT7("NDT7 test started")
-
-        // Cleanup and cancel any test in progress.
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
-        let dg = DispatchGroup()
-
-        if settings.url.hostname.isEmpty {
-            dg.enter()
-            settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
-                guard let hostname = server?.fqdn, error == nil else {
-                    completion(error)
-                    return
-                }
-                self?.settings.url.hostname = hostname
-                self?.settings.url.server = server
-                dg.leave()
-            })
-        }
-
-        dg.notify(queue: .global(qos: .userInteractive)) { [weak self] in
+        serverSetup { [weak self] (error) in
             OperationQueue.current?.name = "net.measurementlab.NDT7.test"
-            // Download test start.
-            self?.startDownload(download) { (error) in
+            self?.test(download: download, upload: upload, error: error, completion)
+        }
+    }
+
+    /// Server setup discover a MLab server for testing if there is not hostname deffined in settings.
+    /// - parameter completion: closure for callback.
+    /// - parameter error: returns an error if exist.
+    func serverSetup(_ completion: @escaping (_ error: NSError?) -> Void) {
+        guard settings.url.hostname.isEmpty else {
+            completion(nil)
+            return
+        }
+        discoverServerTask = settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
+            guard let strongSelf = self else { return }
+            strongSelf.settings.url.hostname = server?.fqdn ?? ""
+            strongSelf.settings.url.server = server
+            completion(error)
+        })
+    }
+
+    /// Start a test for download and/or upload, returning error if something was wrong.
+    /// - parameter download: boolean to run download test.
+    /// - parameter upload: boolean to run upload test.
+    /// - parameter completion: A block to execute.
+    /// - parameter error: Contains an error if it happens during the tests.
+    func test(download: Bool, upload: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
+        startDownload(download, error: error) { [weak self] (error) in
+            self?.cleanup()
+            self?.downloadTestRunning = false
+            self?.startUpload(upload, error: error) { (error) in
                 self?.cleanup()
-                self?.downloadTestRunning = false
-                if let error = error {
-                    if error.localizedDescription == NDT7Constants.Test.cancelled {
-                        logNDT7("NDT7 test cancelled")
-                        completion(nil)
-                        return
-                    }
-                    completion(error)
-                    return
-                }
-                // Upload test start.
-                self?.startUpload(upload) { (error) in
-                    self?.cleanup()
-                    self?.uploadTestRunning = false
-                    let testCancelled = error?.localizedDescription == NDT7Constants.Test.cancelled
-                    logNDT7("NDT7 test \(testCancelled ? "cancelled" : "finished")")
-                    completion(error == nil || testCancelled ? nil : error)
-                }
+                self?.uploadTestRunning = false
+                logNDT7("NDT7 test finished")
+                completion(error)
             }
         }
     }
 
     /// Cancel test running.
     public func cancel() {
-        let error = NSError(domain: NDT7Constants.domain,
-                            code: 0,
-                            userInfo: [ NSLocalizedDescriptionKey: NDT7Constants.Test.cancelled])
+        if discoverServerTask?.state == URLSessionTask.State.running {
+            discoverServerTask?.cancel()
+        }
         if downloadTestRunning {
-            downloadTestCompletion?(error)
+            downloadTestCompletion?(NDT7Constants.Test.cancelledError)
             downloadTestCompletion = nil
         }
         if uploadTestRunning {
-            uploadTestCompletion?(error)
+            uploadTestCompletion?(NDT7Constants.Test.cancelledError)
             uploadTestCompletion = nil
         }
         webSocketDownload?.delegate = nil
@@ -222,11 +219,12 @@ extension NDT7Test {
 
     /// Start download test
     /// - parameter start: boolean to run download test.
+    /// - parameter error: error to return if exist.
     /// - parameter completion: A block to execute.
     /// - parameter error: Contains an error during the download test.
-    func startDownload(_ start: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
-        guard start else {
-            completion(nil)
+    func startDownload(_ start: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
+        guard start && error == nil else {
+            completion(error)
             return
         }
         downloadTestCompletion = completion
@@ -250,11 +248,12 @@ extension NDT7Test {
 
     /// Start upload test
     /// - parameter start: boolean to run upload test.
+    /// - parameter error: error to return if exist.
     /// - parameter completion: A block to execute.
     /// - parameter error: Contains an error during the upload test.
-    func startUpload(_ start: Bool, _ completion: @escaping (_ error: NSError?) -> Void) {
-        guard start else {
-            completion(nil)
+    func startUpload(_ start: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
+        guard start && error == nil else {
+            completion(error)
             return
         }
         uploadTestCompletion = completion

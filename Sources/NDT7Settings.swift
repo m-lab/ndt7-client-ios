@@ -138,16 +138,21 @@ extension NDT7URL {
     /// - parameter completion: callback to get the NDT7Server and error message.
     /// - parameter server: NDT7Server object representing the Mlab server.
     /// - parameter error: if any error happens, this parameter returns the error.
-    public func discoverServer(withGeoOptions geoOptions: Bool, _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) {
+    public func discoverServer(withGeoOptions geoOptions: Bool, _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTask {
         let session = URLSession.shared
         let request = Networking.urlRequest(geoOptions ? NDT7Constants.MlabServerDiscover.urlWithGeoOption : NDT7Constants.MlabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
-            OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.Setup"
+            OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
+            guard error?.localizedDescription != "cancelled" else {
+                completion(nil, NDT7Constants.Test.cancelledError)
+                return
+            }
             let server = NDT7URL.decodeServer(data: data, fromUrl: request.url?.absoluteString)
             logNDT7("NDT7 Mlab server \(server?.fqdn ?? "")\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
             completion(server, server?.fqdn == nil ? NDT7Constants.MlabServerDiscover.noMlabServerError : nil)
         }
         task.resume()
+        return task
     }
 
     static func decodeServer(data: Data?, fromUrl url: String?) -> NDT7Server? {
