@@ -14,6 +14,7 @@ public struct NDT7Constants {
     /// Domain.
     public static let domain = "net.measurementlab.NDT7"
 
+    /// MLab Server discover constants.
     public struct MlabServerDiscover {
 
         /// Discover closer server hostname url.

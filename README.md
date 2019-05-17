@@ -49,6 +49,7 @@ NDT7 provides a framework to measure the download and upload speed.
 ## Current supported features
 
 - [X] Download Speed Test. Beta version.
+- [X] Upload Speed Test. Beta version.
 - [ ] Download Speed Test
 - [ ] Upload Speed Test
 
@@ -77,7 +78,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'NDT7 example' do
-  pod 'NDT7', '0.0.1-beta.1'
+  pod 'NDT7', '0.0.1-beta.2'
 end
 ```
 
@@ -95,7 +96,7 @@ $ pod install
 Create a `Cartfile` and add the following line:
 
 ```
-github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.1
+github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.2
 ```
 
 Next, run the following command:

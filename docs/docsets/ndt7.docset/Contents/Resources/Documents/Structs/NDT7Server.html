@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>NDT7Measurement Structure Reference</title>
+    <title>NDT7Server Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Struct/NDT7Measurement" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Struct/NDT7Server" class="dashAnchor"></a>
 
-    <a title="NDT7Measurement Structure Reference"></a>
+    <a title="NDT7Server Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">NDT7 Reference</a>
       <img class="carat" src="../img/carat.png" />
-      NDT7Measurement Structure Reference
+      NDT7Server Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -116,32 +116,14 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>NDT7Measurement</h1>
+            <h1>NDT7Server</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Measurement</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Server</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
-            <p>For measurement, the server and client exchange JSON measurements using Textual WebSocket messages.
-NDT7Measurement represents such JSON measurements, which contains all the information.</p>
-
-<p>Example of JSON to be matched with NDT7Measurement object:</p>
-<pre class="highlight swift"><code><span class="p">{</span>
- <span class="s">"app_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"num_bytes"</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
- <span class="p">},</span>
- <span class="s">"bbr_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"max_bandwidth"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>
-   <span class="s">"min_rtt"</span><span class="p">:</span> <span class="mf">123.4</span>
- <span class="p">},</span>
- <span class="s">"elapsed"</span><span class="p">:</span> <span class="mf">1.2345</span><span class="p">,</span>
- <span class="s">"tcp_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"rtt_var"</span><span class="p">:</span> <span class="mf">123.4</span><span class="p">,</span>
-   <span class="s">"smoothed_rtt"</span><span class="p">:</span> <span class="mf">567.8</span>
- <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
+            <p>Mlab NDT7 Server.</p>
 
           </div>
         </section>
@@ -153,9 +135,9 @@ NDT7Measurement represents such JSON measurements, which contains all the inform
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV7elapsedSdSgvp"></a>
-                    <a name="//apple_ref/swift/Property/elapsed" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV7elapsedSdSgvp">elapsed</a>
+                    <a name="/s:4NDT70A6ServerV2ipSaySSGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/ip" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV2ipSaySSGSgvp">ip</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -163,15 +145,14 @@ NDT7Measurement represents such JSON measurements, which contains all the inform
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>elapsed (a float64) is the number of seconds elapsed since the beginning of the specific subtest and marks
-the moment in which the measurement has been performed by the client or by the server.</p>
+                        <p>ip array</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">elapsed</span><span class="p">:</span> <span class="kt">Float64</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">ip</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -181,9 +162,9 @@ the moment in which the measurement has been performed by the client or by the s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV7tcpInfoAA0A7TCPInfoVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/tcpInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV7tcpInfoAA0A7TCPInfoVSgvp">tcpInfo</a>
+                    <a name="/s:4NDT70A6ServerV7countrySSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/country" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV7countrySSSgvp">country</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -191,14 +172,14 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>tcpInfo is an optional object only included in the measurement when it is possible to access TCP_INFO stats.</p>
+                        <p>country</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">tcpInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">country</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -208,9 +189,9 @@ the moment in which the measurement has been performed by the client or by the s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV7appInfoAA0A7APPInfoVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/appInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV7appInfoAA0A7APPInfoVSgvp">appInfo</a>
+                    <a name="/s:4NDT70A6ServerV4citySSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/city" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV4citySSSgvp">city</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -218,14 +199,14 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>appInfo is an optional object only included in the measurement when an application-level measurement is available.</p>
+                        <p>city</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">appInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7APPInfo.html">NDT7APPInfo</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">city</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -235,9 +216,9 @@ the moment in which the measurement has been performed by the client or by the s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV7bbrInfoAA0A7BBRInfoVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/bbrInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV7bbrInfoAA0A7BBRInfoVSgvp">bbrInfo</a>
+                    <a name="/s:4NDT70A6ServerV4fqdnSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/fqdn" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV4fqdnSSSgvp">fqdn</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -245,14 +226,14 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>bbrInfo is an optional object only included in the measurement when it is possible to access TCP_CC_INFO stats for BBR.</p>
+                        <p>fqdn</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bbrInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">fqdn</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -262,9 +243,9 @@ the moment in which the measurement has been performed by the client or by the s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV11descriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV11descriptionSSvp">description</a>
+                    <a name="/s:4NDT70A6ServerV4siteSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/site" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV4siteSSSgvp">site</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -272,14 +253,14 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>description contains a formated string for NDT7Measurement.</p>
+                        <p>site</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">site</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
