@@ -1562,7 +1562,7 @@ private enum TCPConnSecurity {
 // sockets are opened.
 private class Manager {
     var queue = DispatchQueue(label: "SwiftWebSocketInstance", attributes: [])
-    let dispatchQueue = DispatchQueue.init(label: "SwiftWebSocket", qos: .userInitiated, attributes: [])
+    let dispatchQueue = DispatchQueue.init(label: "SwiftWebSocket", qos: .userInteractive, attributes: [])
     var once = Int()
     var mutex = pthread_mutex_t()
     var cond = pthread_cond_t()

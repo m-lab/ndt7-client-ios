@@ -15,7 +15,7 @@ class QueueTests: XCTestCase {
         let expectationMain = XCTestExpectation(description: "Job in main thread")
         DispatchQueue.main.async {
             let queueNameString = queueName()
-            XCTAssertEqual(queueNameString, "com.apple.main-thread")
+            XCTAssertEqual(queueNameString, "Operation queue: com.apple.main-thread-thread")
             expectationMain.fulfill()
         }
         wait(for: [expectationMain], timeout: 5.0)
@@ -26,7 +26,7 @@ class QueueTests: XCTestCase {
         let dispatchQueue = DispatchQueue(label: "com.ndt7.queueTest")
         dispatchQueue.async {
             let queueNameString = queueName()
-            XCTAssertEqual(queueNameString, "com.ndt7.queueTest")
+            XCTAssertEqual(queueNameString, "Dispatch queue: com.ndt7.queueTest-thread")
             expectationLabel.fulfill()
         }
         wait(for: [expectationLabel], timeout: 5.0)
