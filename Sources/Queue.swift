@@ -24,3 +24,16 @@ func queueName() -> String? {
         return "Dispatch queue: \(String(cString: currentQueueLabel, encoding: .utf8) ?? unknown)-thread"
     }
 }
+
+/// mainThread function forces to run a closure in main thread asynchronously
+/// if it is not runnnig in main thread.
+/// - returns: Closure running in main thread.
+func mainThread(_ completion: @escaping () -> Void) {
+    if Thread.isMainThread {
+        completion()
+    } else {
+        DispatchQueue.main.async {
+            completion()
+        }
+    }
+}

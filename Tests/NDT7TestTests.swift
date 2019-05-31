@@ -215,9 +215,8 @@ class NDT7TestTests: XCTestCase {
         ndt7Test = NDT7Test(settings: settings)
         result = false
         expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup({ (error) in
+        ndt7Test?.serverSetup({ (_) in
             result = true
-            XCTAssertNil(error)
             expectation.fulfill()
         })
         wait(for: [expectation], timeout: 10.0)

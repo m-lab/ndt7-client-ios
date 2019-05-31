@@ -46,7 +46,9 @@ class ViewController: UIViewController {
             if let error = error {
                 strongSelf.errorAlert(title: "Error during tests", message: "\(error.localizedDescription)")
             }
-            strongSelf.statusUpdate(downloadTestRunning: false, uploadTestRunning: false)
+            DispatchQueue.main.async {
+                strongSelf.statusUpdate(downloadTestRunning: false, uploadTestRunning: false)
+            }
         }
     }
 
@@ -86,21 +88,15 @@ extension ViewController {
             self.uploadTestRunning = uploadTestRunning
         }
         if self.downloadTestRunning == false && self.uploadTestRunning == false {
-            DispatchQueue.main.async { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.cancelButton.alpha = 0
-                strongSelf.cancelButton.isEnabled = false
-                strongSelf.startButton.alpha = 1
-                strongSelf.startButton.isEnabled = true
-            }
+            cancelButton.alpha = 0
+            cancelButton.isEnabled = false
+            startButton.alpha = 1
+            startButton.isEnabled = true
         } else {
-            DispatchQueue.main.async { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.cancelButton.alpha = 1
-                strongSelf.cancelButton.isEnabled = true
-                strongSelf.startButton.alpha = 0
-                strongSelf.startButton.isEnabled = false
-            }
+            cancelButton.alpha = 1
+            cancelButton.isEnabled = true
+            startButton.alpha = 0
+            startButton.isEnabled = false
         }
     }
 }
@@ -117,45 +113,39 @@ extension ViewController: NDT7TestInteraction {
     }
 
     func downloadMeasurement(_ measurement: NDT7Measurement) {
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            if let url = strongSelf.ndt7Test?.settings.url.hostname {
-                strongSelf.serverLabel.text = url
+        if let url = ndt7Test?.settings.url.hostname {
+            serverLabel.text = url
+        }
+        if let elapsedTime = measurement.elapsed {
+            downloadTime.text = "\(String(Int(elapsedTime))) s"
+            if let maxBandwidth = measurement.bbrInfo?.bandwith {
+                let rounded = Double(Float64(maxBandwidth)/elapsedTime/125000).rounded(toPlaces: 3)
+                maxBandwidthLabel.text = "\(rounded) Mbit/s"
             }
-            if let elapsedTime = measurement.elapsed {
-                strongSelf.downloadTime.text = "\(String(Int(elapsedTime))) s"
-                if let maxBandwidth = measurement.bbrInfo?.bandwith {
-                    let rounded = Double(Float64(maxBandwidth)/elapsedTime/125000).rounded(toPlaces: 3)
-                    strongSelf.maxBandwidthLabel.text = "\(rounded) Mbit/s"
-                }
-                if let downloadSpeed = measurement.appInfo?.numBytes {
-                    let rounded = Double(Float64(downloadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
-                    strongSelf.downloadSpeedLabel.text = "\(rounded) Mbit/s"
-                }
+            if let downloadSpeed = measurement.appInfo?.numBytes {
+                let rounded = Double(Float64(downloadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
+                downloadSpeedLabel.text = "\(rounded) Mbit/s"
             }
-            if let minRTT = measurement.bbrInfo?.minRtt {
-                strongSelf.minRTTLabel.text = "\(minRTT) ms"
-            }
-            if let smoothedRTT = measurement.tcpInfo?.smoothedRtt {
-                strongSelf.smoothedRTTLabel.text = "\(smoothedRTT) ms"
-            }
-            if let rttVariance = measurement.tcpInfo?.rttVar {
-                strongSelf.rttVarianceLabel.text = "\(rttVariance) ms"
-            }
+        }
+        if let minRTT = measurement.bbrInfo?.minRtt {
+            minRTTLabel.text = "\(minRTT) ms"
+        }
+        if let smoothedRTT = measurement.tcpInfo?.smoothedRtt {
+            smoothedRTTLabel.text = "\(smoothedRTT) ms"
+        }
+        if let rttVariance = measurement.tcpInfo?.rttVar {
+            rttVarianceLabel.text = "\(rttVariance) ms"
         }
     }
 
     func uploadMeasurement(_ measurement: NDT7Measurement) {
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            if let url = strongSelf.ndt7Test?.settings.url.hostname {
-                strongSelf.serverLabel.text = url
-            }
-            if let elapsedTime = measurement.elapsed, let uploadSpeed = measurement.appInfo?.numBytes {
-                strongSelf.uploadTime.text = "\(String(Int(elapsedTime))) s"
-                let rounded = Double(Float64(uploadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
-                strongSelf.uploadSpeedLabel.text = "\(rounded) Mbit/s"
-            }
+        if let url = ndt7Test?.settings.url.hostname {
+            serverLabel.text = url
+        }
+        if let elapsedTime = measurement.elapsed, let uploadSpeed = measurement.appInfo?.numBytes {
+            uploadTime.text = "\(String(Int(elapsedTime))) s"
+            let rounded = Double(Float64(uploadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
+            uploadSpeedLabel.text = "\(rounded) Mbit/s"
         }
     }
 
