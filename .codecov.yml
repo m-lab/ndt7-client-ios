@@ -1,6 +1,0 @@
-coverage:
-  ignore:
-    - "Example/**/*"
-    - "Tests/**/*"
-    - "Sources/WebSocketWrapper.swift"
-    - "Sources/WebSocket.swift"

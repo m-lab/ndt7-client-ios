@@ -1,0 +1,7 @@
+coverage:
+  ignore:
+    - Example/*
+    - Tests/*
+    - Docs/*
+    - Sources/WebSocketWrapper.swift
+    - Sources/WebSocket.swift
