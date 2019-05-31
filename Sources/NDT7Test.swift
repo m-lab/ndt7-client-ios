@@ -37,6 +37,7 @@ public protocol NDT7TestInteraction: class {
 }
 
 /// This extension for NDT7TestInteraction protocol allows to have optional functions.
+/// The information is returned in the main thread.
 extension NDT7TestInteraction {
 
     /// Convert protocol downloadTestRunning function in optional
@@ -162,7 +163,7 @@ extension NDT7Test {
             completion(nil)
             return
         }
-        discoverServerTask = settings.url.discoverServer(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
+        discoverServerTask = NDT7Server.discover(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
             guard let strongSelf = self else { return }
             strongSelf.settings.url.hostname = server?.fqdn ?? ""
             strongSelf.settings.url.server = server
@@ -178,10 +179,14 @@ extension NDT7Test {
     func test(download: Bool, upload: Bool, error: NSError?, _ completion: @escaping (_ error: NSError?) -> Void) {
         startDownload(download, error: error) { [weak self] (error) in
             self?.cleanup()
-            self?.downloadTestRunning = false
+            mainThread {
+                self?.downloadTestRunning = false
+            }
             self?.startUpload(upload, error: error) { (error) in
                 self?.cleanup()
-                self?.uploadTestRunning = false
+                mainThread {
+                    self?.uploadTestRunning = false
+                }
                 logNDT7("NDT7 test finished")
                 completion(error)
             }
@@ -324,7 +329,9 @@ extension NDT7Test {
         let message = "{\"elapsed\": \(t1.timeIntervalSince1970 - t0.timeIntervalSince1970), \"app_info\": { \"num_bytes\": \(count)}}"
         if let measurement = handleMessage(message) {
             logNDT7("Upload test \(measurement)")
-            delegate?.uploadMeasurement(measurement)
+            mainThread { [weak self] in
+                self?.delegate?.uploadMeasurement(measurement)
+            }
         }
     }
 
@@ -364,9 +371,13 @@ extension NDT7Test: WebSocketInteraction {
 
     func open(webSocket: WebSocketWrapper) {
         if webSocket === webSocketDownload {
-            downloadTestRunning = true
+            mainThread { [weak self] in
+                self?.downloadTestRunning = true
+            }
         } else if webSocket === webSocketUpload {
-            uploadTestRunning = true
+            mainThread { [weak self] in
+                self?.uploadTestRunning = true
+            }
             let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.upload.test", qos: .userInteractive)
             dispatchQueue.async { [weak self] in
                 self?.uploader(socket: webSocket, message: Data.randomDataNetworkElement(), t0: nil, tlast: nil, count: 0, queue: dispatchQueue)
@@ -394,7 +405,9 @@ extension NDT7Test: WebSocketInteraction {
             let appInfo = NDT7APPInfo(numBytes: Int64(webSocket.inputBytesLengthAccumulated))
             measurement.appInfo = appInfo
             logNDT7("Download test \(measurement)")
-            delegate?.downloadMeasurement(measurement)
+            mainThread { [weak self] in
+                self?.delegate?.downloadMeasurement(measurement)
+            }
         }
     }
 
@@ -404,12 +417,16 @@ extension NDT7Test: WebSocketInteraction {
                                       userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.url.hostname) has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
-            delegate?.downloadTestError(mlabServerError)
+            mainThread { [weak self] in
+                self?.delegate?.downloadTestError(mlabServerError)
+            }
             downloadTestCompletion?(mlabServerError)
             downloadTestCompletion = nil
         } else if webSocket === webSocketUpload {
             logNDT7("Upload test error: \(error.localizedDescription)", .error)
-            delegate?.uploadTestError(mlabServerError)
+            mainThread { [weak self] in
+                self?.delegate?.uploadTestError(mlabServerError)
+            }
             uploadTestCompletion?(mlabServerError)
             uploadTestCompletion = nil
         }
