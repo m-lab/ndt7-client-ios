@@ -131,15 +131,17 @@ public struct NDT7Server: Codable {
 }
 
 /// This extension provides helper methods to discover Mlab servers availables.
-extension NDT7URL {
+extension NDT7Server {
 
-    /// Discover the closer Mlab server available or using geo location to get a random server from a list of the closer servers if hostname is empty.
+    /// Discover the closer Mlab server available or using geo location to get a random server from a list of the closer servers.
+    /// - parameter session: URLSession object used to request servers, using URLSession.shared object as default session.
     /// - parameter geoOptions: true to use a list of servers based in geo location, otherwise the function will work trying to get the closer server.
     /// - parameter completion: callback to get the NDT7Server and error message.
     /// - parameter server: NDT7Server object representing the Mlab server.
     /// - parameter error: if any error happens, this parameter returns the error.
-    public func discoverServer(withGeoOptions geoOptions: Bool, _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTask {
-        let session = URLSession.shared
+    public static func discover(_ session: URLSession = URLSession.shared,
+                                withGeoOptions geoOptions: Bool,
+                                _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTask {
         let request = Networking.urlRequest(geoOptions ? NDT7Constants.MlabServerDiscover.urlWithGeoOption : NDT7Constants.MlabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
@@ -147,7 +149,7 @@ extension NDT7URL {
                 completion(nil, NDT7Constants.Test.cancelledError)
                 return
             }
-            let server = NDT7URL.decodeServer(data: data, fromUrl: request.url?.absoluteString)
+            let server = decode(data: data, fromUrl: request.url?.absoluteString)
             logNDT7("NDT7 Mlab server \(server?.fqdn ?? "")\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
             completion(server, server?.fqdn == nil ? NDT7Constants.MlabServerDiscover.noMlabServerError : nil)
         }
@@ -155,7 +157,7 @@ extension NDT7URL {
         return task
     }
 
-    static func decodeServer(data: Data?, fromUrl url: String?) -> NDT7Server? {
+    static func decode(data: Data?, fromUrl url: String?) -> NDT7Server? {
         guard let data = data, let url = url else { return nil }
         switch url {
         case NDT7Constants.MlabServerDiscover.url:

@@ -41,4 +41,30 @@ class QueueTests: XCTestCase {
         }
         wait(for: [expectationNoLabel], timeout: 5.0)
     }
+
+    func testMainThreadWithBackgroundQueue() {
+        let expectationMainThread = XCTestExpectation(description: "Job in main thread")
+        var checkThread = false
+        DispatchQueue.global().async {
+            mainThread {
+                XCTAssertTrue(Thread.isMainThread)
+                checkThread = true
+                expectationMainThread.fulfill()
+            }
+        }
+        wait(for: [expectationMainThread], timeout: 5.0)
+        XCTAssertTrue(checkThread)
+    }
+
+    func testMainThreadInMainThread() {
+        let expectationMainThread = XCTestExpectation(description: "Job in main thread")
+        var checkThread = false
+        mainThread {
+            XCTAssertTrue(Thread.isMainThread)
+            checkThread = true
+            expectationMainThread.fulfill()
+        }
+        wait(for: [expectationMainThread], timeout: 5.0)
+        XCTAssertTrue(checkThread)
+    }
 }
