@@ -18,10 +18,10 @@ public struct NDT7Constants {
     public struct MlabServerDiscover {
 
         /// Discover closer server hostname url.
-        public static let hostname = "locate-dot-mlab-staging.appspot.com"
+        public static let hostname = "locate.measurementlab.net"
 
         /// Discover server path.
-        public static let path = "ndt_ssl"
+        public static let path = "ndt7"
 
         /// Geo options.
         public static let geoOption = "geo_options"
