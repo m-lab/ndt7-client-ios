@@ -11,68 +11,46 @@ import Foundation
 /// This protocol allows to receive the test information.
 public protocol NDT7TestInteraction: class {
 
-    /// Provide the status of download test
-    /// - parameter running: true if the download test is running, otherwise, false.
-    func downloadTestRunning(_ running: Bool)
+    /// Provide the status of download and upload test
+    /// - parameter kind: Kind of test.
+    /// - parameter running: true if the test is running, otherwise, false.
+    func test(kind: NDT7TestConstants.Kind, running: Bool)
 
-    /// Provide the status of upload test
-    /// - parameter running: true if the upload test is running, otherwise, false.
-    func uploadTestRunning(_ running: Bool)
-
-    /// Provide the measurement of download test
+    /// Provide the measurement of download and upload test
+    /// - parameter origin: Origin of the test.
+    /// - parameter kind: Kind of test.
     /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
-    func downloadMeasurement(_ measurement: NDT7Measurement)
-
-    /// Provide the measurement of upload test
-    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
-    func uploadMeasurement(_ measurement: NDT7Measurement)
+    func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement)
 
     /// Error returned if something happen during a download test.
-    /// - parameter error: Error during the download test.
-    func downloadTestError(_ error: NSError)
-
-    /// Error returned if something happen during an upload test.
-    /// - parameter error: Error during the upload test.
-    func uploadTestError(_ error: NSError)
+    /// - parameter kind: Kind of test.
+    /// - parameter error: Error during the test.
+    func error(kind: NDT7TestConstants.Kind, error: NSError)
 }
 
 /// This extension for NDT7TestInteraction protocol allows to have optional functions.
 /// The information is returned in the main thread.
 extension NDT7TestInteraction {
 
-    /// Convert protocol downloadTestRunning function in optional
-    /// - parameter running: true if the download test is running, otherwise, false.
-    public func downloadTestRunning(_ running: Bool) {
+    /// Convert protocol test function in optional
+    /// - parameter kind: Kind of test.
+    /// - parameter running: true if the test is running, otherwise, false.
+    public func test(kind: NDT7TestConstants.Kind, running: Bool) {
         // Empty function for default implementation.
     }
 
-    /// Convert protocol uploadTestRunning function in optional
-    /// - parameter running: true if the upload test is running, otherwise, false.
-    public func uploadTestRunning(_ running: Bool) {
-        // Empty function for default implementation.
-    }
-
-    /// Convert protocol downloadMeasurement function in optional
+    /// Convert protocol measurement function in optional
+    /// - parameter origin: Origin of the test.
+    /// - parameter kind: Kind of test.
     /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
-    public func downloadMeasurement(_ measurement: NDT7Measurement) {
+    public func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
         // Empty function for default implementation.
     }
 
-    /// Convert protocol uploadMeasurement function in optional
-    /// - parameter measurement: Provide the measurement via `NDT7Measurement`, please check `NDT7Measurement` to get more information about the parameters the measurement contain.
-    public func uploadMeasurement(_ measurement: NDT7Measurement) {
-        // Empty function for default implementation.
-    }
-
-    /// Convert protocol downloadTestError function in optional
-    /// - parameter error: Error during the download test.
-    public func downloadTestError(_ error: NSError) {
-        // Empty function for default implementation.
-    }
-
-    /// Convert protocol uploadTestError function in optional
-    /// - parameter error: Error during the upload test.
-    public func uploadTestError(_ error: NSError) {
+    /// Convert protocol error function in optional
+    /// - parameter kind: Kind of test.
+    /// - parameter error: Error during the test.
+    public func error(kind: NDT7TestConstants.Kind, error: NSError) {
         // Empty function for default implementation.
     }
 }
@@ -80,7 +58,6 @@ extension NDT7TestInteraction {
 /// NDT7Test describes the version 7 of the Network Diagnostic Tool (NDT) protocol (ndt7).
 /// It is a redesign of the original NDT network performance measurement protocol.
 /// NDT7Test is based on WebSocket and TLS, and takes advantage of TCP BBR, where this flavour of TCP is available.
-/// This is version v0.7.0 of the ndt7 specification.
 /// For more information, please, visit the next link:
 /// https://github.com/m-lab/ndt-server/blob/master/spec/ndt7-protocol.md
 open class NDT7Test {
@@ -93,7 +70,7 @@ open class NDT7Test {
         didSet {
             if downloadTestRunning != oldValue {
                 logNDT7("Download test running: \(downloadTestRunning)")
-                delegate?.downloadTestRunning(downloadTestRunning)
+                delegate?.test(kind: .download, running: downloadTestRunning)
             }
         }
     }
@@ -103,7 +80,7 @@ open class NDT7Test {
         didSet {
             if uploadTestRunning != oldValue {
                 logNDT7("Upload test running: \(uploadTestRunning)")
-                delegate?.uploadTestRunning(uploadTestRunning)
+                delegate?.test(kind: .upload, running: uploadTestRunning)
             }
         }
     }
@@ -114,6 +91,8 @@ open class NDT7Test {
     var timerDownload: Timer?
     var timerUpload: Timer?
     var discoverServerTask: URLSessionTask?
+    var t0Download: Date?
+    var tLastDownload: Date?
 
     /// This delegate allows to return the test interaction information (`NDT7TestInteraction` protocol).
     public weak var delegate: NDT7TestInteraction?
@@ -199,11 +178,11 @@ extension NDT7Test {
             discoverServerTask?.cancel()
         }
         if downloadTestRunning {
-            downloadTestCompletion?(NDT7Constants.Test.cancelledError)
+            downloadTestCompletion?(NDT7TestConstants.cancelledError)
             downloadTestCompletion = nil
         }
         if uploadTestRunning {
-            uploadTestCompletion?(NDT7Constants.Test.cancelledError)
+            uploadTestCompletion?(NDT7TestConstants.cancelledError)
             uploadTestCompletion = nil
         }
         webSocketDownload?.delegate = nil
@@ -237,7 +216,7 @@ extension NDT7Test {
         let url = settings.url.download
         if let downloadURL = URL(string: url) {
             timerDownload?.invalidate()
-            timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.test,
+            timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.downloadTimeout,
                                                  repeats: false,
                                                  block: { [weak self] (_) in
                                                     self?.downloadTestCompletion?(nil)
@@ -266,7 +245,7 @@ extension NDT7Test {
         let url = settings.url.upload
         if let uploadURL = URL(string: url) {
             timerUpload?.invalidate()
-            timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.test,
+            timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.uploadTimeout,
                                                repeats: false,
                                                block: { [weak self] (_) in
                                                 self?.uploadTestCompletion?(nil)
@@ -326,11 +305,17 @@ extension NDT7Test {
     /// - parameter count: Number of transmitted bytes.
     func uploadMessage(socket: WebSocketWrapper, t0: Date, t1: Date, count: Int) {
         guard socket === webSocketUpload else { return }
-        let message = "{\"elapsed\": \(t1.timeIntervalSince1970 - t0.timeIntervalSince1970), \"app_info\": { \"num_bytes\": \(count)}}"
-        if let measurement = handleMessage(message) {
-            logNDT7("Upload test \(measurement)")
+        let message = "{ }"
+        if var measurement = handleMessage(message) {
+            measurement.origin = .client
+            measurement.direction = .upload
+            measurement.appInfo = NDT7APPInfo(elapsedTime: Int64((t1.timeIntervalSince1970 * 1000000.0) - (t0.timeIntervalSince1970 * 1000000.0)), numBytes: Int64(count))
+            if let jsonData = try? JSONEncoder().encode(measurement) {
+                measurement.rawData = String(data: jsonData, encoding: .utf8)
+            }
+            logNDT7("Upload test from client: \(measurement.rawData ?? "") - \(Int64(webSocketUpload?.outputBytesLengthAccumulated ?? 0))")
             mainThread { [weak self] in
-                self?.delegate?.uploadMeasurement(measurement)
+                self?.delegate?.measurement(origin: .client, kind: .upload, measurement: measurement)
             }
         }
     }
@@ -341,7 +326,8 @@ extension NDT7Test {
     func handleMessage(_ message: Any) -> NDT7Measurement? {
         if let message = message as? String, let data = message.data(using: .utf8) {
             do {
-                let decoded = try JSONDecoder().decode(NDT7Measurement.self, from: data)
+                var decoded = try JSONDecoder().decode(NDT7Measurement.self, from: data)
+                decoded.rawData = message
                 return decoded
             } catch {
                 logNDT7("Failed to decode message", .error)
@@ -371,6 +357,8 @@ extension NDT7Test: WebSocketInteraction {
 
     func open(webSocket: WebSocketWrapper) {
         if webSocket === webSocketDownload {
+            t0Download = Date()
+            tLastDownload = Date()
             mainThread { [weak self] in
                 self?.downloadTestRunning = true
             }
@@ -402,30 +390,59 @@ extension NDT7Test: WebSocketInteraction {
     func message(webSocket: WebSocketWrapper, message: Any) {
         guard var measurement = handleMessage(message) else { return }
         if webSocket === webSocketDownload {
-            let appInfo = NDT7APPInfo(numBytes: Int64(webSocket.inputBytesLengthAccumulated))
-            measurement.appInfo = appInfo
-            logNDT7("Download test \(measurement)")
+            measurement.origin = .server
+            measurement.direction = .download
+            logNDT7("Download test from server: \(measurement.rawData ?? "")")
             mainThread { [weak self] in
-                self?.delegate?.downloadMeasurement(measurement)
+                self?.delegate?.measurement(origin: .server, kind: .download, measurement: measurement)
+            }
+            let t1 = Date()
+            if let tLast = tLastDownload,
+                let t0 = t0Download,
+                t1.timeIntervalSince1970 - tLast.timeIntervalSince1970 > 0.25 {
+                tLastDownload = t1
+                let elapsedTime = Int64(((t1.timeIntervalSince1970 * 1000000.0) - (t0.timeIntervalSince1970 * 1000000.0)))
+                let appInfo = NDT7APPInfo(elapsedTime: elapsedTime, numBytes: Int64(webSocket.inputBytesLengthAccumulated))
+                var clientMeasurement = NDT7Measurement(appInfo: appInfo,
+                                                        bbrInfo: nil,
+                                                        connectionInfo: nil,
+                                                        origin: .client,
+                                                        direction: .download,
+                                                        tcpInfo: nil,
+                                                        rawData: nil)
+                if let jsonData = try? JSONEncoder().encode(clientMeasurement) {
+                    clientMeasurement.rawData = String(data: jsonData, encoding: .utf8)
+                }
+                logNDT7("Download test from client: \(clientMeasurement.rawData ?? "")")
+                mainThread { [weak self] in
+                    self?.delegate?.measurement(origin: .client, kind: .download, measurement: clientMeasurement)
+                }
+            }
+        } else if webSocket === webSocketUpload {
+            measurement.origin = .server
+            measurement.direction = .upload
+            logNDT7("Upload test from server: \(measurement.rawData ?? "")")
+            mainThread { [weak self] in
+                self?.delegate?.measurement(origin: .server, kind: .upload, measurement: measurement)
             }
         }
     }
 
     func error(webSocket: WebSocketWrapper, error: NSError) {
-        let mlabServerError = NSError(domain: NDT7Constants.domain,
+        let mlabServerError = NSError(domain: NDT7WebSocketConstants.domain,
                                       code: 0,
                                       userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.url.hostname) has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in
-                self?.delegate?.downloadTestError(mlabServerError)
+                self?.delegate?.error(kind: .download, error: mlabServerError)
             }
             downloadTestCompletion?(mlabServerError)
             downloadTestCompletion = nil
         } else if webSocket === webSocketUpload {
             logNDT7("Upload test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in
-                self?.delegate?.uploadTestError(mlabServerError)
+                self?.delegate?.error(kind: .upload, error: mlabServerError)
             }
             uploadTestCompletion?(mlabServerError)
             uploadTestCompletion = nil

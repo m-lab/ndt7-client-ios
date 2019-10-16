@@ -32,10 +32,7 @@ public struct NDT7Settings {
                 timeout: NDT7Timeouts = NDT7Timeouts(),
                 skipTLSCertificateVerification: Bool = true,
                 useGeoOptions: Bool = false,
-                headers: [String: String] = [NDT7Constants.WebSocket.headerProtocolKey: NDT7Constants.WebSocket.headerProtocolValue,
-                                     NDT7Constants.WebSocket.headerAcceptKey: NDT7Constants.WebSocket.headerAcceptValue,
-                                     NDT7Constants.WebSocket.headerVersionKey: NDT7Constants.WebSocket.headerVersionValue,
-                                     NDT7Constants.WebSocket.headerKey: NDT7Constants.WebSocket.headerValue]) {
+                headers: [String: String] = [NDT7WebSocketConstants.Request.headerProtocolKey: NDT7WebSocketConstants.Request.headerProtocolValue]) {
         self.url = url
         self.skipTLSCertificateVerification = skipTLSCertificateVerification
         self.useGeoOptions = useGeoOptions
@@ -74,8 +71,8 @@ public struct NDT7URL {
 
     /// Initialization.
     public init(hostname: String,
-                downloadPath: String = NDT7Constants.WebSocket.downloadPath,
-                uploadPath: String = NDT7Constants.WebSocket.uploadPath,
+                downloadPath: String = NDT7WebSocketConstants.Request.downloadPath,
+                uploadPath: String = NDT7WebSocketConstants.Request.uploadPath,
                 wss: Bool = true) {
         self.hostname = hostname
         self.downloadPath = downloadPath
@@ -95,19 +92,24 @@ public struct NDT7Timeouts {
     /// If it is initialize with less than 250 ms, it's going to be overwritten to 250 ms
     public let measurement: TimeInterval
 
-    /// Timeout for connection.
-    public let request: TimeInterval
+    /// ioTimeout is the timeout in seconds for I/O operations.
+    public let ioTimeout: TimeInterval
 
-    /// Define the max among of time used for a test before to force to finish.
-    public let test: TimeInterval
+    /// Define the max among of time used for a download test before to force to finish.
+    public let downloadTimeout: TimeInterval
+
+    /// Define the max among of time used for a upload test before to force to finish.
+    public let uploadTimeout: TimeInterval
 
     /// Initialization.
-    public init(measurement: TimeInterval = 0.25,
-                request: TimeInterval = 5,
-                test: TimeInterval = 15) {
-        self.measurement = measurement >= 0.25 ? measurement : 0.25
-        self.request = request
-        self.test = test
+    public init(measurement: TimeInterval = NDT7WebSocketConstants.Request.updateInterval,
+                ioTimeout: TimeInterval = NDT7WebSocketConstants.Request.ioTimeout,
+                downloadTimeout: TimeInterval = NDT7WebSocketConstants.Request.downloadTimeout,
+                uploadTimeout: TimeInterval = NDT7WebSocketConstants.Request.uploadTimeout) {
+        self.measurement = measurement >= NDT7WebSocketConstants.Request.updateInterval ? measurement : NDT7WebSocketConstants.Request.updateInterval
+        self.ioTimeout = ioTimeout
+        self.downloadTimeout = downloadTimeout
+        self.uploadTimeout = uploadTimeout
     }
 }
 
@@ -142,16 +144,16 @@ extension NDT7Server {
     public static func discover(_ session: URLSession = URLSession.shared,
                                 withGeoOptions geoOptions: Bool,
                                 _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTask {
-        let request = Networking.urlRequest(geoOptions ? NDT7Constants.MlabServerDiscover.urlWithGeoOption : NDT7Constants.MlabServerDiscover.url)
+        let request = Networking.urlRequest(geoOptions ? NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption : NDT7WebSocketConstants.MlabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
             guard error?.localizedDescription != "cancelled" else {
-                completion(nil, NDT7Constants.Test.cancelledError)
+                completion(nil, NDT7TestConstants.cancelledError)
                 return
             }
             let server = decode(data: data, fromUrl: request.url?.absoluteString)
             logNDT7("NDT7 Mlab server \(server?.fqdn ?? "")\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-            completion(server, server?.fqdn == nil ? NDT7Constants.MlabServerDiscover.noMlabServerError : nil)
+            completion(server, server?.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
         }
         task.resume()
         return task
@@ -160,9 +162,9 @@ extension NDT7Server {
     static func decode(data: Data?, fromUrl url: String?) -> NDT7Server? {
         guard let data = data, let url = url else { return nil }
         switch url {
-        case NDT7Constants.MlabServerDiscover.url:
+        case NDT7WebSocketConstants.MlabServerDiscover.url:
             return try? JSONDecoder().decode(NDT7Server.self, from: data)
-        case NDT7Constants.MlabServerDiscover.urlWithGeoOption:
+        case NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption:
             let decoded = try? JSONDecoder().decode([NDT7Server].self, from: data)
             let server = decoded?.first(where: { (server) -> Bool in
                 return server.fqdn != nil && !server.fqdn!.isEmpty

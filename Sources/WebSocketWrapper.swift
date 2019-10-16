@@ -37,7 +37,7 @@ class WebSocketWrapper {
         self.settings = settings
         var urlRequest = URLRequest(url: self.url,
                                     cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
-                                    timeoutInterval: settings.timeout.request)
+                                    timeoutInterval: settings.timeout.ioTimeout)
         for (header, value) in settings.headers {
             urlRequest.addValue(value, forHTTPHeaderField: header)
         }
