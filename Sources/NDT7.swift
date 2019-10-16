@@ -9,6 +9,20 @@
 import Foundation
 
 /// NDT7 provides a framework to measure the download and upload speed.
+/// NDT7 is based on WebSocket and TLS, and takes advantage of TCP BBR, where this flavour of TCP is available.
+/// NDT7 always uses a single TCP connection.
+///
+/// NDT7 answers the question of how fast you could pull/push data from your device to a typically-nearby, well-provisioned web server by means of commonly-used web technologies.
+/// This is not necessarily a measurement of your last mile speed.
+/// Rather it is a measurement of what performance is possible with your device,
+/// your current internet connection (landline, Wi-Fi, 4G, etc.),
+/// the characteristics of your ISP and possibly of other ISPs in the middle,
+/// and the server being used.
+/// The main metric measured by ndt7 is the goodput, i.e., the speed measured at application level,
+/// without including the overheads of WebSockets, TLS, TCP/IP, and link layer headers.
+/// But we also provide kernel-level information from TCP_INFO where available.
+/// For all these reasons we say that ndt7 performs application-level measurements.
+///
 /// The next example shows the whole implementation to get the information from NDT7
 /// with a default `NDT7Settings`.
 /// Please, check the `NDT7Settings` to undestand the parameters to be able
@@ -47,22 +61,13 @@ import Foundation
 ///
 ///extension ViewController: NDT7TestInteraction {
 ///
-///    func downloadTestRunning(_ running: Bool) {
+///    func test(kind: NDT7TestConstants.Kind, running: Bool) {
 ///    }
 ///
-///    func uploadTestRunning(_ running: Bool) {
+///    func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
 ///    }
 ///
-///    func downloadMeasurement(_ measurement: NDT7Measurement) {
-///    }
-///
-///    func uploadMeasurement(_ measurement: NDT7Measurement) {
-///    }
-///
-///    func downloadTestError(_ error: NSError) {
-///    }
-///
-///    func uploadTestError(_ error: NSError) {
+///    error(kind: NDT7TestConstants.Kind, error: NSError) {
 ///    }
 ///}
 /// ```

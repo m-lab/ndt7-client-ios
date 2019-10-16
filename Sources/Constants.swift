@@ -8,8 +8,40 @@
 
 import Foundation
 
+/// Test measurement constants.
+public struct NDT7TestConstants {
+
+    /// Origin of the test.
+    public enum Origin: String, Codable {
+
+        /// client indicates that the measurement origin is the client.
+        case client
+
+        /// server indicates that the measurement origin is the server.
+        case server
+    }
+
+    /// Kind of test.
+    public enum Kind: String, Codable {
+
+        /// download indicates that this is a download.
+        case download
+
+        /// upload indicates that this is an upload.
+        case upload
+    }
+
+    /// Test cancelled.
+    public static let cancelled = "Test cancelled"
+
+    /// Test cancelled error.
+    public static let cancelledError = NSError(domain: NDT7WebSocketConstants.domain,
+                                               code: 0,
+                                               userInfo: [NSLocalizedDescriptionKey: cancelled])
+}
+
 /// Websocket constants definition.
-public struct NDT7Constants {
+public struct NDT7WebSocketConstants {
 
     /// Domain.
     public static let domain = "net.measurementlab.NDT7"
@@ -33,22 +65,13 @@ public struct NDT7Constants {
         public static let url = "https://\(hostname)/\(path)"
 
         /// Cannot find a suitable mlab server error
-        public static let noMlabServerError = NSError(domain: NDT7Constants.domain,
-                                                        code: 0,
-                                                        userInfo: [NSLocalizedDescriptionKey: "Cannot find a suitable mlab server"])
+        public static let noMlabServerError = NSError(domain: NDT7WebSocketConstants.domain,
+                                                      code: 0,
+                                                      userInfo: [NSLocalizedDescriptionKey: "Cannot find a suitable mlab server"])
     }
 
     /// Websocket constants definition.
-    public struct WebSocket {
-
-        /// Hostname.
-        public static let hostname = "ndt-iupui-mlab4-lax04.measurement-lab.org"
-
-        /// Download Path.
-        public static let downloadPath = "/ndt/v7/download"
-
-        /// Upload Path.
-        public static let uploadPath = "/ndt/v7/upload"
+    public struct Request {
 
         /// protocol key header.
         public static let headerProtocolKey = "Sec-WebSocket-Protocol"
@@ -56,34 +79,25 @@ public struct NDT7Constants {
         /// protocol value header.
         public static let headerProtocolValue = "net.measurementlab.ndt.v7"
 
-        /// Accept key header.
-        public static let headerAcceptKey = "Sec-WebSocket-Accept"
+        /// Download Path.
+        public static let downloadPath = "/ndt/v7/download"
 
-        /// Accept value header.
-        public static let headerAcceptValue = "Nhz+x95YebD6Uvd4nqPC2fomoUQ="
+        /// Upload Path.
+        public static let uploadPath = "/ndt/v7/upload"
 
-        /// Version key header.
-        public static let headerVersionKey = "Sec-WebSocket-Version"
+        /// downloadTimeout is the time in seconds after which the download must stop.
+        public static let downloadTimeout: TimeInterval = 15
 
-        /// Version value header.
-        public static let headerVersionValue = "13"
+        /// uploadTimeout is the time in seconds after which the upload must stop.
+        public static let uploadTimeout: TimeInterval = 15
 
-        /// WebSocket key header.
-        public static let headerKey = "Sec-WebSocket-Key"
+        /// ioTimeout is the timeout in seconds for I/O operations.
+        public static let ioTimeout: TimeInterval = 7
 
-        /// WebSocket value header.
-        public static let headerValue = "DOdm+5/Cm3WwvhfcAlhJoQ=="
-    }
+        /// updateInterval is the interval between client side upload measurements.
+        public static let updateInterval: TimeInterval = 0.25
 
-    /// Test Constants.
-    public struct Test {
-
-        /// Test cancelled.
-        public static let cancelled = "Test cancelled"
-
-        /// Test cancelled error.
-        public static let cancelledError = NSError(domain: NDT7Constants.domain,
-                                                   code: 0,
-                                                   userInfo: [NSLocalizedDescriptionKey: cancelled])
+        /// bulkMessageSize is the size of uploaded messages
+        public static let bulkMessageSize = 1 << 13
     }
 }

@@ -12,13 +12,7 @@ import NDT7
 class ViewController: UIViewController {
 
     @IBOutlet weak var serverLabel: UILabel!
-    @IBOutlet weak var downloadTime: UILabel!
     @IBOutlet weak var downloadSpeedLabel: UILabel!
-    @IBOutlet weak var maxBandwidthLabel: UILabel!
-    @IBOutlet weak var minRTTLabel: UILabel!
-    @IBOutlet weak var smoothedRTTLabel: UILabel!
-    @IBOutlet weak var rttVarianceLabel: UILabel!
-    @IBOutlet weak var uploadTime: UILabel!
     @IBOutlet weak var uploadSpeedLabel: UILabel!
 
     @IBOutlet weak var startButton: UIButton!
@@ -59,13 +53,7 @@ class ViewController: UIViewController {
 
     func clearData() {
         serverLabel.text = "-"
-        downloadTime.text = "-"
         downloadSpeedLabel.text = "-"
-        maxBandwidthLabel.text = "-"
-        minRTTLabel.text = "-"
-        smoothedRTTLabel.text = "-"
-        rttVarianceLabel.text = "-"
-        uploadTime.text = "-"
         uploadSpeedLabel.text = "-"
     }
 
@@ -103,57 +91,37 @@ extension ViewController {
 
 extension ViewController: NDT7TestInteraction {
 
-    func downloadTestRunning(_ running: Bool) {
-        downloadTestRunning = running
+    func test(kind: NDT7TestConstants.Kind, running: Bool) {
+        switch kind {
+        case .download:
+            downloadTestRunning = running
+        case .upload:
+            uploadTestRunning = running
+            statusUpdate(downloadTestRunning: nil, uploadTestRunning: running)
+        }
     }
 
-    func uploadTestRunning(_ running: Bool) {
-        uploadTestRunning = running
-        statusUpdate(downloadTestRunning: nil, uploadTestRunning: running)
-    }
-
-    func downloadMeasurement(_ measurement: NDT7Measurement) {
+    func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
         if let url = ndt7Test?.settings.url.hostname {
             serverLabel.text = url
         }
-        if let elapsedTime = measurement.elapsed {
-            downloadTime.text = "\(String(Int(elapsedTime))) s"
-            if let maxBandwidth = measurement.bbrInfo?.bandwith {
-                let rounded = Double(Float64(maxBandwidth)/elapsedTime/125000).rounded(toPlaces: 3)
-                maxBandwidthLabel.text = "\(rounded) Mbit/s"
-            }
-            if let downloadSpeed = measurement.appInfo?.numBytes {
-                let rounded = Double(Float64(downloadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
+        if origin == .client,
+            let elapsedTime = measurement.appInfo?.elapsedTime,
+            let numBytes = measurement.appInfo?.numBytes,
+            elapsedTime >= 1000000 {
+            let seconds = elapsedTime / 1000000
+            let mbit = numBytes / 125000
+            let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
+            switch kind {
+            case .download:
                 downloadSpeedLabel.text = "\(rounded) Mbit/s"
+            case .upload:
+                uploadSpeedLabel.text = "\(rounded) Mbit/s"
             }
         }
-        if let minRTT = measurement.bbrInfo?.minRtt {
-            minRTTLabel.text = "\(minRTT) ms"
-        }
-        if let smoothedRTT = measurement.tcpInfo?.smoothedRtt {
-            smoothedRTTLabel.text = "\(smoothedRTT) ms"
-        }
-        if let rttVariance = measurement.tcpInfo?.rttVar {
-            rttVarianceLabel.text = "\(rttVariance) ms"
-        }
     }
 
-    func uploadMeasurement(_ measurement: NDT7Measurement) {
-        if let url = ndt7Test?.settings.url.hostname {
-            serverLabel.text = url
-        }
-        if let elapsedTime = measurement.elapsed, let uploadSpeed = measurement.appInfo?.numBytes {
-            uploadTime.text = "\(String(Int(elapsedTime))) s"
-            let rounded = Double(Float64(uploadSpeed)/elapsedTime/125000).rounded(toPlaces: 3)
-            uploadSpeedLabel.text = "\(rounded) Mbit/s"
-        }
-    }
-
-    func downloadTestError(_ error: NSError) {
-        cancelTest()
-    }
-
-    func uploadTestError(_ error: NSError) {
+    func error(kind: NDT7TestConstants.Kind, error: NSError) {
         cancelTest()
     }
 
