@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -167,9 +176,9 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8TimeoutsV7requestSdvp"></a>
-                    <a name="//apple_ref/swift/Property/request" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8TimeoutsV7requestSdvp">request</a>
+                    <a name="/s:4NDT70A8TimeoutsV9ioTimeoutSdvp"></a>
+                    <a name="//apple_ref/swift/Property/ioTimeout" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV9ioTimeoutSdvp">ioTimeout</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -177,14 +186,14 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Timeout for connection.</p>
+                        <p>ioTimeout is the timeout in seconds for I/O operations.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">ioTimeout</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
 
                         </div>
                       </div>
@@ -194,9 +203,9 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8TimeoutsV4testSdvp"></a>
-                    <a name="//apple_ref/swift/Property/test" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8TimeoutsV4testSdvp">test</a>
+                    <a name="/s:4NDT70A8TimeoutsV15downloadTimeoutSdvp"></a>
+                    <a name="//apple_ref/swift/Property/downloadTimeout" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV15downloadTimeoutSdvp">downloadTimeout</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -204,14 +213,14 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Define the max among of time used for a test before to force to finish.</p>
+                        <p>Define the max among of time used for a download test before to force to finish.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">test</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">downloadTimeout</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
 
                         </div>
                       </div>
@@ -221,9 +230,36 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A8TimeoutsV11measurement7request4testACSd_S2dtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(measurement:request:test:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A8TimeoutsV11measurement7request4testACSd_S2dtcfc">init(measurement:request:test:)</a>
+                    <a name="/s:4NDT70A8TimeoutsV13uploadTimeoutSdvp"></a>
+                    <a name="//apple_ref/swift/Property/uploadTimeout" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV13uploadTimeoutSdvp">uploadTimeout</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Define the max among of time used for a upload test before to force to finish.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">uploadTimeout</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A8TimeoutsV11measurement9ioTimeout08downloadE006uploadE0ACSd_S3dtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(measurement:ioTimeout:downloadTimeout:uploadTimeout:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A8TimeoutsV11measurement9ioTimeout08downloadE006uploadE0ACSd_S3dtcfc">init(measurement:ioTimeout:downloadTimeout:uploadTimeout:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,9 +274,10 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">measurement</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
-            <span class="nv">request</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-            <span class="nv">test</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">measurement</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a></span><span class="o">.</span><span class="kt">Request</span><span class="o">.</span><span class="n">updateInterval</span><span class="p">,</span>
+            <span class="nv">ioTimeout</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a></span><span class="o">.</span><span class="kt">Request</span><span class="o">.</span><span class="n"><a href="../Structs/NDT7Timeouts.html#/s:4NDT70A8TimeoutsV9ioTimeoutSdvp">ioTimeout</a></span><span class="p">,</span>
+            <span class="nv">downloadTimeout</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a></span><span class="o">.</span><span class="kt">Request</span><span class="o">.</span><span class="n"><a href="../Structs/NDT7Timeouts.html#/s:4NDT70A8TimeoutsV15downloadTimeoutSdvp">downloadTimeout</a></span><span class="p">,</span>
+            <span class="nv">uploadTimeout</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="kt"><a href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a></span><span class="o">.</span><span class="kt">Request</span><span class="o">.</span><span class="n"><a href="../Structs/NDT7Timeouts.html#/s:4NDT70A8TimeoutsV13uploadTimeoutSdvp">uploadTimeout</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -255,8 +292,8 @@ If it is initialize with less than 250 ms, it&rsquo;s going to be overwritten to
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-10-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

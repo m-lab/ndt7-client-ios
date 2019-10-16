@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -119,26 +128,41 @@
             <h1>NDT7Measurement</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Measurement</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Measurement</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
             <p>For measurement, the server and client exchange JSON measurements using Textual WebSocket messages.
-NDT7Measurement represents such JSON measurements, which contains all the information.</p>
+NDT7Measurement represents such JSON measurements, which contains all the information.
+Note that the JSON exchanged on the wire, MAY possibly contain more TCP_INFO fields.
+Yet, only the fields described in this specification are returned by a compliant,
+TCP_INFO enabled implementation of ndt7.</p>
 
-<p>Example of JSON to be matched with NDT7Measurement object:</p>
+<p>Example of JSON to be matched with NDT7Measurement object v0.8.3 of the specification:</p>
 <pre class="highlight swift"><code><span class="p">{</span>
- <span class="s">"app_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"num_bytes"</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+ <span class="s">"AppInfo"</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s">"ElapsedTime"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"NumBytes"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
  <span class="p">},</span>
- <span class="s">"bbr_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"max_bandwidth"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>
-   <span class="s">"min_rtt"</span><span class="p">:</span> <span class="mf">123.4</span>
+ <span class="s">"ConnectionInfo"</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s">"Client"</span><span class="p">:</span> <span class="s">"1.2.3.4:5678"</span><span class="p">,</span>
+   <span class="s">"Server"</span><span class="p">:</span> <span class="s">"[::1]:2345"</span><span class="p">,</span>
+   <span class="s">"UUID"</span><span class="p">:</span> <span class="s">"&lt;platform-specific-string&gt;"</span>
  <span class="p">},</span>
- <span class="s">"elapsed"</span><span class="p">:</span> <span class="mf">1.2345</span><span class="p">,</span>
- <span class="s">"tcp_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"rtt_var"</span><span class="p">:</span> <span class="mf">123.4</span><span class="p">,</span>
-   <span class="s">"smoothed_rtt"</span><span class="p">:</span> <span class="mf">567.8</span>
+ <span class="s">"Origin"</span><span class="p">:</span> <span class="s">"server"</span><span class="p">,</span>
+ <span class="s">"Test"</span><span class="p">:</span> <span class="s">"download"</span><span class="p">,</span>
+ <span class="s">"TCPInfo"</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s">"BusyTime"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesAcked"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesReceived"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesSent"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesRetrans"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"ElapsedTime"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"MinRTT"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"RTT"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"RTTVar"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"RWndLimited"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"SndBufLimited"</span><span class="p">:</span> <span class="mi">1234</span>
  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -153,61 +177,6 @@ NDT7Measurement represents such JSON measurements, which contains all the inform
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV7elapsedSdSgvp"></a>
-                    <a name="//apple_ref/swift/Property/elapsed" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV7elapsedSdSgvp">elapsed</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>elapsed (a float64) is the number of seconds elapsed since the beginning of the specific subtest and marks
-the moment in which the measurement has been performed by the client or by the server.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">elapsed</span><span class="p">:</span> <span class="kt">Float64</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:4NDT70A11MeasurementV7tcpInfoAA0A7TCPInfoVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/tcpInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV7tcpInfoAA0A7TCPInfoVSgvp">tcpInfo</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>tcpInfo is an optional object only included in the measurement when it is possible to access TCP_INFO stats.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">tcpInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:4NDT70A11MeasurementV7appInfoAA0A7APPInfoVSgvp"></a>
                     <a name="//apple_ref/swift/Property/appInfo" class="dashAnchor"></a>
                     <a class="token" href="#/s:4NDT70A11MeasurementV7appInfoAA0A7APPInfoVSgvp">appInfo</a>
@@ -218,7 +187,7 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>appInfo is an optional object only included in the measurement when an application-level measurement is available.</p>
+                        <p>appInfo is an optional object that contains application level measurement.</p>
 
                       </div>
                       <div class="declaration">
@@ -245,14 +214,14 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>bbrInfo is an optional object only included in the measurement when it is possible to access TCP_CC_INFO stats for BBR.</p>
+                        <p>bbrInfo is an optional object that contains the data measured using TCP BBR instrumentation.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bbrInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">bbrInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -262,9 +231,9 @@ the moment in which the measurement has been performed by the client or by the s
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A11MeasurementV11descriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A11MeasurementV11descriptionSSvp">description</a>
+                    <a name="/s:4NDT70A11MeasurementV14connectionInfoAA0a10ConnectionD0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/connectionInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A11MeasurementV14connectionInfoAA0a10ConnectionD0VSgvp">connectionInfo</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -272,14 +241,124 @@ the moment in which the measurement has been performed by the client or by the s
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>description contains a formated string for NDT7Measurement.</p>
+                        <p>connectionInfo is an optional object used to provide information about the connection.
+Servers send this message exactly once.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">connectionInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A11MeasurementV6originAA0A13TestConstantsV6OriginOSgvp"></a>
+                    <a name="//apple_ref/swift/Property/origin" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A11MeasurementV6originAA0A13TestConstantsV6OriginOSgvp">origin</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>origin is an optional string that indicates whether the measurement has been performed by the client or by the server. ie client or server</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a></span><span class="o">.</span><span class="kt">Origin</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A11MeasurementV9directionAA0A13TestConstantsV4KindOSgvp"></a>
+                    <a name="//apple_ref/swift/Property/direction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A11MeasurementV9directionAA0A13TestConstantsV4KindOSgvp">direction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>direction is an optional string that indicates the name of the current test. ie. download or upload</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a></span><span class="o">.</span><span class="kt">Kind</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A11MeasurementV7tcpInfoAA0A7TCPInfoVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tcpInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A11MeasurementV7tcpInfoAA0A7TCPInfoVSgvp">tcpInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>tcpInfo is an optional object that contains a TCP_INFO measurement.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">tcpInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A11MeasurementV7rawDataSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/rawData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A11MeasurementV7rawDataSSSgvp">rawData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>rawData is an optional object that contains the json measurement.
+It can contains more information about the current measurement.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">rawData</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -294,8 +373,8 @@ the moment in which the measurement has been performed by the client or by the s
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-10-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

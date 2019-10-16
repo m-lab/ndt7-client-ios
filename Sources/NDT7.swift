@@ -67,7 +67,7 @@ import Foundation
 ///    func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
 ///    }
 ///
-///    error(kind: NDT7TestConstants.Kind, error: NSError) {
+///    func error(kind: NDT7TestConstants.Kind, error: NSError) {
 ///    }
 ///}
 /// ```

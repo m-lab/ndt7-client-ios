@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -119,11 +128,40 @@
             <h1>NDT7TCPInfo</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7TCPInfo</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7TCPInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
             <p>NDT7TCPInfo is an optional object only included in the measurement when it is possible to access TCP_INFO stats.</p>
+
+<p>The MinRTT, RTT, and RTTVar fields can be used to compute the statistics of the round-trip time.
+The buildup of a large queue is unexpected when using BBR.
+It generally indicates the presence of a bottleneck with a large buffer that&rsquo;s filling as the test proceeds.
+The MinRTT can also be useful to verify we&rsquo;re using a reasonably nearby-server.
+Also, an unreasonably small RTT when the link is 2G or 3G could indicate a performance enhancing proxy.</p>
+
+<p>The times (BusyTime, RWndLimited, and SndBufLimited) are useful to understand where the bottleneck could be.
+In general we would like to see that we&rsquo;ve been busy for most of the test runtime.
+If RWndLimited is large, then it means that the receiver does not have enough buffering to go faster and it is limiting our performance.
+Likewise, when SndBufLimited is large, the sender&rsquo;s buffer is too small.
+Also, if adding up these three times gives us less time than the duration of the test,
+it generally means that the sender was not filling the send buffer fast enough for keeping TCP busy,
+thus slowing us down.</p>
+
+<p>The amount of BytesAcked combined with the ElapsedTime gives us the average speed at which we&rsquo;ve been sending, measured in the kernel.
+Because of the measurement unit used, by default the speed will be in bytes per microsecond.
+Typically the speed of file transfers is measured instead in bytes per second, so you need to multiply by 10^6.
+To obtain the speed in bits per second, which is the typical unit with which we measure the speed of links (e.g. Wi-Fi), also multiply by 8.</p>
+
+<p>BytesReceived is just like BytesAcked, except that BytesAcked makes sense for the sender
+(e.g. the server during the download), while BytesReceived makes sense for the receiver (e.g. the server during the upload).</p>
+
+<p>BytesSent and BytesRetrans can be used to compute the percentage of bytes overall that have been retransmitted.
+In turn, this is value approximates the packet loss rate, i.e. the (unknown) probability with which the network is likely to drop a packet.
+This approximation is really bad because it assumes that the probability of dropping a packet is uniformly distributed,
+which isn&rsquo;t likely the case. Yet, it may be an useful first order information to characterise a network as possibly very lossy.
+Some packet loss is normal and healthy,
+but too much packet loss is the sign of a network path with systemic problems.</p>
 
           </div>
         </section>
@@ -135,9 +173,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A7TCPInfoV11smoothedRttSdSgvp"></a>
-                    <a name="//apple_ref/swift/Property/smoothedRtt" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7TCPInfoV11smoothedRttSdSgvp">smoothedRtt</a>
+                    <a name="/s:4NDT70A7TCPInfoV8busyTimes5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/busyTime" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV8busyTimes5Int64VSgvp">busyTime</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -145,14 +183,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>smoothedRtt (a float64) is the smoothed RTT in milliseconds.</p>
+                        <p>busyTime aka tcpi_busy_time (an optional Int64),
+i.e. the number of microseconds spent actively sending data because the write queue of the TCP socket is non-empty.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">smoothedRtt</span><span class="p">:</span> <span class="kt">Float64</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">busyTime</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -162,9 +201,207 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A7TCPInfoV6rttVarSdSgvp"></a>
+                    <a name="/s:4NDT70A7TCPInfoV10bytesAckeds5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bytesAcked" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV10bytesAckeds5Int64VSgvp">bytesAcked</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>bytesAcked aka tcpi_bytes_acked (an optional Int64),
+i.e. the number of bytes for which we received acknowledgment.
+Note that this field, and all other TCPInfo fields, contain the number of bytes measured at TCP/IP level
+(i.e. including the WebSocket and TLS overhead).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bytesAcked</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV13bytesReceiveds5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bytesReceived" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV13bytesReceiveds5Int64VSgvp">bytesReceived</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>bytesReceived aka tcpi_bytes_received (an optional Int64),
+i.e. the number of bytes for which we sent acknowledgment.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bytesReceived</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV9bytesSents5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bytesSent" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV9bytesSents5Int64VSgvp">bytesSent</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>bytesSent aka tcpi_bytes_sent (an optional Int64),
+i.e. the number of bytes which have been transmitted or retransmitted.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bytesSent</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV12bytesRetranss5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bytesRetrans" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV12bytesRetranss5Int64VSgvp">bytesRetrans</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>bytesRetrans aka tcpi_bytes_retrans (an optional Int64),
+i.e. the number of bytes which have been retransmitted.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bytesRetrans</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV11elapsedTimes5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/elapsedTime" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV11elapsedTimes5Int64VSgvp">elapsedTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>elapsedTime (an optional Int64),
+this field indicates the moment in which TCP_INFO data has been generated, and therefore is generally useful.
+i.e. the time elapsed since the beginning of this test, measured in microseconds.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">elapsedTime</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV6minRTTs5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/minRTT" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV6minRTTs5Int64VSgvp">minRTT</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>minRTT aka tcpi_min_rtt (an optional Int64),
+i.e. the minimum RTT seen by the kernel, measured in microseconds.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">minRTT</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV3rtts5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/rtt" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV3rtts5Int64VSgvp">rtt</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>rtt aka tcpi_rtt (an optional Int64), i.e. the current smoothed RTT value, measured in microseconds.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">rtt</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV6rttVars5Int64VSgvp"></a>
                     <a name="//apple_ref/swift/Property/rttVar" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7TCPInfoV6rttVarSdSgvp">rttVar</a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV6rttVars5Int64VSgvp">rttVar</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -172,14 +409,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>rttVar (a float64) is RTT variance in milliseconds;</p>
+                        <p>rttVar aka tcpi_rtt_var (an optional Int64), i.e. the variance or RTT.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">rttVar</span><span class="p">:</span> <span class="kt">Float64</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">rttVar</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -189,9 +426,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A7TCPInfoV11descriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7TCPInfoV11descriptionSSvp">description</a>
+                    <a name="/s:4NDT70A7TCPInfoV11rwndLimiteds5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/rwndLimited" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV11rwndLimiteds5Int64VSgvp">rwndLimited</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -199,14 +436,43 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>description contains a formated string for NDT7TCPInfo.</p>
+                        <p>rwndLimited aka tcpi_rwnd_limited (an optional Int64),
+i.e. the amount of microseconds spent stalled because there is not enough buffer at the receiver.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">rwndLimited</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV13sndBufLimiteds5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/sndBufLimited" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV13sndBufLimiteds5Int64VSgvp">sndBufLimited</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>sndBufLimited aka tcpi_sndbuf_limited (an optional Int64),
+i.e. the amount of microseconds spent stalled because there is not enough buffer at the sender.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">sndBufLimited</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -221,8 +487,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-10-16)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
