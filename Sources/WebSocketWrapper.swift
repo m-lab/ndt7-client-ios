@@ -17,20 +17,34 @@ protocol WebSocketInteraction: class {
 }
 
 /// WebSocket wrapper.
-class WebSocketWrapper {
+class WebSocketWrapper: NSObject {
 
     weak var delegate: WebSocketInteraction?
     var open = false
     var connected = false
-    let webSocket: WebSocket
+    let webSocket: WebSocket?
     let url: URL
     let settings: NDT7Settings
     var outputBytesLengthAccumulated: Int {
-        return webSocket.ws.outputBytesLengthAccumulated
+        if webSocketTask != nil {
+            return dataCountSent
+        } else {
+            return webSocket?.ws.outputBytesLengthAccumulated ?? 0
+        }
     }
     var inputBytesLengthAccumulated: Int {
-        return webSocket.ws.inputBytesLengthAccumulated
+        if webSocketTask != nil {
+            return dataCountReceived
+        } else {
+            return webSocket?.ws.inputBytesLengthAccumulated ?? 0
+        }
     }
+
+    /// WebSocket via URLSessionWebSocketTask
+    var webSocketTask: Any?
+    var dataCountSent = 0
+    var dataCountReceived = 0
+    var urlSessionQueue = OperationQueue()
 
     init?(settings: NDT7Settings, url: URL) {
         self.url = url
@@ -41,14 +55,77 @@ class WebSocketWrapper {
         for (header, value) in settings.headers {
             urlRequest.addValue(value, forHTTPHeaderField: header)
         }
-        webSocket = WebSocket(request: urlRequest)
-        webSocket.allowSelfSignedSSL = settings.skipTLSCertificateVerification
-        webSocket.delegate = self
+        if #available(iOS 13.0, *),
+            self.url.absoluteString.contains("upload") {
+            webSocket = nil
+            super.init()
+            urlSessionQueue.maxConcurrentOperationCount = 1
+            let urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: urlSessionQueue)
+            webSocketTask = urlSession.webSocketTask(with: urlRequest)
+            if let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
+                webSocketTask.resume()
+                webSocketMessage()
+            }
+        } else {
+            webSocket = WebSocket(request: urlRequest)
+            webSocketTask = nil
+            super.init()
+            webSocket?.allowSelfSignedSSL = settings.skipTLSCertificateVerification
+            webSocket?.delegate = self
+        }
     }
 
     deinit {
-        webSocket.delegate = nil
-        webSocket.close()
+        webSocket?.delegate = nil
+        webSocket?.close()
+    }
+}
+
+/// Mark: URLSessionWebSocketDelegate
+@available(iOS 13, *)
+extension WebSocketWrapper: URLSessionWebSocketDelegate {
+
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didOpenWithProtocol
+        protocol: String?) {
+        webSocketOpen()
+    }
+
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
+                    reason: Data?) {
+        webSocketClose(0, reason: "", wasClean: false)
+    }
+
+    func webSocketMessage() {
+        guard let webSocketTask = webSocketTask as? URLSessionWebSocketTask,
+            webSocketTask.state == .running else {
+            return
+        }
+        print("websocket status 1: \(webSocketTask.state.rawValue)")
+        webSocketTask.receive { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .failure(let error):
+                print("websocket status 2: \(webSocketTask.state.rawValue)")
+                if error.localizedDescription.contains("Bad address") {
+                    print("bad address!!!!")
+                }
+                self.webSocketError(error as NSError)
+            case .success(let message):
+                switch message {
+                case .string(let text):
+                    self.webSocketMessageText(text)
+                case .data(let data):
+                    self.webSocketMessageData(data)
+                @unknown default:
+                    fatalError()
+                }
+                self.webSocketMessage()
+            }
+        }
     }
 }
 
@@ -56,33 +133,57 @@ extension WebSocketWrapper {
 
     func open(_ interval: TimeInterval = 0.5, _ maxRetries: UInt = 10) {
         logNDT7("WebSocket \(url.absoluteString) opening. Max retries: \(maxRetries)")
-        if !open {
-            open = true
-            webSocket.open()
-        }
-        if maxRetries > 0 && !connected {
-            // If the connection is closed retry to open it.
-            DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.open(interval, maxRetries - 1)
+        if #available(iOS 13.0, *),
+            self.url.absoluteString.contains("upload"),
+            let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
+            webSocketTask.resume()
+        } else {
+            if !open {
+                open = true
+                webSocket?.open()
+            }
+            if maxRetries > 0 && !connected {
+                // If the connection is closed retry to open it.
+                DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.open(interval, maxRetries - 1)
+                }
             }
         }
     }
 
     func close() {
         logNDT7("WebSocket \(url.absoluteString) closing")
-        webSocket.close()
+        webSocket?.close()
+        if #available(iOS 13.0, *),
+            self.url.absoluteString.contains("upload"),
+            let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
+            webSocketTask.cancel()
+        }
     }
 
     func send(_ message: Any, maxBuffer: Int) -> Int? {
-        let buffer = webSocket.ws.outputBytesLength
-        guard buffer < maxBuffer else { return nil }
-        if open {
-            webSocket.send(message)
-            return buffer
+        if #available(iOS 13.0, *),
+            self.url.absoluteString.contains("upload"),
+            let webSocketTask = webSocketTask as? URLSessionWebSocketTask,
+            let data = message as? Data {
+            let messagedata = URLSessionWebSocketTask.Message.data(Data.randomDataNetworkElement())
+            webSocketTask.send(messagedata, completionHandler: { [weak self] (error) in
+                guard let self = self else { return }
+                if error != nil {
+                    self.dataCountSent += data.count
+                }
+            })
+            return 0
         } else {
-            logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")
-            return nil
+            guard let buffer = webSocket?.ws.outputBytesLength, buffer < maxBuffer else { return nil }
+            if open {
+                webSocket?.send(message)
+                return buffer
+            } else {
+                logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")
+                return nil
+            }
         }
     }
 }
@@ -93,8 +194,10 @@ extension WebSocketWrapper: WebSocketDelegate {
         logNDT7("WebSocket \(url.absoluteString) open")
         open = true
         delegate?.open(webSocket: self)
-        webSocket.ws.outputBytesLengthAccumulated = 0
-        webSocket.ws.inputBytesLengthAccumulated = 0
+        webSocket?.ws.outputBytesLengthAccumulated = 0
+        webSocket?.ws.inputBytesLengthAccumulated = 0
+        dataCountSent = 0
+        dataCountReceived = 0
     }
 
     func webSocketClose(_ code: Int, reason: String, wasClean: Bool) {
@@ -116,6 +219,7 @@ extension WebSocketWrapper: WebSocketDelegate {
 
     func webSocketMessageData(_ data: Data) {
         connected = true
+        dataCountReceived += data.count
         delegate?.message(webSocket: self, message: data)
     }
 }
