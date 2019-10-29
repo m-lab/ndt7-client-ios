@@ -41,6 +41,7 @@ class WebSocketWrapper: NSObject {
     }
 
     /// WebSocket via URLSessionWebSocketTask
+    var enableiOS13Socket = false
     var webSocketTask: Any?
     var dataCountSent = 0
     var dataCountReceived = 0
@@ -56,6 +57,7 @@ class WebSocketWrapper: NSObject {
             urlRequest.addValue(value, forHTTPHeaderField: header)
         }
         if #available(iOS 13.0, *),
+            enableiOS13Socket,
             self.url.absoluteString.contains("upload") {
             webSocket = nil
             super.init()
@@ -104,16 +106,15 @@ extension WebSocketWrapper: URLSessionWebSocketDelegate {
             webSocketTask.state == .running else {
             return
         }
-        print("websocket status 1: \(webSocketTask.state.rawValue)")
         webSocketTask.receive { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .failure(let error):
-                print("websocket status 2: \(webSocketTask.state.rawValue)")
                 if error.localizedDescription.contains("Bad address") {
-                    print("bad address!!!!")
+                    // Apple framework is not reliable.
+                    // it's getting a lot of bad address errors.
+                    self.webSocketError(error as NSError)
                 }
-                self.webSocketError(error as NSError)
             case .success(let message):
                 switch message {
                 case .string(let text):
@@ -134,6 +135,7 @@ extension WebSocketWrapper {
     func open(_ interval: TimeInterval = 0.5, _ maxRetries: UInt = 10) {
         logNDT7("WebSocket \(url.absoluteString) opening. Max retries: \(maxRetries)")
         if #available(iOS 13.0, *),
+            enableiOS13Socket,
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
             webSocketTask.resume()
@@ -156,6 +158,7 @@ extension WebSocketWrapper {
         logNDT7("WebSocket \(url.absoluteString) closing")
         webSocket?.close()
         if #available(iOS 13.0, *),
+            enableiOS13Socket,
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
             webSocketTask.cancel()
@@ -164,13 +167,14 @@ extension WebSocketWrapper {
 
     func send(_ message: Any, maxBuffer: Int) -> Int? {
         if #available(iOS 13.0, *),
+            enableiOS13Socket,
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask,
             let data = message as? Data {
             let messagedata = URLSessionWebSocketTask.Message.data(Data.randomDataNetworkElement())
             webSocketTask.send(messagedata, completionHandler: { [weak self] (error) in
                 guard let self = self else { return }
-                if error != nil {
+                if error == nil {
                     self.dataCountSent += data.count
                 }
             })
