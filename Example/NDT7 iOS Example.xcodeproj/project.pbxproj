@@ -12,6 +12,8 @@
 		49BE5B54224EA90800DB7BDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B52224EA90800DB7BDF /* Main.storyboard */; };
 		49BE5B56224EA90900DB7BDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B55224EA90900DB7BDF /* Assets.xcassets */; };
 		49BE5B59224EA90900DB7BDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B57224EA90900DB7BDF /* LaunchScreen.storyboard */; };
+		88413CC22369034000EE061A /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8830D17F2256C51500FA109E /* NDT7.framework */; };
+		88413CC32369034000EE061A /* NDT7.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8830D17F2256C51500FA109E /* NDT7.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		88413CC42369034000EE061A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				88413CC32369034000EE061A /* NDT7.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		49BE5B4B224EA90800DB7BDF /* NDT7 iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NDT7 iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BE5B4E224EA90800DB7BDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88413CC22369034000EE061A /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +111,7 @@
 				8830D1742256C51500FA109E /* NDT7.xcodeproj */,
 				49BE5B4D224EA90800DB7BDF /* Sources */,
 				49BE5B4C224EA90800DB7BDF /* Products */,
+				88413CC12369034000EE061A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,6 +150,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		88413CC12369034000EE061A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,6 +167,7 @@
 				49BE5B47224EA90800DB7BDF /* Sources */,
 				49BE5B48224EA90800DB7BDF /* Frameworks */,
 				49BE5B49224EA90800DB7BDF /* Resources */,
+				88413CC42369034000EE061A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
