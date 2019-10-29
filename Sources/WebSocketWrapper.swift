@@ -56,7 +56,7 @@ class WebSocketWrapper: NSObject {
         for (header, value) in settings.headers {
             urlRequest.addValue(value, forHTTPHeaderField: header)
         }
-        if #available(iOS 13.0, *),
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
             enableiOS13Socket,
             self.url.absoluteString.contains("upload") {
             webSocket = nil
@@ -84,7 +84,7 @@ class WebSocketWrapper: NSObject {
 }
 
 /// Mark: URLSessionWebSocketDelegate
-@available(iOS 13, *)
+@available(iOS 13, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension WebSocketWrapper: URLSessionWebSocketDelegate {
 
     func urlSession(_ session: URLSession,
@@ -134,7 +134,7 @@ extension WebSocketWrapper {
 
     func open(_ interval: TimeInterval = 0.5, _ maxRetries: UInt = 10) {
         logNDT7("WebSocket \(url.absoluteString) opening. Max retries: \(maxRetries)")
-        if #available(iOS 13.0, *),
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
             enableiOS13Socket,
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
@@ -157,7 +157,7 @@ extension WebSocketWrapper {
     func close() {
         logNDT7("WebSocket \(url.absoluteString) closing")
         webSocket?.close()
-        if #available(iOS 13.0, *),
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
             enableiOS13Socket,
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
@@ -166,7 +166,7 @@ extension WebSocketWrapper {
     }
 
     func send(_ message: Any, maxBuffer: Int) -> Int? {
-        if #available(iOS 13.0, *),
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
             enableiOS13Socket,
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask,
