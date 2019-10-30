@@ -142,7 +142,7 @@ extension NDT7Test {
             completion(nil)
             return
         }
-        discoverServerTask = NDT7Server.discover(withGeoOptions: settings.useGeoOptions, { [weak self] (server, error) in
+        discoverServerTask = NDT7Server.discover(withGeoOptions: settings.useGeoOptions, retray: 4, { [weak self] (server, error) in
             guard let strongSelf = self else { return }
             strongSelf.settings.url.hostname = server?.fqdn ?? ""
             strongSelf.settings.url.server = server
@@ -282,7 +282,8 @@ extension NDT7Test {
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
-        while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true {
+        while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true,
+            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated, count < outputBytesAccumulated + underbuffered {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
                 count += message.count
@@ -293,7 +294,7 @@ extension NDT7Test {
                 uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
             }
         }
-        queue.asyncAfter(deadline: .now()) { [weak self] in
+        queue.asyncAfter(deadline: .now() + 0.001) { [weak self] in
             self?.uploader(socket: socket, message: message, t0: t0, tlast: tlast, count: count, queue: queue)
         }
     }
@@ -313,7 +314,7 @@ extension NDT7Test {
             if let jsonData = try? JSONEncoder().encode(measurement) {
                 measurement.rawData = String(data: jsonData, encoding: .utf8)
             }
-            logNDT7("Upload test from client: \(measurement.rawData ?? "") - \(Int64(webSocketUpload?.outputBytesLengthAccumulated ?? 0))")
+            logNDT7("Upload test from client: \(measurement.rawData ?? "")")
             mainThread { [weak self] in
                 self?.delegate?.measurement(origin: .client, kind: .upload, measurement: measurement)
             }

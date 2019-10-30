@@ -12,7 +12,8 @@
 		49BE5B54224EA90800DB7BDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B52224EA90800DB7BDF /* Main.storyboard */; };
 		49BE5B56224EA90900DB7BDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B55224EA90900DB7BDF /* Assets.xcassets */; };
 		49BE5B59224EA90900DB7BDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49BE5B57224EA90900DB7BDF /* LaunchScreen.storyboard */; };
-		8830D18E2256C55300FA109E /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8830D17F2256C51500FA109E /* NDT7.framework */; };
+		88413CC22369034000EE061A /* NDT7.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8830D17F2256C51500FA109E /* NDT7.framework */; };
+		88413CC32369034000EE061A /* NDT7.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8830D17F2256C51500FA109E /* NDT7.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,14 +66,21 @@
 			remoteGlobalIDString = 49C52FFF224ED19600592C4C;
 			remoteInfo = "NDT7 watchOS";
 		};
-		8830D18C2256C54C00FA109E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8830D1742256C51500FA109E /* NDT7.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 49BE5B7B224EAA3900DB7BDF;
-			remoteInfo = "NDT7 iOS";
-		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		88413CC42369034000EE061A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				88413CC32369034000EE061A /* NDT7.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		49BE5B4B224EA90800DB7BDF /* NDT7 iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NDT7 iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8830D18E2256C55300FA109E /* NDT7.framework in Frameworks */,
+				88413CC22369034000EE061A /* NDT7.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +111,7 @@
 				8830D1742256C51500FA109E /* NDT7.xcodeproj */,
 				49BE5B4D224EA90800DB7BDF /* Sources */,
 				49BE5B4C224EA90800DB7BDF /* Products */,
+				88413CC12369034000EE061A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +150,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		88413CC12369034000EE061A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,11 +167,11 @@
 				49BE5B47224EA90800DB7BDF /* Sources */,
 				49BE5B48224EA90800DB7BDF /* Frameworks */,
 				49BE5B49224EA90800DB7BDF /* Resources */,
+				88413CC42369034000EE061A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8830D18D2256C54C00FA109E /* PBXTargetDependency */,
 			);
 			name = "NDT7 iOS Example";
 			productName = "NDT7 iOS Example";
@@ -277,14 +293,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8830D18D2256C54C00FA109E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "NDT7 iOS";
-			targetProxy = 8830D18C2256C54C00FA109E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		49BE5B52224EA90800DB7BDF /* Main.storyboard */ = {
@@ -434,7 +442,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -443,6 +452,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.measurementlab.NDT7-iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -452,7 +462,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -461,6 +472,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.measurementlab.NDT7-iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

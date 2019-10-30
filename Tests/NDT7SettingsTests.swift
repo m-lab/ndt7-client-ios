@@ -39,7 +39,7 @@ class NDT7SettingsTests: XCTestCase {
     func testDiscoverServer() {
         var result = false
         let expectation = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(withGeoOptions: false) { (server, error) in
+        _ = NDT7Server.discover(withGeoOptions: false, retray: 100) { (server, error) in
             if let errorServer = error?.localizedDescription {
                 XCTAssertEqual(errorServer, "Cannot find a suitable mlab server")
             } else {
@@ -58,7 +58,7 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertTrue(result)
         var resultWithGeoOptions = false
         let expectationGeoOptions = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(withGeoOptions: false) { (server, error) in
+        _ = NDT7Server.discover(withGeoOptions: false, retray: 100) { (server, error) in
             if let errorServer = error?.localizedDescription {
                 XCTAssertEqual(errorServer, "Cannot find a suitable mlab server")
             } else {
@@ -75,18 +75,6 @@ class NDT7SettingsTests: XCTestCase {
         }
         wait(for: [expectationGeoOptions], timeout: 10.0)
         XCTAssertTrue(resultWithGeoOptions)
-        var resultWithTaskCancelled = false
-        let expectationWithTaskCancelled = XCTestExpectation(description: "Job in main thread")
-        let task = NDT7Server.discover(withGeoOptions: false) { (server, error) in
-            XCTAssertNil(server)
-            XCTAssertNotNil(error)
-            XCTAssertEqual(error, NDT7TestConstants.cancelledError)
-            resultWithTaskCancelled = true
-            expectationWithTaskCancelled.fulfill()
-        }
-        task.cancel()
-        wait(for: [expectationWithTaskCancelled], timeout: 10.0)
-        XCTAssertTrue(resultWithTaskCancelled)
     }
 
     func testDecodeServer() {
