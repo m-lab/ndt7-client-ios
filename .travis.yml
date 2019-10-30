@@ -13,13 +13,12 @@ env:
   - MACOS_FRAMEWORK_SCHEME="NDT7 macOS"
   - WATCHOS_FRAMEWORK_SCHEME="NDT7 watchOS"
   - EXAMPLE_SCHEME="NDT7 iOS Example"
-  matrix:
-    include:
-      - mame: "test"
-      os: osx
-      osx_image: xcode8.3
-      env:
-        - DESTINATION="OS=3.2,name=Apple Watch Series 4 - 40mm" SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO" CODECOV_CHECK="NO" SONAR_SCANNER="NO"
+matrix:
+  include:
+    - mame: "test"
+    os: osx
+    osx_image: xcode8.3
+    env: DESTINATION="OS=3.2,name=Apple Watch Series 4 - 40mm" SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO" CODECOV_CHECK="NO" SONAR_SCANNER="NO"
 
       # # - DESTINATION="OS=4.2,name=Apple Watch Series 4 - 44mm" SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO" CODECOV_CHECK="NO" SONAR_SCANNER="NO"
       # # - DESTINATION="OS=5.1,name=Apple Watch Series 5 - 40mm" SCHEME="$WATCHOS_FRAMEWORK_SCHEME" RUN_TESTS="NO" BUILD_EXAMPLE="NO" POD_LINT="NO" CODECOV_CHECK="NO" SONAR_SCANNER="NO"
