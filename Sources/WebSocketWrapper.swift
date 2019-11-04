@@ -39,7 +39,7 @@ class WebSocketWrapper: NSObject {
             return webSocket?.ws.inputBytesLengthAccumulated ?? 0
         }
     }
-    let dispatchQueue = DispatchQueue.init(label: "test")
+    let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.read.URLSessionWebSocketTask")
 
     /// WebSocket via URLSessionWebSocketTask
     var enableiOS13Socket = true
@@ -194,7 +194,7 @@ extension WebSocketWrapper {
         } else {
             guard let buffer = webSocket?.ws.outputBytesLength, buffer < maxBuffer else { return nil }
             if open {
-                webSocket?.send(message)
+                webSocket?.send(message, 7)
                 return buffer
             } else {
                 logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")
