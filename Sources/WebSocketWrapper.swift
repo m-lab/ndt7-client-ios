@@ -117,7 +117,6 @@ extension WebSocketWrapper: URLSessionWebSocketDelegate {
                 if error.localizedDescription.contains("Bad address") {
                     if let webSocketTask = self.webSocketTask as? URLSessionWebSocketTask {
                         webSocketTask.cancel(with: .normalClosure, reason: nil)
-                        self.enableiOS13Socket = false
                         let urlRequest = URLRequest(url: self.url,
                         cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
                         timeoutInterval: self.settings.timeout.ioTimeout)
@@ -226,7 +225,6 @@ extension WebSocketWrapper: WebSocketDelegate {
     func webSocketError(_ error: NSError) {
         if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
             enableiOS13Socket,
-            error.localizedDescription.contains("Bad address"),
             let webSocketTask = self.webSocketTask as? URLSessionWebSocketTask {
             webSocketTask.cancel(with: .normalClosure, reason: nil)
             enableiOS13Socket = false
