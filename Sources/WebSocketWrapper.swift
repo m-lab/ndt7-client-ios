@@ -42,7 +42,7 @@ class WebSocketWrapper: NSObject {
     let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.read.URLSessionWebSocketTask")
 
     /// WebSocket via URLSessionWebSocketTask
-    var enableiOS13Socket = true
+    var enableiOS13Socket = false
     var webSocketTask: Any?
     var dataCountSent = 0
     var dataCountReceived = 0
