@@ -282,6 +282,12 @@ extension NDT7Test {
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
+        t1 = Date()
+        if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25,
+            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated {
+            tlast = t1
+            uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
+        }
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true,
             let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated,
             count < outputBytesAccumulated + underbuffered {
