@@ -283,10 +283,11 @@ extension NDT7Test {
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true,
-            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated, count < outputBytesAccumulated + underbuffered {
+            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated,
+            count < outputBytesAccumulated + underbuffered {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
-                count += message.count
+                count += message.count * 100
             }
             t1 = Date()
             if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25 {
@@ -294,7 +295,7 @@ extension NDT7Test {
                 uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
             }
         }
-        queue.asyncAfter(deadline: .now() + 0.0025) { [weak self] in
+        queue.asyncAfter(deadline: .now() + 0.02) { [weak self] in
             self?.uploader(socket: socket, message: message, t0: t0, tlast: tlast, count: count, queue: queue)
         }
     }

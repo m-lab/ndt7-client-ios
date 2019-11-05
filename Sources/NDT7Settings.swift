@@ -116,6 +116,9 @@ public struct NDT7Timeouts {
 /// Mlab NDT7 Server.
 public struct NDT7Server: Codable {
 
+    /// Last server got from MLab
+    static var lastServer: NDT7Server?
+
     /// ip array
     public var ip: [String]?
 
@@ -154,11 +157,16 @@ extension NDT7Server {
                     logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retray: \(retray)", .info)
                     _ = discover(withGeoOptions: geoOptions, retray: retray - 1, completion)
                     return
+                } else if retray == 0, let server = lastServer {
+                    logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
+                    completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
+                    return
                 }
                 completion(nil, NDT7TestConstants.cancelledError)
                 return
             }
             if let server = decode(data: data, fromUrl: request.url?.absoluteString), server.fqdn != nil  && server.fqdn! != "" {
+                lastServer = server
                 logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
                 completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
             } else if retray > 0 {
