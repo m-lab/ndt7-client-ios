@@ -172,6 +172,9 @@ extension NDT7Server {
             } else if retray > 0 {
                 logNDT7("NDT7 Mlab cannot find a suitable mlab server, retray: \(retray)", .info)
                 _ = discover(withGeoOptions: geoOptions, retray: retray - 1, completion)
+            } else if retray == 0, let server = lastServer {
+                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
+                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
             } else {
                 logNDT7("NDT7 Mlab cannot find a suitable mlab server, retray: \(retray)", .info)
                 completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)

@@ -193,7 +193,7 @@ extension WebSocketWrapper {
         } else {
             guard let buffer = webSocket?.ws.outputBytesLength, buffer < maxBuffer else { return nil }
             if open {
-                webSocket?.send(message, 100)
+                webSocket?.send(message, NDT7WebSocketConstants.Request.maxConcurrentMessages)
                 return buffer
             } else {
                 logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")

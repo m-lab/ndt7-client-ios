@@ -99,5 +99,11 @@ public struct NDT7WebSocketConstants {
 
         /// bulkMessageSize is the size of uploaded messages
         public static let bulkMessageSize = 1 << 13
+
+        /// maxConcurrentMessages is the max concurrent messages for upload
+        public static let maxConcurrentMessages: UInt = 100
+
+        /// maxConcurrentMessages is the max concurrent messages for upload
+        public static let uploadRequestDelay: Double = Double(maxConcurrentMessages) * Double(bulkMessageSize) / (4 * 125000) / 100
     }
 }
