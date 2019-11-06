@@ -21,6 +21,9 @@ class ViewController: UIViewController {
     var ndt7Test: NDT7Test?
     var downloadTestRunning: Bool = false
     var uploadTestRunning: Bool = false
+    var downloadSpeed: Double?
+    var uploadSpeed: Double?
+    var dispatchQueue = DispatchQueue(label: "DispatchQueue.NDT7.UpdateUI")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,9 +117,27 @@ extension ViewController: NDT7TestInteraction {
             let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
             switch kind {
             case .download:
-                downloadSpeedLabel.text = "\(rounded) Mbit/s"
+                let values = decimalArray(from: downloadSpeed ?? 0, to: rounded)
+                downloadSpeed = rounded
+                for i in values {
+                    dispatchQueue.async {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.downloadSpeedLabel.text = "\(i) Mbit/s"
+                        }
+                        usleep(12500)
+                    }
+                }
             case .upload:
-                uploadSpeedLabel.text = "\(rounded) Mbit/s"
+                let values = decimalArray(from: uploadSpeed ?? 0, to: rounded)
+                uploadSpeed = rounded
+                for i in values {
+                    dispatchQueue.async {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.uploadSpeedLabel.text = "\(i) Mbit/s"
+                        }
+                        usleep(12500)
+                    }
+                }
             }
         }
     }
@@ -132,6 +153,30 @@ extension ViewController: NDT7TestInteraction {
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             strongSelf.present(alert, animated: true)
         }
+    }
+}
+
+extension ViewController {
+
+    func decimalArray(from firstInt: Double, to secondInt: Double) -> [Double] {
+        var firstInt = firstInt
+        var array: [Double] = []
+        if firstInt == secondInt {
+            array.insert(firstInt, at: 0)
+        } else if firstInt > secondInt {
+            let decimals = (firstInt - secondInt) / 10
+            while firstInt >= secondInt {
+                array.append(firstInt.rounded(toPlaces: 1))
+                firstInt -= decimals
+            }
+        } else if secondInt > firstInt {
+            let decimals = (secondInt - firstInt) / 10
+            while secondInt >= firstInt {
+                array.append(firstInt.rounded(toPlaces: 1))
+                firstInt += decimals
+            }
+        }
+        return array
     }
 }
 
