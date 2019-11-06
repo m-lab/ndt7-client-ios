@@ -22,7 +22,7 @@ class WebSocketWrapper: NSObject {
     weak var delegate: WebSocketInteraction?
     var open = false
     var connected = false
-    let webSocket: WebSocket?
+    var webSocket: WebSocket?
     let url: URL
     let settings: NDT7Settings
     var outputBytesLengthAccumulated: Int {
@@ -39,6 +39,7 @@ class WebSocketWrapper: NSObject {
             return webSocket?.ws.inputBytesLengthAccumulated ?? 0
         }
     }
+    let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.read.URLSessionWebSocketTask")
 
     /// WebSocket via URLSessionWebSocketTask
     var enableiOS13Socket = false
@@ -46,6 +47,7 @@ class WebSocketWrapper: NSObject {
     var dataCountSent = 0
     var dataCountReceived = 0
     var urlSessionQueue = OperationQueue()
+    var mutex = pthread_mutex_t()
 
     init?(settings: NDT7Settings, url: URL) {
         self.url = url
@@ -66,7 +68,9 @@ class WebSocketWrapper: NSObject {
             webSocketTask = urlSession.webSocketTask(with: urlRequest)
             if let webSocketTask = webSocketTask as? URLSessionWebSocketTask {
                 webSocketTask.resume()
-                webSocketMessage()
+                dispatchQueue.async { [weak self] in
+                    self?.webSocketMessage()
+                }
             }
         } else {
             webSocket = WebSocket(request: urlRequest)
@@ -111,9 +115,15 @@ extension WebSocketWrapper: URLSessionWebSocketDelegate {
             switch result {
             case .failure(let error):
                 if error.localizedDescription.contains("Bad address") {
-                    // Apple framework is not reliable.
-                    // it's getting a lot of bad address errors.
-                    self.webSocketError(error as NSError)
+                    if let webSocketTask = self.webSocketTask as? URLSessionWebSocketTask {
+                        webSocketTask.cancel(with: .normalClosure, reason: nil)
+                        let urlRequest = URLRequest(url: self.url,
+                        cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
+                        timeoutInterval: self.settings.timeout.ioTimeout)
+                        self.webSocket = WebSocket(request: urlRequest)
+                        self.webSocket?.allowSelfSignedSSL = self.settings.skipTLSCertificateVerification
+                        self.webSocket?.delegate = self
+                    }
                 }
             case .success(let message):
                 switch message {
@@ -171,18 +181,19 @@ extension WebSocketWrapper {
             self.url.absoluteString.contains("upload"),
             let webSocketTask = webSocketTask as? URLSessionWebSocketTask,
             let data = message as? Data {
-            let messagedata = URLSessionWebSocketTask.Message.data(Data.randomDataNetworkElement())
-            webSocketTask.send(messagedata, completionHandler: { [weak self] (error) in
+            webSocketTask.send(URLSessionWebSocketTask.Message.data(data), completionHandler: { [weak self] (error) in
                 guard let self = self else { return }
                 if error == nil {
+                    pthread_mutex_lock(&self.mutex)
                     self.dataCountSent += data.count
+                    pthread_mutex_unlock(&self.mutex)
                 }
             })
             return 0
         } else {
             guard let buffer = webSocket?.ws.outputBytesLength, buffer < maxBuffer else { return nil }
             if open {
-                webSocket?.send(message)
+                webSocket?.send(message, NDT7WebSocketConstants.Request.maxConcurrentMessages)
                 return buffer
             } else {
                 logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")
@@ -212,8 +223,21 @@ extension WebSocketWrapper: WebSocketDelegate {
     }
 
     func webSocketError(_ error: NSError) {
-        logNDT7("WebSocket \(url.absoluteString) did get error: \(error.localizedDescription)", .error)
-        delegate?.error(webSocket: self, error: error)
+        if #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
+            enableiOS13Socket,
+            let webSocketTask = self.webSocketTask as? URLSessionWebSocketTask {
+            webSocketTask.cancel(with: .normalClosure, reason: nil)
+            enableiOS13Socket = false
+            let urlRequest = URLRequest(url: url,
+            cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
+            timeoutInterval: settings.timeout.ioTimeout)
+            webSocket = WebSocket(request: urlRequest)
+            webSocket?.allowSelfSignedSSL = settings.skipTLSCertificateVerification
+            webSocket?.delegate = self
+        } else {
+            logNDT7("WebSocket \(url.absoluteString) did get error: \(error.localizedDescription)", .error)
+            delegate?.error(webSocket: self, error: error)
+        }
     }
 
     func webSocketMessageText(_ text: String) {

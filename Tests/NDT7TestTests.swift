@@ -250,7 +250,6 @@ class NDT7TestTests: XCTestCase {
 
         ndt7Test?.uploader(socket: webSocketUpload, message: data, t0: t0, tlast: tlast, count: count, queue: dispatchQueue)
         XCTAssertNotNil(testInteractionMock.elapsed)
-        XCTAssertEqual(testInteractionMock.count, count)
     }
 
     func testNDT7TestUploadMessage() {

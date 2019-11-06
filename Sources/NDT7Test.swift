@@ -274,7 +274,7 @@ extension NDT7Test {
         var count = count
         let duration: TimeInterval = 10.0
         guard t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true else {
-            uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
+            uploadMessage(socket: socket, t0: t0, t1: t1, count: webSocketUpload?.outputBytesLengthAccumulated ?? 0)
             uploadTestCompletion?(nil)
             uploadTestCompletion = nil
             return
@@ -282,19 +282,25 @@ extension NDT7Test {
 
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
+        if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25,
+            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated {
+            tlast = t1
+            uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
+        }
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true,
-            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated, count < outputBytesAccumulated + underbuffered {
+            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated,
+            count < outputBytesAccumulated + underbuffered {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
-                count += message.count
+                count += message.count * Int(NDT7WebSocketConstants.Request.maxConcurrentMessages)
             }
             t1 = Date()
             if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25 {
                 tlast = t1
-                uploadMessage(socket: socket, t0: t0, t1: t1, count: count)
+                uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
             }
         }
-        queue.asyncAfter(deadline: .now() + 0.001) { [weak self] in
+        queue.asyncAfter(deadline: .now() + NDT7WebSocketConstants.Request.uploadRequestDelay) { [weak self] in
             self?.uploader(socket: socket, message: message, t0: t0, tlast: tlast, count: count, queue: queue)
         }
     }
