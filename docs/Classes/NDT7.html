@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -124,7 +133,21 @@
                 </div>
               </div>
             <p>NDT7 provides a framework to measure the download and upload speed.
- The next example shows the whole implementation to get the information from NDT7
+ NDT7 is based on WebSocket and TLS, and takes advantage of TCP BBR, where this flavour of TCP is available.
+ NDT7 always uses a single TCP connection.</p>
+
+<p>NDT7 answers the question of how fast you could pull/push data from your device to a typically-nearby, well-provisioned web server by means of commonly-used web technologies.
+ This is not necessarily a measurement of your last mile speed.
+ Rather it is a measurement of what performance is possible with your device,
+ your current internet connection (landline, Wi-Fi, 4G, etc.),
+ the characteristics of your ISP and possibly of other ISPs in the middle,
+ and the server being used.
+ The main metric measured by ndt7 is the goodput, i.e., the speed measured at application level,
+ without including the overheads of WebSockets, TLS, TCP/IP, and link layer headers.
+ But we also provide kernel-level information from TCP_INFO where available.
+ For all these reasons we say that ndt7 performs application-level measurements.</p>
+
+<p>The next example shows the whole implementation to get the information from NDT7
  with a default <code><a href="../Structs/NDT7Settings.html">NDT7Settings</a></code>.
  Please, check the <code><a href="../Structs/NDT7Settings.html">NDT7Settings</a></code> to undestand the parameters to be able
  to define for the tests like hostname, paths, etc.</p>
@@ -160,22 +183,13 @@
 
 <span class="kd">extension</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">NDT7TestInteraction</span> <span class="p">{</span>
 
-    <span class="kd">func</span> <span class="nf">downloadTestRunning</span><span class="p">(</span><span class="n">_</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">test</span><span class="p">(</span><span class="nv">kind</span><span class="p">:</span> <span class="kt">NDT7TestConstants</span><span class="o">.</span><span class="kt">Kind</span><span class="p">,</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">}</span>
 
-    <span class="kd">func</span> <span class="nf">uploadTestRunning</span><span class="p">(</span><span class="n">_</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">measurement</span><span class="p">(</span><span class="nv">origin</span><span class="p">:</span> <span class="kt">NDT7TestConstants</span><span class="o">.</span><span class="kt">Origin</span><span class="p">,</span> <span class="nv">kind</span><span class="p">:</span> <span class="kt">NDT7TestConstants</span><span class="o">.</span><span class="kt">Kind</span><span class="p">,</span> <span class="nv">measurement</span><span class="p">:</span> <span class="kt">NDT7Measurement</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">}</span>
 
-    <span class="kd">func</span> <span class="nf">downloadMeasurement</span><span class="p">(</span><span class="n">_</span> <span class="nv">measurement</span><span class="p">:</span> <span class="kt">NDT7Measurement</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">uploadMeasurement</span><span class="p">(</span><span class="n">_</span> <span class="nv">measurement</span><span class="p">:</span> <span class="kt">NDT7Measurement</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">downloadTestError</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="kd">func</span> <span class="nf">uploadTestError</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">error</span><span class="p">(</span><span class="nv">kind</span><span class="p">:</span> <span class="kt">NDT7TestConstants</span><span class="o">.</span><span class="kt">Kind</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -223,8 +237,8 @@ for debugging purpose.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-11-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

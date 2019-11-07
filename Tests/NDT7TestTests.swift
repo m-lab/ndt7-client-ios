@@ -13,11 +13,17 @@ class NDT7TestTests: XCTestCase {
 
     class TestInteractionMock: NDT7TestInteraction {
         var count: Int? = 0
-        var elapsed: Float64? = 0.0
+        var elapsed: Int64? = 0
+        var direction: NDT7TestConstants.Kind?
+        var origin: NDT7TestConstants.Origin?
+        var rawData: String?
         var measurement: NDT7Measurement?
-        func uploadMeasurement(_ measurement: NDT7Measurement) {
+        func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
             self.measurement = measurement
-            elapsed = self.measurement?.elapsed
+            elapsed = self.measurement?.appInfo?.elapsedTime
+            self.direction = measurement.direction
+            self.origin = measurement.origin
+            self.rawData = measurement.rawData
             if let count = measurement.appInfo?.numBytes {
                 self.count = Int(count)
             }
@@ -244,7 +250,6 @@ class NDT7TestTests: XCTestCase {
 
         ndt7Test?.uploader(socket: webSocketUpload, message: data, t0: t0, tlast: tlast, count: count, queue: dispatchQueue)
         XCTAssertNotNil(testInteractionMock.elapsed)
-        XCTAssertEqual(testInteractionMock.count, count)
     }
 
     func testNDT7TestUploadMessage() {
@@ -258,27 +263,64 @@ class NDT7TestTests: XCTestCase {
         ndt7Test?.webSocketUpload = WebSocketWrapper(settings: settings, url: URL(string: settings.url.uploadPath)!)
         ndt7Test?.uploadMessage(socket: ndt7Test!.webSocketUpload!, t0: t0, t1: t1, count: count)
         XCTAssertEqual(testInteractionMock.count, count)
-        XCTAssertEqual(testInteractionMock.elapsed, t1.timeIntervalSince1970 - t0.timeIntervalSince1970)
+        XCTAssertEqual(testInteractionMock.direction, .upload)
+        XCTAssertEqual(testInteractionMock.origin, .client)
+//        XCTAssertEqual(testInteractionMock.rawData, "{\"rawData\":\"{ }\",\"AppInfo\":{\"ElapsedTime\":0,\"NumBytes\":123456},\"Origin\":\"client\",\"Test\":\"upload\"}")
+//        XCTAssertEqual(testInteractionMock.elapsed, Int64(t1.timeIntervalSince1970 - t0.timeIntervalSince1970))
     }
 
     func testNDT7TestHhandleMessage() {
         let measurementJSON = """
 {
-"elapsed": 1,
-"tcp_info": { "smoothed_rtt": 2, "rtt_var": 3 },
-"app_info": { "num_bytes": 4 },
-"bbr_info": { "max_bandwidth" : 5, "min_rtt": 6 }
+ "AppInfo": {
+   "ElapsedTime": 12341,
+   "NumBytes": 12342,
+ },
+ "ConnectionInfo": {
+   "Client": "1.2.3.4:5678",
+   "Server": "[::1]:2345",
+   "UUID": "<platform-specific-string>"
+ },
+ "Origin": "server",
+ "Test": "download",
+ "TCPInfo": {
+   "BusyTime": 1234,
+   "BytesAcked": 12345,
+   "BytesReceived": 12346,
+   "BytesSent": 12347,
+   "BytesRetrans": 12348,
+   "ElapsedTime": 12349,
+   "MinRTT": 12340,
+   "RTT": 123411,
+   "RTTVar": 123412,
+   "RWndLimited": 123413,
+   "SndBufLimited": 123414
+ }
 }
 """
         let ndt7Test: NDT7Test? = NDT7Test(settings: NDT7Settings())
         let message = ndt7Test?.handleMessage(measurementJSON)
         XCTAssertNotNil(message)
-        XCTAssertEqual(message?.elapsed, 1)
-        XCTAssertEqual(message?.tcpInfo?.smoothedRtt, 2)
-        XCTAssertEqual(message?.tcpInfo?.rttVar, 3)
-        XCTAssertEqual(message?.appInfo?.numBytes, 4)
-        XCTAssertEqual(message?.bbrInfo?.bandwith, 5)
-        XCTAssertEqual(message?.bbrInfo?.minRtt, 6)
+        XCTAssertEqual(message?.appInfo?.elapsedTime, 12341)
+        XCTAssertEqual(message?.appInfo?.numBytes, 12342)
+        XCTAssertEqual(message?.connectionInfo?.client, "1.2.3.4:5678")
+        XCTAssertEqual(message?.connectionInfo?.server, "[::1]:2345")
+        XCTAssertEqual(message?.connectionInfo?.uuid, "<platform-specific-string>")
+        XCTAssertEqual(message?.connectionInfo?.uuid, "<platform-specific-string>")
+        XCTAssertEqual(message?.origin, .server)
+        XCTAssertEqual(message?.direction, .download)
+        XCTAssertEqual(message?.tcpInfo?.busyTime, 1234)
+        XCTAssertEqual(message?.tcpInfo?.bytesAcked, 12345)
+        XCTAssertEqual(message?.tcpInfo?.bytesReceived, 12346)
+        XCTAssertEqual(message?.tcpInfo?.bytesSent, 12347)
+        XCTAssertEqual(message?.tcpInfo?.bytesRetrans, 12348)
+        XCTAssertEqual(message?.tcpInfo?.elapsedTime, 12349)
+        XCTAssertEqual(message?.tcpInfo?.minRTT, 12340)
+        XCTAssertEqual(message?.tcpInfo?.rtt, 123411)
+        XCTAssertEqual(message?.tcpInfo?.rttVar, 123412)
+        XCTAssertEqual(message?.tcpInfo?.rwndLimited, 123413)
+        XCTAssertEqual(message?.tcpInfo?.sndBufLimited, 123414)
+        XCTAssertEqual(message?.rawData, measurementJSON)
     }
 
     func testNDT7TestHhandleWrongMessage() {
@@ -306,7 +348,7 @@ elapsed: 1,
             startDownloadCheck = true
             XCTAssertNotNil(error)
         }
-        ndt7Test?.startDownload(false, error: NDT7Constants.Test.cancelledError, completionWithError)
+        ndt7Test?.startDownload(false, error: NDT7TestConstants.cancelledError, completionWithError)
         XCTAssertTrue(startDownloadCheck)
     }
 
@@ -328,7 +370,7 @@ elapsed: 1,
             startDownloadCheck = true
             XCTAssertNotNil(error)
         }
-        ndt7Test?.startDownload(true, error: NDT7Constants.Test.cancelledError, completionWithError)
+        ndt7Test?.startDownload(true, error: NDT7TestConstants.cancelledError, completionWithError)
         XCTAssertTrue(startDownloadCheck)
     }
 
@@ -343,7 +385,7 @@ elapsed: 1,
             startUploadCheck = true
             XCTAssertNotNil(error)
         }
-        ndt7Test?.startUpload(false, error: NDT7Constants.Test.cancelledError, completionWithError)
+        ndt7Test?.startUpload(false, error: NDT7TestConstants.cancelledError, completionWithError)
         XCTAssertTrue(startUploadCheck)
     }
 
@@ -365,7 +407,7 @@ elapsed: 1,
             startUploadCheck = true
             XCTAssertNotNil(error)
         }
-        ndt7Test?.startUpload(true, error: NDT7Constants.Test.cancelledError, completionWithError)
+        ndt7Test?.startUpload(true, error: NDT7TestConstants.cancelledError, completionWithError)
         XCTAssertTrue(startUploadCheck)
     }
 
@@ -412,12 +454,10 @@ elapsed: 1,
         XCTAssertTrue(settings.url.wss)
         XCTAssertTrue(settings.skipTLSCertificateVerification)
         XCTAssertEqual(settings.timeout.measurement, 5.5)
-        XCTAssertEqual(settings.timeout.request, 5)
-        XCTAssertEqual(settings.timeout.test, 15)
+        XCTAssertEqual(settings.timeout.ioTimeout, 7)
+        XCTAssertEqual(settings.timeout.downloadTimeout, 15)
+        XCTAssertEqual(settings.timeout.uploadTimeout, 15)
         XCTAssertEqual(settings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
-        XCTAssertEqual(settings.headers["Sec-WebSocket-Accept"], "Nhz+x95YebD6Uvd4nqPC2fomoUQ=")
-        XCTAssertEqual(settings.headers["Sec-WebSocket-Version"], "13")
-        XCTAssertEqual(settings.headers["Sec-WebSocket-Key"], "DOdm+5/Cm3WwvhfcAlhJoQ==")
     }
 
     func testWebSocketInteraction() {

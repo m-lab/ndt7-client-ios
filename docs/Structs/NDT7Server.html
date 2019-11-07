@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -274,9 +283,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A6ServerV8discover_14withGeoOptions_So16NSURLSessionTaskCSo0G0C_SbyACSg_So7NSErrorCSgtctFZ"></a>
-                    <a name="//apple_ref/swift/Method/discover(_:withGeoOptions:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A6ServerV8discover_14withGeoOptions_So16NSURLSessionTaskCSo0G0C_SbyACSg_So7NSErrorCSgtctFZ">discover(_:withGeoOptions:_:)</a>
+                    <a name="/s:4NDT70A6ServerV8discover_14withGeoOptions6retray_So16NSURLSessionTaskCSo0H0C_SbSuyACSg_So7NSErrorCSgtctFZ"></a>
+                    <a name="//apple_ref/swift/Method/discover(_:withGeoOptions:retray:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV8discover_14withGeoOptions6retray_So16NSURLSessionTaskCSo0H0C_SbSuyACSg_So7NSErrorCSgtctFZ">discover(_:withGeoOptions:retray:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -293,6 +302,7 @@
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">discover</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">URLSession</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span>
                             <span class="n">withGeoOptions</span> <span class="nv">geoOptions</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                            <span class="nv">retray</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
                             <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">server</span><span class="p">:</span> <span class="kt">NDT7Server</span><span class="p">?,</span> <span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionTask</span></code></pre>
 
                         </div>
@@ -375,8 +385,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-11-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

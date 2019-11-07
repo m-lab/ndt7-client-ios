@@ -198,22 +198,13 @@ class ViewController: UIViewController {
 // 1. Setup all the functions needed for NDT7Test delegate.
 extension ViewController: NDT7TestInteraction {
 
-    func downloadTestRunning(_ running: Bool) {
+    func test(kind: NDT7TestConstants.Kind, running: Bool) {
     }
-
-    func uploadTestRunning(_ running: Bool) {
+    
+    func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
     }
-
-    func downloadMeasurement(_ measurement: NDT7Measurement) {
-    }
-
-    func uploadMeasurement(_ measurement: NDT7Measurement) {
-    }
-
-    func downloadTestError(_ error: NSError) {
-    }
-
-    func uploadTestError(_ error: NSError) {
+    
+    func error(kind: NDT7TestConstants.Kind, error: NSError) {
     }
 }
 ```

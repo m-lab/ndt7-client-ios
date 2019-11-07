@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="../Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="../Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -119,7 +128,7 @@
             <h1>NDT7BBRInfo</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7BBRInfo</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7BBRInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
@@ -135,6 +144,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:4NDT70A7BBRInfoV11elapsedTimes5Int64VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/elapsedTime" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7BBRInfoV11elapsedTimes5Int64VSgvp">elapsedTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>elapsedTime (an Int64) is the time elapsed since the beginning of this test, measured in microseconds.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">elapsedTime</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:4NDT70A7BBRInfoV8bandwiths5Int64VSgvp"></a>
                     <a name="//apple_ref/swift/Property/bandwith" class="dashAnchor"></a>
                     <a class="token" href="#/s:4NDT70A7BBRInfoV8bandwiths5Int64VSgvp">bandwith</a>
@@ -145,7 +181,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>bandwith (a int64) is the max-bandwidth measured by BBR, in bits per second.</p>
+                        <p>bandwith (a Int64) is the max-bandwidth measured by BBR, in bits per second.</p>
 
                       </div>
                       <div class="declaration">
@@ -162,9 +198,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A7BBRInfoV6minRttSdSgvp"></a>
+                    <a name="/s:4NDT70A7BBRInfoV6minRtts5Int64VSgvp"></a>
                     <a name="//apple_ref/swift/Property/minRtt" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7BBRInfoV6minRttSdSgvp">minRtt</a>
+                    <a class="token" href="#/s:4NDT70A7BBRInfoV6minRtts5Int64VSgvp">minRtt</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -172,41 +208,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>minRtt (a float64) is the min-rtt measured by BBR, in millisecond;</p>
+                        <p>minRtt (a Int64) is the min-rtt measured by BBR, in millisecond;</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">minRtt</span><span class="p">:</span> <span class="kt">Float64</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:4NDT70A7BBRInfoV11descriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7BBRInfoV11descriptionSSvp">description</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>description contains a formated string for NDT7BBRInfo.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">minRtt</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -221,8 +230,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-11-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

@@ -15,9 +15,6 @@ class NDT7SettingsTests: XCTestCase {
         let defaultSettings = NDT7Settings()
         XCTAssertTrue(defaultSettings.skipTLSCertificateVerification)
         XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Accept"], "Nhz+x95YebD6Uvd4nqPC2fomoUQ=")
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Version"], "13")
-        XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Key"], "DOdm+5/Cm3WwvhfcAlhJoQ==")
     }
 
     func testNDT7URLDefault() {
@@ -34,14 +31,15 @@ class NDT7SettingsTests: XCTestCase {
     func testNDT7TimeoutsDefault() {
         let defaultTimeouts = NDT7Timeouts()
         XCTAssertEqual(defaultTimeouts.measurement, 0.25)
-        XCTAssertEqual(defaultTimeouts.request, 5)
-        XCTAssertEqual(defaultTimeouts.test, 15)
+        XCTAssertEqual(defaultTimeouts.ioTimeout, 7)
+        XCTAssertEqual(defaultTimeouts.downloadTimeout, 15)
+        XCTAssertEqual(defaultTimeouts.uploadTimeout, 15)
     }
 
     func testDiscoverServer() {
         var result = false
         let expectation = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(withGeoOptions: false) { (server, error) in
+        _ = NDT7Server.discover(withGeoOptions: false, retray: 100) { (server, error) in
             if let errorServer = error?.localizedDescription {
                 XCTAssertEqual(errorServer, "Cannot find a suitable mlab server")
             } else {
@@ -60,7 +58,7 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertTrue(result)
         var resultWithGeoOptions = false
         let expectationGeoOptions = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(withGeoOptions: false) { (server, error) in
+        _ = NDT7Server.discover(withGeoOptions: false, retray: 100) { (server, error) in
             if let errorServer = error?.localizedDescription {
                 XCTAssertEqual(errorServer, "Cannot find a suitable mlab server")
             } else {
@@ -77,25 +75,13 @@ class NDT7SettingsTests: XCTestCase {
         }
         wait(for: [expectationGeoOptions], timeout: 10.0)
         XCTAssertTrue(resultWithGeoOptions)
-        var resultWithTaskCancelled = false
-        let expectationWithTaskCancelled = XCTestExpectation(description: "Job in main thread")
-        let task = NDT7Server.discover(withGeoOptions: false) { (server, error) in
-            XCTAssertNil(server)
-            XCTAssertNotNil(error)
-            XCTAssertEqual(error, NDT7Constants.Test.cancelledError)
-            resultWithTaskCancelled = true
-            expectationWithTaskCancelled.fulfill()
-        }
-        task.cancel()
-        wait(for: [expectationWithTaskCancelled], timeout: 10.0)
-        XCTAssertTrue(resultWithTaskCancelled)
     }
 
     func testDecodeServer() {
         let jsonServer = """
 {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
 """
-        let server = NDT7Server.decode(data: jsonServer.data(using: .utf8), fromUrl: NDT7Constants.MlabServerDiscover.url)
+        let server = NDT7Server.decode(data: jsonServer.data(using: .utf8), fromUrl: NDT7WebSocketConstants.MlabServerDiscover.url)
         XCTAssertTrue(server!.ip!.contains("70.42.177.114"))
         XCTAssertTrue(server!.ip!.contains("2600:c0b:2002:5::114"))
         XCTAssertEqual(server?.country, "US")
@@ -105,7 +91,7 @@ class NDT7SettingsTests: XCTestCase {
         let jsonServerList = """
 [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}]
 """
-        let serverFromList = NDT7Server.decode(data: jsonServerList.data(using: .utf8), fromUrl: NDT7Constants.MlabServerDiscover.urlWithGeoOption)
+        let serverFromList = NDT7Server.decode(data: jsonServerList.data(using: .utf8), fromUrl: NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption)
         XCTAssertTrue(serverFromList!.ip!.contains("70.42.177.114"))
         XCTAssertTrue(serverFromList!.ip!.contains("2600:c0b:2002:5::114"))
         XCTAssertEqual(serverFromList?.country, "US")

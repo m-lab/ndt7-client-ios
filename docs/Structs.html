@@ -79,16 +79,7 @@
                 <a class="nav-group-task-link" href="Structs/NDT7BBRInfo.html">NDT7BBRInfo</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/NDT7Constants.html">NDT7Constants</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/NDT7Constants/MlabServerDiscover.html">– MlabServerDiscover</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/NDT7Constants/WebSocket.html">– WebSocket</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/NDT7Constants/Test.html">– Test</a>
+                <a class="nav-group-task-link" href="Structs/NDT7ConnectionInfo.html">NDT7ConnectionInfo</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/NDT7Measurement.html">NDT7Measurement</a>
@@ -103,10 +94,28 @@
                 <a class="nav-group-task-link" href="Structs/NDT7TCPInfo.html">NDT7TCPInfo</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7TestConstants.html">NDT7TestConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7TestConstants/Origin.html">– Origin</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7TestConstants/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/NDT7Timeouts.html">NDT7Timeouts</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/NDT7URL.html">NDT7URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7WebSocketConstants.html">NDT7WebSocketConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7WebSocketConstants/MlabServerDiscover.html">– MlabServerDiscover</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/NDT7WebSocketConstants/Request.html">– Request</a>
               </li>
             </ul>
           </li>
@@ -129,9 +138,37 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A9ConstantsV"></a>
-                    <a name="//apple_ref/swift/Struct/NDT7Constants" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A9ConstantsV">NDT7Constants</a>
+                    <a name="/s:4NDT70A13TestConstantsV"></a>
+                    <a name="//apple_ref/swift/Struct/NDT7TestConstants" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A13TestConstantsV">NDT7TestConstants</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Test measurement constants.</p>
+
+                        <a href="Structs/NDT7TestConstants.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7TestConstants</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A18WebSocketConstantsV"></a>
+                    <a name="//apple_ref/swift/Struct/NDT7WebSocketConstants" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A18WebSocketConstantsV">NDT7WebSocketConstants</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -141,13 +178,13 @@
                       <div class="abstract">
                         <p>Websocket constants definition.</p>
 
-                        <a href="Structs/NDT7Constants.html" class="slightly-smaller">See more</a>
+                        <a href="Structs/NDT7WebSocketConstants.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Constants</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7WebSocketConstants</span></code></pre>
 
                         </div>
                       </div>
@@ -172,21 +209,36 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>For measurement, the server and client exchange JSON measurements using Textual WebSocket messages.
-NDT7Measurement represents such JSON measurements, which contains all the information.</p>
+NDT7Measurement represents such JSON measurements, which contains all the information.
+Note that the JSON exchanged on the wire, MAY possibly contain more TCP_INFO fields.
+Yet, only the fields described in this specification are returned by a compliant,
+TCP_INFO enabled implementation of ndt7.</p>
 
-<p>Example of JSON to be matched with NDT7Measurement object:</p>
+<p>Example of JSON to be matched with NDT7Measurement object v0.8.3 of the specification:</p>
 <pre class="highlight swift"><code><span class="p">{</span>
- <span class="s">"app_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"num_bytes"</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+ <span class="s">"AppInfo"</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s">"ElapsedTime"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"NumBytes"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
  <span class="p">},</span>
- <span class="s">"bbr_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"max_bandwidth"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>
-   <span class="s">"min_rtt"</span><span class="p">:</span> <span class="mf">123.4</span>
+ <span class="s">"ConnectionInfo"</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s">"Client"</span><span class="p">:</span> <span class="s">"1.2.3.4:5678"</span><span class="p">,</span>
+   <span class="s">"Server"</span><span class="p">:</span> <span class="s">"[::1]:2345"</span><span class="p">,</span>
+   <span class="s">"UUID"</span><span class="p">:</span> <span class="s">"&lt;platform-specific-string&gt;"</span>
  <span class="p">},</span>
- <span class="s">"elapsed"</span><span class="p">:</span> <span class="mf">1.2345</span><span class="p">,</span>
- <span class="s">"tcp_info"</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s">"rtt_var"</span><span class="p">:</span> <span class="mf">123.4</span><span class="p">,</span>
-   <span class="s">"smoothed_rtt"</span><span class="p">:</span> <span class="mf">567.8</span>
+ <span class="s">"Origin"</span><span class="p">:</span> <span class="s">"server"</span><span class="p">,</span>
+ <span class="s">"Test"</span><span class="p">:</span> <span class="s">"download"</span><span class="p">,</span>
+ <span class="s">"TCPInfo"</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s">"BusyTime"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesAcked"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesReceived"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesSent"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"BytesRetrans"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"ElapsedTime"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"MinRTT"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"RTT"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"RTTVar"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"RWndLimited"</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+   <span class="s">"SndBufLimited"</span><span class="p">:</span> <span class="mi">1234</span>
  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -197,35 +249,7 @@ NDT7Measurement represents such JSON measurements, which contains all the inform
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Measurement</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:4NDT70A7TCPInfoV"></a>
-                    <a name="//apple_ref/swift/Struct/NDT7TCPInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7TCPInfoV">NDT7TCPInfo</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>NDT7TCPInfo is an optional object only included in the measurement when it is possible to access TCP_INFO stats.</p>
-
-                        <a href="Structs/NDT7TCPInfo.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7TCPInfo</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7Measurement</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                         </div>
                       </div>
@@ -253,7 +277,7 @@ NDT7Measurement represents such JSON measurements, which contains all the inform
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7APPInfo</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7APPInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                         </div>
                       </div>
@@ -281,7 +305,94 @@ NDT7Measurement represents such JSON measurements, which contains all the inform
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7BBRInfo</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7BBRInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A14ConnectionInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/NDT7ConnectionInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A14ConnectionInfoV">NDT7ConnectionInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>NDT7ConnectionInfo is an optional object used to provide information about the connection four tuple.
+Clients MUST NOT send this message. Servers MUST send this message exactly once.
+Clients SHOULD cache the first received instance of this message, and discard any subsequently received instance of this message.</p>
+
+                        <a href="Structs/NDT7ConnectionInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7ConnectionInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4NDT70A7TCPInfoV"></a>
+                    <a name="//apple_ref/swift/Struct/NDT7TCPInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A7TCPInfoV">NDT7TCPInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>NDT7TCPInfo is an optional object only included in the measurement when it is possible to access TCP_INFO stats.</p>
+
+<p>The MinRTT, RTT, and RTTVar fields can be used to compute the statistics of the round-trip time.
+The buildup of a large queue is unexpected when using BBR.
+It generally indicates the presence of a bottleneck with a large buffer that&rsquo;s filling as the test proceeds.
+The MinRTT can also be useful to verify we&rsquo;re using a reasonably nearby-server.
+Also, an unreasonably small RTT when the link is 2G or 3G could indicate a performance enhancing proxy.</p>
+
+<p>The times (BusyTime, RWndLimited, and SndBufLimited) are useful to understand where the bottleneck could be.
+In general we would like to see that we&rsquo;ve been busy for most of the test runtime.
+If RWndLimited is large, then it means that the receiver does not have enough buffering to go faster and it is limiting our performance.
+Likewise, when SndBufLimited is large, the sender&rsquo;s buffer is too small.
+Also, if adding up these three times gives us less time than the duration of the test,
+it generally means that the sender was not filling the send buffer fast enough for keeping TCP busy,
+thus slowing us down.</p>
+
+<p>The amount of BytesAcked combined with the ElapsedTime gives us the average speed at which we&rsquo;ve been sending, measured in the kernel.
+Because of the measurement unit used, by default the speed will be in bytes per microsecond.
+Typically the speed of file transfers is measured instead in bytes per second, so you need to multiply by 10^6.
+To obtain the speed in bits per second, which is the typical unit with which we measure the speed of links (e.g. Wi-Fi), also multiply by 8.</p>
+
+<p>BytesReceived is just like BytesAcked, except that BytesAcked makes sense for the sender
+(e.g. the server during the download), while BytesReceived makes sense for the receiver (e.g. the server during the upload).</p>
+
+<p>BytesSent and BytesRetrans can be used to compute the percentage of bytes overall that have been retransmitted.
+In turn, this is value approximates the packet loss rate, i.e. the (unknown) probability with which the network is likely to drop a packet.
+This approximation is really bad because it assumes that the probability of dropping a packet is uniformly distributed,
+which isn&rsquo;t likely the case. Yet, it may be an useful first order information to characterise a network as possibly very lossy.
+Some packet loss is normal and healthy,
+but too much packet loss is the sign of a network path with systemic problems.</p>
+
+                        <a href="Structs/NDT7TCPInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7TCPInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
 
                         </div>
                       </div>
@@ -413,8 +524,8 @@ Can be used with default values: NDT7Settings()</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-05-31)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-11-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
