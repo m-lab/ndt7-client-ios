@@ -78,7 +78,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'NDT7 example' do
-  pod 'NDT7', '0.0.1-beta.3'
+  pod 'NDT7', '0.0.1-beta.4'
 end
 ```
 
@@ -96,7 +96,7 @@ $ pod install
 Create a `Cartfile` and add the following line:
 
 ```
-github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.3
+github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.4
 ```
 
 Next, run the following command:
@@ -200,10 +200,10 @@ extension ViewController: NDT7TestInteraction {
 
     func test(kind: NDT7TestConstants.Kind, running: Bool) {
     }
-    
+
     func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
     }
-    
+
     func error(kind: NDT7TestConstants.Kind, error: NSError) {
     }
 }
