@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     var downloadSpeed: Double?
     var uploadSpeed: Double?
     var dispatchQueue = DispatchQueue(label: "DispatchQueue.NDT7.UpdateUI")
-    var enableAppData = false
+    var enableAppData = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
