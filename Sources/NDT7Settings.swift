@@ -147,6 +147,7 @@ extension NDT7Server {
     public static func discover(_ session: URLSession = URLSession.shared,
                                 withGeoOptions geoOptions: Bool,
                                 retray: UInt = 0,
+                                geoOptionsChangeInRetray: Bool = false,
                                 _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTask {
         let retray = retray > 4 ? 4 : retray
         let request = Networking.urlRequest(geoOptions ? NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption : NDT7WebSocketConstants.MlabServerDiscover.url)
@@ -155,7 +156,7 @@ extension NDT7Server {
             guard error?.localizedDescription != "cancelled" else {
                 if retray > 0 {
                     logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retray: \(retray)", .info)
-                    _ = discover(withGeoOptions: geoOptions, retray: retray - 1, completion)
+                    _ = discover(withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
                     return
                 } else if retray == 0, let server = lastServer {
                     logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
@@ -171,7 +172,7 @@ extension NDT7Server {
                 completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
             } else if retray > 0 {
                 logNDT7("NDT7 Mlab cannot find a suitable mlab server, retray: \(retray)", .info)
-                _ = discover(withGeoOptions: geoOptions, retray: retray - 1, completion)
+                _ = discover(withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
             } else if retray == 0, let server = lastServer {
                 logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
                 completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
