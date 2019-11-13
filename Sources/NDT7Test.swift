@@ -142,7 +142,9 @@ extension NDT7Test {
             completion(nil)
             return
         }
-        discoverServerTask = NDT7Server.discover(withGeoOptions: settings.useGeoOptions, retray: 4, { [weak self] (server, error) in
+        discoverServerTask = NDT7Server.discover(withGeoOptions: settings.useGeoOptions,
+                                                 retray: 4,
+                                                 geoOptionsChangeInRetray: true, { [weak self] (server, error) in
             guard let strongSelf = self else { return }
             strongSelf.settings.url.hostname = server?.fqdn ?? ""
             strongSelf.settings.url.server = server
