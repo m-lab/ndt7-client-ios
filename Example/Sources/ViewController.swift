@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     var downloadSpeed: Double?
     var uploadSpeed: Double?
     var dispatchQueue = DispatchQueue(label: "DispatchQueue.NDT7.UpdateUI")
+    var enableAppData = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +110,7 @@ extension ViewController: NDT7TestInteraction {
             serverLabel.text = url
         }
         if origin == .client,
+            enableAppData,
             let elapsedTime = measurement.appInfo?.elapsedTime,
             let numBytes = measurement.appInfo?.numBytes,
             elapsedTime >= 1000000 {
@@ -136,6 +138,42 @@ extension ViewController: NDT7TestInteraction {
                             self?.uploadSpeedLabel.text = "\(i) Mbit/s"
                         }
                         usleep(12500)
+                    }
+                }
+            }
+        } else if origin == .server,
+            let elapsedTime = measurement.tcpInfo?.elapsedTime,
+            elapsedTime >= 1000000 {
+            let seconds = elapsedTime / 1000000
+            switch kind {
+            case .download:
+                if let numBytes = measurement.tcpInfo?.bytesSent {
+                    let mbit = numBytes / 125000
+                    let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
+                    let values = decimalArray(from: downloadSpeed ?? 0, to: rounded)
+                    downloadSpeed = rounded
+                    for i in values {
+                        dispatchQueue.async {
+                            DispatchQueue.main.async { [weak self] in
+                                self?.downloadSpeedLabel.text = "\(i) Mbit/s"
+                            }
+                            usleep(12500)
+                        }
+                    }
+                }
+            case .upload:
+                if let numBytes = measurement.tcpInfo?.bytesReceived {
+                    let mbit = numBytes / 125000
+                    let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
+                    let values = decimalArray(from: uploadSpeed ?? 0, to: rounded)
+                    uploadSpeed = rounded
+                    for i in values {
+                        dispatchQueue.async {
+                            DispatchQueue.main.async { [weak self] in
+                                self?.uploadSpeedLabel.text = "\(i) Mbit/s"
+                            }
+                            usleep(12500)
+                        }
                     }
                 }
             }
