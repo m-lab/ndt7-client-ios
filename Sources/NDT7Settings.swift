@@ -156,7 +156,9 @@ extension NDT7Server {
             guard error?.localizedDescription != "cancelled" else {
                 if retray > 0 {
                     logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retray: \(retray)", .info)
-                    _ = discover(withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                        _ = discover(withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
+                    }
                     return
                 } else if retray == 0, let server = lastServer {
                     logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
@@ -172,7 +174,9 @@ extension NDT7Server {
                 completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
             } else if retray > 0 {
                 logNDT7("NDT7 Mlab cannot find a suitable mlab server, retray: \(retray)", .info)
-                _ = discover(withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
+                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                    _ = discover(withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
+                }
             } else if retray == 0, let server = lastServer {
                 logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
                 completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
