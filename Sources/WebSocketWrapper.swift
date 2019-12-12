@@ -26,10 +26,10 @@ class WebSocketWrapper {
     let url: URL
     let settings: NDT7Settings
     var outputBytesLengthAccumulated: Int {
-        webSocket?.ws.outputBytesLengthAccumulated ?? 0
+        return webSocket?.ws.outputBytesLengthAccumulated ?? 0
     }
     var inputBytesLengthAccumulated: Int {
-        webSocket?.ws.inputBytesLengthAccumulated ?? 0
+        return webSocket?.ws.inputBytesLengthAccumulated ?? 0
     }
     let dispatchQueue = DispatchQueue.init(label: "net.measurementlab.NDT7.read.URLSessionWebSocketTask")
 
