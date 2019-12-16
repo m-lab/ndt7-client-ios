@@ -137,12 +137,13 @@ extension NDT7Test {
     /// Server setup discover a MLab server for testing if there is not hostname deffined in settings.
     /// - parameter completion: closure for callback.
     /// - parameter error: returns an error if exist.
-    func serverSetup(_ completion: @escaping (_ error: NSError?) -> Void) {
+    func serverSetup(session: URLSession = URLSession.shared, _ completion: @escaping (_ error: NSError?) -> Void) {
         guard settings.url.hostname.isEmpty else {
             completion(nil)
             return
         }
-        discoverServerTask = NDT7Server.discover(withGeoOptions: settings.useGeoOptions,
+        discoverServerTask = NDT7Server.discover(session: session,
+                                                 withGeoOptions: settings.useGeoOptions,
                                                  retray: 4,
                                                  geoOptionsChangeInRetray: true, { [weak self] (server, error) in
             guard let strongSelf = self else { return }
