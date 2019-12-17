@@ -8,6 +8,25 @@
 
 import Foundation
 
+/// Protocol for URLSession dataTask
+public protocol URLSessionNDT7 {
+    associatedtype DataTaskType: URLSessionTaskNDT7
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> DataTaskType
+}
+
+/// Protocol for URLSessionTask
+public protocol URLSessionTaskNDT7 {
+    var state: URLSessionTask.State { get }
+    func resume()
+    func cancel()
+}
+
+extension URLSession: URLSessionNDT7 {
+}
+
+extension URLSessionTask: URLSessionTaskNDT7 {
+}
+
 /// Networking helper methods.
 struct Networking {
 
