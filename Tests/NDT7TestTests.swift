@@ -77,106 +77,6 @@ class NDT7TestTests: XCTestCase {
         XCTAssertFalse(startUploadCheck)
     }
 
-    func testNdt7TestStartTestTrue() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com", downloadPath: ""))
-        let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
-        var startDownloadCheck = false
-        let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
-            startDownloadCheck = true
-            XCTAssertNil(error)
-        }
-        var startUploadCheck = false
-        let uploadCompletion: (_ error: NSError?) -> Void = { (error) in
-            startUploadCheck = true
-            XCTAssertNil(error)
-        }
-
-        ndt7Test?.downloadTestCompletion = downloadCompletion
-        ndt7Test?.uploadTestCompletion = uploadCompletion
-        XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
-        XCTAssertFalse(startDownloadCheck)
-        XCTAssertFalse(startUploadCheck)
-        var check = false
-        ndt7Test?.startTest(download: true, upload: true, { (error) in
-            XCTAssertNil(error)
-            check = true
-        })
-        XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        ndt7Test?.downloadTestCompletion?(nil)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        ndt7Test?.uploadTestCompletion?(nil)
-        XCTAssertTrue(check)
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
-        XCTAssertFalse(startDownloadCheck)
-        XCTAssertFalse(startUploadCheck)
-
-        ndt7Test?.downloadTestCompletion = downloadCompletion
-        ndt7Test?.uploadTestCompletion = uploadCompletion
-        XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
-        XCTAssertFalse(startDownloadCheck)
-        XCTAssertFalse(startUploadCheck)
-        check = false
-        ndt7Test?.startTest(download: false, upload: true, { (error) in
-            XCTAssertNil(error)
-            check = true
-        })
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertFalse(check)
-        ndt7Test?.downloadTestCompletion?(nil)
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertFalse(check)
-        ndt7Test?.uploadTestCompletion?(nil)
-        XCTAssertTrue(check)
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
-        XCTAssertFalse(startDownloadCheck)
-        XCTAssertFalse(startUploadCheck)
-
-        ndt7Test?.downloadTestCompletion = downloadCompletion
-        ndt7Test?.uploadTestCompletion = uploadCompletion
-        XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNotNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
-        XCTAssertFalse(startDownloadCheck)
-        XCTAssertFalse(startUploadCheck)
-        check = false
-        ndt7Test?.startTest(download: true, upload: false, { (error) in
-            XCTAssertNil(error)
-            check = true
-        })
-        XCTAssertNotNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertFalse(check)
-        ndt7Test?.downloadTestCompletion?(nil)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertTrue(check)
-        ndt7Test?.uploadTestCompletion?(nil)
-        XCTAssertTrue(check)
-        XCTAssertNil(ndt7Test?.downloadTestCompletion)
-        XCTAssertNil(ndt7Test?.uploadTestCompletion)
-        XCTAssertNil(ndt7Test?.timerDownload)
-        XCTAssertNil(ndt7Test?.timerUpload)
-        XCTAssertFalse(startDownloadCheck)
-        XCTAssertFalse(startUploadCheck)
-    }
-
     func testNDT7TestCleanup() {
 
         let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
@@ -207,26 +107,91 @@ class NDT7TestTests: XCTestCase {
 
         var settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com"))
         var ndt7Test: NDT7Test? = NDT7Test(settings: settings)
+        let session = URLSessionMock()
         var result = false
+        var errorResult: Error?
         var expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup({ (error) in
+        ndt7Test?.serverSetup(session: session, { (error) in
             result = true
+            errorResult = error
             XCTAssertNil(error)
             expectation.fulfill()
         })
         wait(for: [expectation], timeout: 10.0)
         XCTAssertTrue(result)
+        XCTAssertNil(errorResult)
+        XCTAssertNil(ndt7Test?.settings.url.server)
+        XCTAssertEqual(ndt7Test?.settings.url.hostname ?? "", "hostname.com")
 
         settings = NDT7Settings(url: NDT7URL(hostname: ""))
         ndt7Test = NDT7Test(settings: settings)
+        let jsonServerDataNofqdn = """
+        {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}
+        """.data(using: .utf8)
+        session.data = jsonServerDataNofqdn
         result = false
+        errorResult = nil
         expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup({ (_) in
+        ndt7Test?.serverSetup(session: session, { (error) in
             result = true
+            errorResult = error
+            XCTAssertNotNil(error)
             expectation.fulfill()
         })
         wait(for: [expectation], timeout: 10.0)
         XCTAssertTrue(result)
+        XCTAssertNotNil(errorResult)
+        XCTAssertEqual(errorResult?.localizedDescription ?? "", "Cannot find a suitable mlab server")
+        XCTAssertNil(ndt7Test?.settings.url.server)
+        XCTAssertEqual(ndt7Test?.settings.url.hostname, "")
+        ndt7Test?.discoverServerTask = nil
+
+        settings = NDT7Settings(url: NDT7URL(hostname: ""))
+        ndt7Test = NDT7Test(settings: settings)
+        let jsonServerData = """
+        {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
+        """.data(using: .utf8)
+        session.data = jsonServerData
+        result = false
+        errorResult = nil
+        expectation = XCTestExpectation(description: "Job in main thread")
+        ndt7Test?.serverSetup(session: session, { (error) in
+            result = true
+            errorResult = error
+            XCTAssertNil(error)
+            expectation.fulfill()
+        })
+        wait(for: [expectation], timeout: 10.0)
+        XCTAssertTrue(result)
+        XCTAssertNil(errorResult)
+        XCTAssertNotNil(ndt7Test?.settings.url.server)
+        XCTAssertEqual(ndt7Test?.settings.url.hostname ?? "", "ndt-iupui-mlab4-atl06.measurement-lab.org")
+        ndt7Test?.discoverServerTask = nil
+
+        // After one successful server, if we don't get a successful server again, we use the last server
+        settings = NDT7Settings(url: NDT7URL(hostname: ""))
+        ndt7Test = NDT7Test(settings: settings)
+        let jsonServerDataNofqdn2 = """
+        {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}
+        """.data(using: .utf8)
+        session.data = jsonServerDataNofqdn2
+        result = false
+        errorResult = nil
+        expectation = XCTestExpectation(description: "Job in main thread")
+        ndt7Test?.serverSetup(session: session, { (error) in
+            result = true
+            errorResult = error
+            XCTAssertNil(error)
+            expectation.fulfill()
+        })
+        wait(for: [expectation], timeout: 10.0)
+        XCTAssertTrue(result)
+        XCTAssertNil(errorResult)
+        XCTAssertNotNil(ndt7Test?.settings.url.server)
+        XCTAssertEqual(ndt7Test?.settings.url.hostname ?? "", "ndt-iupui-mlab4-atl06.measurement-lab.org")
+        ndt7Test?.discoverServerTask = nil
+
+        NDT7Server.lastServer = nil
     }
 
     func testNDT7TestUploader() {
