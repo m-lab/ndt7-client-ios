@@ -9,11 +9,12 @@
 import XCTest
 @testable import NDT7
 
-class URLSessionMock: URLSession {
+class URLSessionMock: URLSessionNDT7 {
     typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
+    typealias URLSessionTaskNDT7 = URLSessionDataTaskMock
     var data: Data?
     var error: Error?
-    override func dataTask(with request: URLRequest, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
+    func dataTask(with request: URLRequest, completionHandler: @escaping CompletionHandler) -> URLSessionTaskNDT7 {
         let data = self.data
         let error = self.error
         return URLSessionDataTaskMock {
@@ -22,17 +23,32 @@ class URLSessionMock: URLSession {
     }
 }
 
-class URLSessionDataTaskMock: URLSessionDataTask {
+class URLSessionDataTaskMock: URLSessionTaskNDT7 {
     private let closure: () -> Void
+    var state: URLSessionTask.State
     init(closure: @escaping () -> Void) {
         self.closure = closure
+        self.state = .running
     }
-    override func resume() {
+    func resume() {
+        closure()
+    }
+    func cancel() {
         closure()
     }
 }
 
 class NDT7SettingsTests: XCTestCase {
+
+    override func setUp() {
+        super.setUp()
+        NDT7Server.lastServer = nil
+    }
+
+    override func tearDown() {
+        NDT7Server.lastServer = nil
+        super.tearDown()
+    }
 
     func testNDT7SettingsDefault() {
         let defaultSettings = NDT7Settings()
@@ -61,7 +77,7 @@ class NDT7SettingsTests: XCTestCase {
 
     func testDiscoverServer() {
 
-        // 1. The server is discovered without geo options enabled.
+        // 1. The server is discovered without geo options enabled (NDT7 server cache disabled).
         let session = URLSessionMock()
         let jsonServerData = """
         {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
@@ -88,7 +104,7 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
         XCTAssertEqual(serverResult?.site, "atl06")
 
-        // 2. The server is discovered with geo options enabled.
+        // 2. The server is discovered with geo options enabled (NDT7 server cache disabled).
         let jsonServerListData1 = """
         [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}]
         """.data(using: .utf8)
@@ -113,34 +129,7 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
         XCTAssertEqual(serverResult?.site, "atl06")
 
-        // 3. The server is discovered, even if fqdn is empty, because it was discovered before and it is in cache (NDT7Server.lastServer).
-        let jsonServerListData2 = """
-        [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}]
-        """.data(using: .utf8)
-        session.data = jsonServerListData2
-        var resultWithGeoOptions2 = false
-        let expectationGeoOptions2 = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(session: session,
-                                withGeoOptions: true,
-                                retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, _) in
-                                    serverResult = server
-                                    resultWithGeoOptions2 = true
-                                    expectationGeoOptions2.fulfill()
-        })
-        wait(for: [expectationGeoOptions2], timeout: 10.0)
-        XCTAssertTrue(resultWithGeoOptions2)
-        XCTAssertNotNil(serverResult)
-        XCTAssertTrue(serverResult?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(serverResult?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(serverResult?.country, "US")
-        XCTAssertEqual(serverResult?.city, "Atlanta_GA")
-        XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(serverResult?.site, "atl06")
-
-        NDT7Server.lastServer = nil
-
-        // 4. After delete the last server discovered, if there is an error getting a new server, the server can't be discovered.
+        // 3. if there is an error getting a new server, the server can't be discovered (NDT7 server cache disabled).
         let jsonServerListData3 = """
         [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}]
         """.data(using: .utf8)
@@ -158,28 +147,30 @@ class NDT7SettingsTests: XCTestCase {
         wait(for: [expectationGeoOptions3], timeout: 10.0)
         XCTAssertTrue(resultWithGeoOptions3)
         XCTAssertNil(serverResult)
+    }
 
-        // 5. The server can be discovered again.
-        let jsonServerListData4 = """
-        [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}]
+    func testDiscoverServerUsingNDT7ServerCache() {
+
+        // The server is discovered without geo options enabled and saved in cache.
+        let session = URLSessionMock()
+        let jsonServerData = """
+        {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
         """.data(using: .utf8)
-        session.data = jsonServerListData4
-        var errorResult: Error?
-        var resultWithGeoOptions4 = false
-        let expectationGeoOptions4 = XCTestExpectation(description: "Job in main thread")
+        session.data = jsonServerData
+        var result = false
+        var serverResult: NDT7Server?
+        let expectation = XCTestExpectation(description: "Job in main thread")
         _ = NDT7Server.discover(session: session,
-                                withGeoOptions: true,
+                                withGeoOptions: false,
                                 retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, error) in
-                                    errorResult = error
+                                geoOptionsChangeInRetray: false, { (server, _) in
                                     serverResult = server
-                                    resultWithGeoOptions4 = true
-                                    expectationGeoOptions4.fulfill()
+                                    result = true
+                                    expectation.fulfill()
         })
-        wait(for: [expectationGeoOptions4], timeout: 10.0)
-        XCTAssertTrue(resultWithGeoOptions4)
+        wait(for: [expectation], timeout: 10.0)
+        XCTAssertTrue(result)
         XCTAssertNotNil(serverResult)
-        XCTAssertNil(errorResult)
         XCTAssertTrue(serverResult?.ip?.contains("70.42.177.114") != nil)
         XCTAssertTrue(serverResult?.ip?.contains("2600:c0b:2002:5::114") != nil)
         XCTAssertEqual(serverResult?.country, "US")
@@ -187,18 +178,19 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
         XCTAssertEqual(serverResult?.site, "atl06")
 
-        // 6. If the server discovery is returning errors all the time, the discovery returns the last server discovered.
+        // If the server discovery is returning errors, the discovery returns the last server discovered if getting the server in cache is enabled.
         let jsonServerListData5 = """
         """.data(using: .utf8)
         session.data = jsonServerListData5
         session.error = NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError
-        errorResult = nil
+        var errorResult: Error?
         var resultWithGeoOptions5 = false
         let expectationGeoOptions5 = XCTestExpectation(description: "Job in main thread")
         _ = NDT7Server.discover(session: session,
                                 withGeoOptions: true,
                                 retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, error) in
+                                geoOptionsChangeInRetray: false,
+                                useNDT7ServerCache: true, { (server, error) in
                                     errorResult = error
                                     serverResult = server
                                     resultWithGeoOptions5 = true
@@ -214,9 +206,6 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertEqual(serverResult?.city, "Atlanta_GA")
         XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
         XCTAssertEqual(serverResult?.site, "atl06")
-
-        // Remove the last server discovered from Cache.
-        NDT7Server.lastServer = nil
     }
 
     func testDecodeServer() {

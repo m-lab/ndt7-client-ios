@@ -141,14 +141,18 @@ extension NDT7Server {
     /// Discover the closer Mlab server available or using geo location to get a random server from a list of the closer servers.
     /// - parameter session: URLSession object used to request servers, using URLSession.shared object as default session.
     /// - parameter geoOptions: true to use a list of servers based in geo location, otherwise the function will work trying to get the closer server.
+    /// - parameter retray: true to use a list of servers based in geo location, otherwise the function will work trying to get the closer server.
+    /// - parameter geoOptionsChangeInRetray: Alternate geo options for retray.
+    /// - parameter useNDT7ServerCache: uses the NDT7 Server cached if exist and if the request/s fail.
     /// - parameter completion: callback to get the NDT7Server and error message.
     /// - parameter server: NDT7Server object representing the Mlab server.
     /// - parameter error: if any error happens, this parameter returns the error.
-    public static func discover(session: URLSession = URLSession.shared,
-                                withGeoOptions geoOptions: Bool,
-                                retray: UInt = 0,
-                                geoOptionsChangeInRetray: Bool = false,
-                                _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTask {
+    public static func discover<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
+                                                   withGeoOptions geoOptions: Bool,
+                                                   retray: UInt = 0,
+                                                   geoOptionsChangeInRetray: Bool = false,
+                                                   useNDT7ServerCache: Bool = false,
+                                                   _ completion: @escaping (_ server: NDT7Server?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
         let retray = min(retray, 4)
         let request = Networking.urlRequest(geoOptions ? NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption : NDT7WebSocketConstants.MlabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
@@ -161,9 +165,14 @@ extension NDT7Server {
                 if retray > 0 {
                     logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retray: \(retray)", .info)
                     DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                        _ = discover(session: session, withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
+                        _ = discover(session: session,
+                                     withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions,
+                                     retray: retray - 1,
+                                     geoOptionsChangeInRetray: geoOptionsChangeInRetray,
+                                     useNDT7ServerCache: useNDT7ServerCache,
+                                     completion)
                     }
-                } else if retray == 0, let server = lastServer {
+                } else if retray == 0, useNDT7ServerCache, let server = lastServer {
                     logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
                     completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
                 }
@@ -176,9 +185,14 @@ extension NDT7Server {
             } else if retray > 0 {
                 logNDT7("NDT7 Mlab cannot find a suitable mlab server, retray: \(retray)", .info)
                 DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                    _ = discover(session: session, withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions, retray: retray - 1, completion)
+                    _ = discover(session: session,
+                                 withGeoOptions: geoOptionsChangeInRetray ? !geoOptions : geoOptions,
+                                 retray: retray - 1,
+                                 geoOptionsChangeInRetray: geoOptionsChangeInRetray,
+                                 useNDT7ServerCache: useNDT7ServerCache,
+                                 completion)
                 }
-            } else if retray == 0, let server = lastServer {
+            } else if retray == 0, useNDT7ServerCache, let server = lastServer {
                 logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
                 completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
             } else {

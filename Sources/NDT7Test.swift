@@ -90,7 +90,7 @@ open class NDT7Test {
     var uploadTestCompletion: ((_ error: NSError?) -> Void)?
     var timerDownload: Timer?
     var timerUpload: Timer?
-    var discoverServerTask: URLSessionTask?
+    var discoverServerTask: URLSessionTaskNDT7?
     var t0Download: Date?
     var tLastDownload: Date?
 
@@ -128,16 +128,18 @@ extension NDT7Test {
         logNDT7("NDT7 test started")
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
-        serverSetup { [weak self] (error) in
+        serverSetup(session: URLSession.shared, useNDT7ServerCache: true, { [weak self] (error) in
             OperationQueue.current?.name = "net.measurementlab.NDT7.test"
             self?.test(download: download, upload: upload, error: error, completion)
-        }
+        })
     }
 
     /// Server setup discover a MLab server for testing if there is not hostname deffined in settings.
     /// - parameter completion: closure for callback.
     /// - parameter error: returns an error if exist.
-    func serverSetup(session: URLSession = URLSession.shared, _ completion: @escaping (_ error: NSError?) -> Void) {
+    func serverSetup<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
+                                        useNDT7ServerCache: Bool = false,
+                                        _ completion: @escaping (_ error: NSError?) -> Void) {
         guard settings.url.hostname.isEmpty else {
             completion(nil)
             return
@@ -145,7 +147,8 @@ extension NDT7Test {
         discoverServerTask = NDT7Server.discover(session: session,
                                                  withGeoOptions: settings.useGeoOptions,
                                                  retray: 4,
-                                                 geoOptionsChangeInRetray: true, { [weak self] (server, error) in
+                                                 geoOptionsChangeInRetray: true,
+                                                 useNDT7ServerCache: useNDT7ServerCache, { [weak self] (server, error) in
             guard let strongSelf = self else { return }
             strongSelf.settings.url.hostname = server?.fqdn ?? ""
             strongSelf.settings.url.server = server
