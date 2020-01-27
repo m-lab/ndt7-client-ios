@@ -167,7 +167,7 @@ Please, copy paste this before that:
 </dict>
 ```
 
-That requests an exception for site locate.measurementlab.net.
+That requests add an exception for site locate.measurementlab.net.
 
 The only setup needed for debugging purpose is to enable logging if needed.
 ```swift

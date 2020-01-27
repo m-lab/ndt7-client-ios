@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           NDT7 Docs
         </a>
-         (100% documented)
+         (95% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -65,6 +65,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/NDT7TestInteraction.html">NDT7TestInteraction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/URLSessionNDT7.html">URLSessionNDT7</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/URLSessionTaskNDT7.html">URLSessionTaskNDT7</a>
               </li>
             </ul>
           </li>
@@ -237,7 +243,7 @@
 <span class="n">use_frameworks!</span>
 
 <span class="n">target</span> <span class="s1">'NDT7 example'</span> <span class="k">do</span>
-  <span class="n">pod</span> <span class="s1">'NDT7'</span><span class="p">,</span> <span class="s1">'0.0.1-beta.3'</span>
+  <span class="n">pod</span> <span class="s1">'NDT7'</span><span class="p">,</span> <span class="s1">'0.0.1-beta.6'</span>
 <span class="k">end</span>
 </code></pre>
 
@@ -251,7 +257,7 @@
 <p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.</p>
 
 <p>Create a <code>Cartfile</code> and add the following line:</p>
-<pre class="highlight plaintext"><code>github "m-lab/ndt7-client-ios" ~&gt; 0.0.1-beta.3
+<pre class="highlight plaintext"><code>github "m-lab/ndt7-client-ios" ~&gt; 0.0.1-beta.6
 </code></pre>
 
 <p>Next, run the following command:</p>
@@ -283,6 +289,35 @@
 
 <p><a name="setup"></a></p>
 <h2 id='setup' class='heading'>Setup</h2>
+
+<p>If you experiment issues been blocked for App Transport Security during the M-Lab server discovery, that means that requires data to be transmitted securely and you need to tell iOS to make exceptions for you.</p>
+
+<p>Remember, if you add this exception you&rsquo;ll be required to explain it to the app review team when you submit your app to the App Store.</p>
+
+<p>The exception will be defined for the individual site locate.measurementlab.net inside your application&rsquo;s info.plist file. You can edit the plist as source code, right-click on your info.plist and choose Open As &gt; Source Code.</p>
+
+<p>Your plist should end like this:</p>
+<pre class="highlight swift"><code><span class="o">&lt;/</span><span class="n">dict</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">plist</span><span class="o">&gt;</span>
+</code></pre>
+
+<p>Please, copy paste this before that:</p>
+<pre class="highlight swift"><code><span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span><span class="kt">NSAppTransportSecurity</span><span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dict</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span><span class="kt">NSExceptionDomains</span><span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">dict</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span><span class="n">locate</span><span class="o">.</span><span class="n">measurementlab</span><span class="o">.</span><span class="n">net</span><span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">dict</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span><span class="kt">NSIncludesSubdomains</span><span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="kc">true</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span><span class="kt">NSThirdPartyExceptionAllowsInsecureHTTPLoads</span><span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="kc">true</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">dict</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">dict</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dict</span><span class="o">&gt;</span>
+</code></pre>
+
+<p>That requests add an exception for site locate.measurementlab.net.</p>
 
 <p>The only setup needed for debugging purpose is to enable logging if needed.</p>
 <pre class="highlight swift"><code><span class="kt">NDT7</span><span class="o">.</span><span class="n">loggingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
@@ -365,7 +400,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-11-06)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2020-01-27)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
