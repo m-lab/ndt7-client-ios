@@ -128,7 +128,7 @@ extension NDT7Test {
         logNDT7("NDT7 test started")
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
-        serverSetup(session: URLSession.shared, useNDT7ServerCache: true, { [weak self] (error) in
+        serverSetup(session: Networking.shared.session, useNDT7ServerCache: true, { [weak self] (error) in
             OperationQueue.current?.name = "net.measurementlab.NDT7.test"
             self?.test(download: download, upload: upload, error: error, completion)
         })
