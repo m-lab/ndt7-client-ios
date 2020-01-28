@@ -1192,7 +1192,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
@@ -1223,7 +1223,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
@@ -1288,7 +1288,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
@@ -1316,7 +1316,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
@@ -1381,7 +1381,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
@@ -1410,7 +1410,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
@@ -1481,7 +1481,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;
@@ -1514,7 +1514,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = "0.0.1-beta.4";
+				MARKETING_VERSION = "0.0.1-beta.6";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = net.measurementlab.NDT7;
 				PRODUCT_NAME = NDT7;

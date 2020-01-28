@@ -28,8 +28,15 @@ extension URLSessionTask: URLSessionTaskNDT7 {
 }
 
 /// Networking helper methods.
-struct Networking {
+class Networking: NSObject {
 
+    static let shared = Networking()
+    var session: URLSession!
+
+    private override init() {
+        super.init()
+        session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+    }
     static func urlRequest(_ urlString: String) -> URLRequest {
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(url: url! as URL)
@@ -37,5 +44,18 @@ struct Networking {
         request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
         request.timeoutInterval = 10
         return request as URLRequest
+    }
+}
+
+extension Networking: URLSessionDelegate {
+    func urlSession(_ session: URLSession,
+                    didReceive challenge: URLAuthenticationChallenge,
+                    completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+            challenge.protectionSpace.host == NDT7WebSocketConstants.MlabServerDiscover.hostname,
+            let serverTrust = challenge.protectionSpace.serverTrust {
+            let credential = URLCredential(trust: serverTrust)
+            completionHandler(URLSession.AuthChallengeDisposition.useCredential, credential)
+        }
     }
 }

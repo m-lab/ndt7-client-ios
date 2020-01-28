@@ -78,7 +78,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'NDT7 example' do
-  pod 'NDT7', '0.0.1-beta.5'
+  pod 'NDT7', '0.0.1-beta.6'
 end
 ```
 
@@ -96,7 +96,7 @@ $ pod install
 Create a `Cartfile` and add the following line:
 
 ```
-github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.5
+github "m-lab/ndt7-client-ios" ~> 0.0.1-beta.6
 ```
 
 Next, run the following command:
@@ -137,6 +137,37 @@ Under "General" tab from your project, add the NDT7 framework as an embedded bin
 
 <a name="setup"></a>
 ## Setup
+
+If you experiment issues been blocked for App Transport Security during the M-Lab server discovery, that means that requires data to be transmitted securely and you need to tell iOS to make exceptions for you.
+
+Remember, if you add this exception you'll be required to explain it to the app review team when you submit your app to the App Store.
+
+The exception will be defined for the individual site locate.measurementlab.net inside your application's info.plist file. You can edit the plist as source code, right-click on your info.plist and choose Open As > Source Code.
+
+Your plist should end like this:
+```swift
+</dict>
+</plist>
+```
+
+Please, copy paste this before that:
+```swift
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSExceptionDomains</key>
+    <dict>
+        <key>locate.measurementlab.net</key>
+        <dict>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+            <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+        </dict>
+    </dict>
+</dict>
+```
+
+That requests add an exception for site locate.measurementlab.net.
 
 The only setup needed for debugging purpose is to enable logging if needed.
 ```swift
