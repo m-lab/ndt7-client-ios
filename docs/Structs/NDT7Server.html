@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           NDT7 Docs
         </a>
-         (100% documented)
+         (95% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -66,6 +66,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/NDT7TestInteraction.html">NDT7TestInteraction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/URLSessionNDT7.html">URLSessionNDT7</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/URLSessionTaskNDT7.html">URLSessionTaskNDT7</a>
               </li>
             </ul>
           </li>
@@ -283,9 +289,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A6ServerV8discover_14withGeoOptions6retray_So16NSURLSessionTaskCSo0H0C_SbSuyACSg_So7NSErrorCSgtctFZ"></a>
-                    <a name="//apple_ref/swift/Method/discover(_:withGeoOptions:retray:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A6ServerV8discover_14withGeoOptions6retray_So16NSURLSessionTaskCSo0H0C_SbSuyACSg_So7NSErrorCSgtctFZ">discover(_:withGeoOptions:retray:_:)</a>
+                    <a name="/s:4NDT70A6ServerV8discover7session14withGeoOptions6retray03geoG14ChangeInRetray03useaB5Cache_AA014URLSessionTaskA0_px_SbSuS2byACSg_So7NSErrorCSgtctAA0oA0RzlFZ"></a>
+                    <a name="//apple_ref/swift/Method/discover(session:withGeoOptions:retray:geoOptionsChangeInRetray:useNDT7ServerCache:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT70A6ServerV8discover7session14withGeoOptions6retray03geoG14ChangeInRetray03useaB5Cache_AA014URLSessionTaskA0_px_SbSuS2byACSg_So7NSErrorCSgtctAA0oA0RzlFZ">discover(session:withGeoOptions:retray:geoOptionsChangeInRetray:useNDT7ServerCache:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -300,10 +306,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">discover</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">URLSession</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span><span class="p">,</span>
-                            <span class="n">withGeoOptions</span> <span class="nv">geoOptions</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
-                            <span class="nv">retray</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-                            <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">server</span><span class="p">:</span> <span class="kt">NDT7Server</span><span class="p">?,</span> <span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">URLSessionTask</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="n">discover</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span> <span class="kt"><a href="../Protocols/URLSessionNDT7.html">URLSessionNDT7</a></span><span class="o">&gt;</span><span class="p">(</span><span class="nv">session</span><span class="p">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span> <span class="k">as!</span> <span class="kt">T</span><span class="p">,</span>
+                                               <span class="n">withGeoOptions</span> <span class="nv">geoOptions</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+                                               <span class="nv">retray</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                                               <span class="nv">geoOptionsChangeInRetray</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+                                               <span class="nv">useNDT7ServerCache</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+                                               <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">server</span><span class="p">:</span> <span class="kt">NDT7Server</span><span class="p">?,</span> <span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/URLSessionTaskNDT7.html">URLSessionTaskNDT7</a></span></code></pre>
 
                         </div>
                       </div>
@@ -332,6 +340,42 @@
                               <td>
                                 <div>
                                   <p>true to use a list of servers based in geo location, otherwise the function will work trying to get the closer server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>retray</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>true to use a list of servers based in geo location, otherwise the function will work trying to get the closer server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>geoOptionsChangeInRetray</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Alternate geo options for retray.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>useNDT7ServerCache</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>uses the NDT7 Server cached if exist and if the request/s fail.</p>
                                 </div>
                               </td>
                             </tr>
@@ -385,7 +429,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2019-11-06)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/m-lab" target="_blank" rel="external">Miguel Nieto</a>. All rights reserved. (Last updated: 2020-01-27)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

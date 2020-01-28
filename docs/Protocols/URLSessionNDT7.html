@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>NDT7APPInfo Structure Reference</title>
+    <title>URLSessionNDT7 Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Struct/NDT7APPInfo" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/URLSessionNDT7" class="dashAnchor"></a>
 
-    <a title="NDT7APPInfo Structure Reference"></a>
+    <a title="URLSessionNDT7 Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">NDT7 Reference</a>
       <img class="carat" src="../img/carat.png" />
-      NDT7APPInfo Structure Reference
+      URLSessionNDT7 Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -131,14 +131,14 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>NDT7APPInfo</h1>
+            <h1>URLSessionNDT7</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NDT7APPInfo</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">URLSessionNDT7</span></code></pre>
 
                 </div>
               </div>
-            <p>NDT7APPInfo is an optional object only included in the measurement when an application-level measurement is available.</p>
+            <p>Protocol for URLSession dataTask</p>
 
           </div>
         </section>
@@ -150,9 +150,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A7APPInfoV11elapsedTimes5Int64VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/elapsedTime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7APPInfoV11elapsedTimes5Int64VSgvp">elapsedTime</a>
+                    <a name="/s:4NDT7010URLSessionA0P12DataTaskTypeQa"></a>
+                    <a name="//apple_ref/swift/Alias/DataTaskType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT7010URLSessionA0P12DataTaskTypeQa">DataTaskType</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -160,14 +160,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>elapsed (an Int64) is the time elapsed since the beginning of this test, measured in microseconds.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">elapsedTime</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">associatedtype</span> <span class="kt">DataTaskType</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/URLSessionTaskNDT7.html">URLSessionTaskNDT7</a></span></code></pre>
 
                         </div>
                       </div>
@@ -177,9 +177,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4NDT70A7APPInfoV8numBytess5Int64VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/numBytes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4NDT70A7APPInfoV8numBytess5Int64VSgvp">numBytes</a>
+                    <a name="/s:4NDT7010URLSessionA0P8dataTask4with17completionHandler04DataD4TypeQz10Foundation10URLRequestV_yAI0H0VSg_So13NSURLResponseCSgs5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/dataTask(with:completionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4NDT7010URLSessionA0P8dataTask4with17completionHandler04DataD4TypeQz10Foundation10URLRequestV_yAI0H0VSg_So13NSURLResponseCSgs5Error_pSgtctF">dataTask(with:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -187,16 +187,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>numBytes (an Int64) is the number of bytes sent (or received) since the beginning of the specific test.
-Note that this counter tracks the amount of data sent at application level.
-It does not account for the protocol overheaded of the WebSockets, TLS, TCP/IP, and link layers.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">numBytes</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">dataTask</span><span class="p">(</span><span class="n">with</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">URLRequest</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Data</span><span class="p">?,</span> <span class="kt">URLResponse</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/URLSessionNDT7.html#/s:4NDT7010URLSessionA0P12DataTaskTypeQa">DataTaskType</a></span></code></pre>
 
                         </div>
                       </div>
