@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'NDT7'
-  s.version = '0.0.1-beta.6'
+  s.version = '0.0.1'
   s.license = 'Apache License, Version 2.0'
   s.summary = 'Measure the Internet, save the data, and make it universally accessible and useful.'
   s.homepage = 'https://github.com/m-lab/ndt7-client-ios'
