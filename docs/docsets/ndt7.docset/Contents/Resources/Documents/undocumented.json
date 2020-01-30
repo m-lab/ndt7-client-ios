@@ -1,40 +1,60 @@
 {
   "warnings": [
     {
+<<<<<<< HEAD
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+=======
       "file": "/Users/miguel.nietoguillen/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+>>>>>>> master
       "line": 13,
       "symbol": "URLSessionNDT7.DataTaskType",
       "symbol_kind": "source.lang.swift.decl.associatedtype",
       "warning": "undocumented"
     },
     {
+<<<<<<< HEAD
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+=======
       "file": "/Users/miguel.nietoguillen/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+>>>>>>> master
       "line": 14,
       "symbol": "URLSessionNDT7.dataTask(with:completionHandler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
+<<<<<<< HEAD
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+=======
       "file": "/Users/miguel.nietoguillen/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+>>>>>>> master
       "line": 19,
       "symbol": "URLSessionTaskNDT7.state",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
+<<<<<<< HEAD
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+=======
       "file": "/Users/miguel.nietoguillen/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+>>>>>>> master
       "line": 20,
       "symbol": "URLSessionTaskNDT7.resume()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
+<<<<<<< HEAD
+      "file": "/Users/miguel/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+=======
       "file": "/Users/miguel.nietoguillen/OpenSource/ndt7-client-ios/Sources/Networking.swift",
+>>>>>>> master
       "line": 21,
       "symbol": "URLSessionTaskNDT7.cancel()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/miguel.nietoguillen/OpenSource/ndt7-client-ios"
+  "source_directory": "/Users/miguel/OpenSource/ndt7-client-ios"
 }
