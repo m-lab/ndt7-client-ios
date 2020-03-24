@@ -115,7 +115,7 @@ public struct NDT7BBRInfo: Codable {
     /// coding keys for codable purpose.
     enum CodingKeys: String, CodingKey {
         case elapsedTime = "ElapsedTime"
-        case bandwith = "MaxBandwidth"
+        case bandwith = "BW"
         case minRtt = "MinRTT"
     }
 }
