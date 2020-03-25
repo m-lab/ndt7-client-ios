@@ -21,7 +21,9 @@ class NDT7MeasurementTests: XCTestCase {
  "BBRInfo": {
    "ElapsedTime": 123,
    "BW": 456,
-   "MinRTT": 789
+   "MinRTT": 789,
+   "CwndGain":739,
+   "PacingGain":724
  },
 "ConnectionInfo": {
   "Client": "1.2.3.4:5678",
@@ -56,6 +58,8 @@ class NDT7MeasurementTests: XCTestCase {
             XCTAssertEqual(decoded.bbrInfo?.elapsedTime, 123)
             XCTAssertEqual(decoded.bbrInfo?.bandwith, 456)
             XCTAssertEqual(decoded.bbrInfo?.minRtt, 789)
+            XCTAssertEqual(decoded.bbrInfo?.cwndGain, 739)
+            XCTAssertEqual(decoded.bbrInfo?.pacingGain, 724)
             XCTAssertEqual(decoded.origin, .server)
             XCTAssertEqual(decoded.direction, .download)
             XCTAssertEqual(decoded.tcpInfo?.busyTime, 1234)
