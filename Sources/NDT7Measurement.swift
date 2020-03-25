@@ -111,12 +111,20 @@ public struct NDT7BBRInfo: Codable {
 
     /// minRtt (a Int64) is the min-rtt measured by BBR, in millisecond;
     public let minRtt: Int64?
+    
+    /// Pacing gain shifted left 8 bits
+    public let pacingGain: Int64?
+    
+    /// Cwnd gain shifted left 8 bits
+    public let cwndGain: Int64?
 
     /// coding keys for codable purpose.
     enum CodingKeys: String, CodingKey {
         case elapsedTime = "ElapsedTime"
         case bandwith = "BW"
         case minRtt = "MinRTT"
+        case pacingGain = "PacingGain"
+        case cwndGain = "CwndGain"
     }
 }
 
