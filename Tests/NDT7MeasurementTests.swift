@@ -20,7 +20,7 @@ class NDT7MeasurementTests: XCTestCase {
  },
  "BBRInfo": {
    "ElapsedTime": 123,
-   "MaxBandwidth": 456,
+   "BW": 456,
    "MinRTT": 789
  },
 "ConnectionInfo": {
