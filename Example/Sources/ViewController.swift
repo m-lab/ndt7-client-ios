@@ -106,7 +106,7 @@ extension ViewController: NDT7TestInteraction {
     }
 
     func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
-        if let url = ndt7Test?.settings.url.hostname {
+        if let url = ndt7Test?.settings.hostname {
             serverLabel.text = url
         }
         if origin == .client,

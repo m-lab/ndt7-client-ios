@@ -63,6 +63,8 @@ public struct NDT7WebSocketConstants {
 
         /// Discover closer Mlab Server
         public static let url = "https://\(hostname)/\(path)"
+        
+        public static let urlv2 = "https://locate.measurementlab.net/v2/nearest/ndt/ndt7"
 
         /// Cannot find a suitable mlab server error
         public static let noMlabServerError = NSError(domain: NDT7WebSocketConstants.domain,

@@ -38,15 +38,72 @@ class URLSessionDataTaskMock: URLSessionTaskNDT7 {
     }
 }
 
+let jsonServerData = """
+{
+  "results": [
+    {
+      "machine": "mlab1-atl02.mlab-oti.measurement-lab.org",
+      "location": {
+        "city": "Atlanta",
+        "country": "US"
+      },
+      "urls": {
+        "ws:///ndt/v7/download": "ws://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ",
+        "ws:///ndt/v7/upload": "ws://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ",
+        "wss:///ndt/v7/download": "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ",
+        "wss:///ndt/v7/upload": "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ"
+      }
+    },
+    {
+      "machine": "mlab1-atl03.mlab-oti.measurement-lab.org",
+      "location": {
+        "city": "Atlanta",
+        "country": "US"
+      },
+      "urls": {
+        "ws:///ndt/v7/download": "ws://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw",
+        "ws:///ndt/v7/upload": "ws://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw",
+        "wss:///ndt/v7/download": "wss://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw",
+        "wss:///ndt/v7/upload": "wss://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw"
+      }
+    },
+    {
+      "machine": "mlab3-atl08.mlab-oti.measurement-lab.org",
+      "location": {
+        "city": "Atlanta",
+        "country": "US"
+      },
+      "urls": {
+        "ws:///ndt/v7/download": "ws://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA",
+        "ws:///ndt/v7/upload": "ws://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA",
+        "wss:///ndt/v7/download": "wss://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA",
+        "wss:///ndt/v7/upload": "wss://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA"
+      }
+    },
+    {
+      "machine": "mlab1-atl04.mlab-oti.measurement-lab.org",
+      "location": {
+        "city": "Atlanta",
+        "country": "US"
+      },
+      "urls": {
+        "ws:///ndt/v7/download": "ws://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ",
+        "ws:///ndt/v7/upload": "ws://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ",
+        "wss:///ndt/v7/download": "wss://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ",
+        "wss:///ndt/v7/upload": "wss://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ"
+      }
+    }
+  ]
+}
+""".data(using: .utf8)
+
 class NDT7SettingsTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        NDT7Server.lastServer = nil
     }
 
     override func tearDown() {
-        NDT7Server.lastServer = nil
         super.tearDown()
     }
 
@@ -56,17 +113,6 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
     }
 
-    func testNDT7URLDefault() {
-        let defaultURL = NDT7URL(hostname: "")
-        XCTAssertNil(defaultURL.server)
-        XCTAssertEqual(defaultURL.hostname, "")
-        XCTAssertEqual(defaultURL.downloadPath, "/ndt/v7/download")
-        XCTAssertEqual(defaultURL.uploadPath, "/ndt/v7/upload")
-        XCTAssertTrue(defaultURL.wss)
-        XCTAssertEqual(defaultURL.download, "wss:///ndt/v7/download")
-        XCTAssertEqual(defaultURL.upload, "wss:///ndt/v7/upload")
-    }
-
     func testNDT7TimeoutsDefault() {
         let defaultTimeouts = NDT7Timeouts()
         XCTAssertEqual(defaultTimeouts.measurement, 0.25)
@@ -74,162 +120,42 @@ class NDT7SettingsTests: XCTestCase {
         XCTAssertEqual(defaultTimeouts.downloadTimeout, 15)
         XCTAssertEqual(defaultTimeouts.uploadTimeout, 15)
     }
-
-    func testDiscoverServer() {
-
-        // 1. The server is discovered without geo options enabled (NDT7 server cache disabled).
+    
+    /// Validates that we read the correct URLs to run the tests against from the Locate API V2
+    func testDiscoverServerV2() {
+        // Prepare mock data
         let session = URLSessionMock()
-        let jsonServerData = """
-        {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
-        """.data(using: .utf8)
         session.data = jsonServerData
         var result = false
-        var serverResult: NDT7Server?
+        var serverResult: [NDT7ServerV2]?
         let expectation = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(session: session,
-                                withGeoOptions: false,
-                                retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, _) in
-                                    serverResult = server
-                                    result = true
-                                    expectation.fulfill()
+        
+        // Call discovery
+        _ = NDT7ServerV2.discoverV2(session: session, { (server, _) in
+            serverResult = server
+            result = true
+            expectation.fulfill()
         })
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5.0)
+        
+        // Assert
         XCTAssertTrue(result)
         XCTAssertNotNil(serverResult)
-        XCTAssertTrue(serverResult?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(serverResult?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(serverResult?.country, "US")
-        XCTAssertEqual(serverResult?.city, "Atlanta_GA")
-        XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(serverResult?.site, "atl06")
-
-        // 2. The server is discovered with geo options enabled (NDT7 server cache disabled).
-        let jsonServerListData1 = """
-        [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}]
-        """.data(using: .utf8)
-        session.data = jsonServerListData1
-        var resultWithGeoOptions1 = false
-        let expectationGeoOptions1 = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(session: session,
-                                withGeoOptions: true,
-                                retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, _) in
-                                    serverResult = server
-                                    resultWithGeoOptions1 = true
-                                    expectationGeoOptions1.fulfill()
-        })
-        wait(for: [expectationGeoOptions1], timeout: 10.0)
-        XCTAssertTrue(resultWithGeoOptions1)
-        XCTAssertNotNil(serverResult)
-        XCTAssertTrue(serverResult?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(serverResult?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(serverResult?.country, "US")
-        XCTAssertEqual(serverResult?.city, "Atlanta_GA")
-        XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(serverResult?.site, "atl06")
-
-        // 3. if there is an error getting a new server, the server can't be discovered (NDT7 server cache disabled).
-        let jsonServerListData3 = """
-        [{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}]
-        """.data(using: .utf8)
-        session.data = jsonServerListData3
-        var resultWithGeoOptions3 = false
-        let expectationGeoOptions3 = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(session: session,
-                                withGeoOptions: true,
-                                retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, _) in
-                                    serverResult = server
-                                    resultWithGeoOptions3 = true
-                                    expectationGeoOptions3.fulfill()
-        })
-        wait(for: [expectationGeoOptions3], timeout: 10.0)
-        XCTAssertTrue(resultWithGeoOptions3)
-        XCTAssertNil(serverResult)
+        XCTAssertEqual(serverResult?[0].urls.uploadUrl, "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ")
+        XCTAssertEqual(serverResult?[0].urls.downloadUrl, "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ")
+        XCTAssertEqual(serverResult?[0].urls.insecureUploadUrl, "ws://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ")
+        XCTAssertEqual(serverResult?[0].urls.insecureDownloadUrl, "ws://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ")
     }
 
-    func testDiscoverServerUsingNDT7ServerCache() {
-
-        // The server is discovered without geo options enabled and saved in cache.
-        let session = URLSessionMock()
-        let jsonServerData = """
-        {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
-        """.data(using: .utf8)
-        session.data = jsonServerData
-        var result = false
-        var serverResult: NDT7Server?
-        let expectation = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(session: session,
-                                withGeoOptions: false,
-                                retray: 100,
-                                geoOptionsChangeInRetray: false, { (server, _) in
-                                    serverResult = server
-                                    result = true
-                                    expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNotNil(serverResult)
-        XCTAssertTrue(serverResult?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(serverResult?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(serverResult?.country, "US")
-        XCTAssertEqual(serverResult?.city, "Atlanta_GA")
-        XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(serverResult?.site, "atl06")
-
-        // If the server discovery is returning errors, the discovery returns the last server discovered if getting the server in cache is enabled.
-        let jsonServerListData5 = """
-        """.data(using: .utf8)
-        session.data = jsonServerListData5
-        session.error = NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError
-        var errorResult: Error?
-        var resultWithGeoOptions5 = false
-        let expectationGeoOptions5 = XCTestExpectation(description: "Job in main thread")
-        _ = NDT7Server.discover(session: session,
-                                withGeoOptions: true,
-                                retray: 100,
-                                geoOptionsChangeInRetray: false,
-                                useNDT7ServerCache: true, { (server, error) in
-                                    errorResult = error
-                                    serverResult = server
-                                    resultWithGeoOptions5 = true
-                                    expectationGeoOptions5.fulfill()
-        })
-        wait(for: [expectationGeoOptions5], timeout: 10.0)
-        XCTAssertTrue(resultWithGeoOptions5)
-        XCTAssertNotNil(serverResult)
-        XCTAssertNil(errorResult)
-        XCTAssertTrue(serverResult?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(serverResult?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(serverResult?.country, "US")
-        XCTAssertEqual(serverResult?.city, "Atlanta_GA")
-        XCTAssertEqual(serverResult?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(serverResult?.site, "atl06")
-    }
-
-    func testDecodeServer() {
-        let jsonServer = """
-{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
-"""
-        let server = NDT7Server.decode(data: jsonServer.data(using: .utf8), fromUrl: NDT7WebSocketConstants.MlabServerDiscover.url)
-        XCTAssertTrue(server?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(server?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(server?.country, "US")
-        XCTAssertEqual(server?.city, "Atlanta_GA")
-        XCTAssertEqual(server?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(server?.site, "atl06")
-        let jsonServerList = """
-[{\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}]
-"""
-        let serverFromList = NDT7Server.decode(data: jsonServerList.data(using: .utf8), fromUrl: NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption)
-        XCTAssertTrue(serverFromList?.ip?.contains("70.42.177.114") != nil)
-        XCTAssertTrue(serverFromList?.ip?.contains("2600:c0b:2002:5::114") != nil)
-        XCTAssertEqual(serverFromList?.country, "US")
-        XCTAssertEqual(serverFromList?.city, "Atlanta_GA")
-        XCTAssertEqual(serverFromList?.fqdn, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        XCTAssertEqual(serverFromList?.site, "atl06")
-        let noServerFromList = NDT7Server.decode(data: jsonServerList.data(using: .utf8), fromUrl: "empty")
-        XCTAssertNil(noServerFromList)
+    func testDecodeServer() throws {
+        let apiResponse = try? JSONDecoder().decode(LocateAPIV2Response.self, from: jsonServerData!)
+        let maybeServer = apiResponse?.results[0]
+        guard let server = maybeServer else { XCTFail(); return}
+        
+        // Assert the contents of the server
+        XCTAssertEqual(server.machine, "mlab1-atl02.mlab-oti.measurement-lab.org")
+        XCTAssertEqual(server.location.city, "Atlanta")
+        XCTAssertEqual(server.location.country, "US")
+        XCTAssertEqual(server.urls.downloadUrl, "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ")
     }
 }

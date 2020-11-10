@@ -128,7 +128,7 @@ extension NDT7Test {
         logNDT7("NDT7 test started")
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
-        serverSetup(session: Networking.shared.session, useNDT7ServerCache: true, { [weak self] (error) in
+        serverSetup(session: Networking.shared.session, { [weak self] (error) in
             OperationQueue.current?.name = "net.measurementlab.NDT7.test"
             self?.test(download: download, upload: upload, error: error, completion)
         })
@@ -138,20 +138,23 @@ extension NDT7Test {
     /// - parameter completion: closure for callback.
     /// - parameter error: returns an error if exist.
     func serverSetup<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
-                                        useNDT7ServerCache: Bool = false,
                                         _ completion: @escaping (_ error: NSError?) -> Void) {
-        guard settings.url.hostname.isEmpty else {
-            completion(nil)
-            return
-        }
-        discoverServerTask = NDT7Server.discover(session: session,
-                                                 withGeoOptions: settings.useGeoOptions,
-                                                 retray: 4,
-                                                 geoOptionsChangeInRetray: true,
-                                                 useNDT7ServerCache: useNDT7ServerCache, { [weak self] (server, error) in
+        discoverServerTask = NDT7ServerV2.discoverV2(session: session, { [weak self] (server, error) in
             guard let strongSelf = self else { return }
-            strongSelf.settings.url.hostname = server?.fqdn ?? ""
-            strongSelf.settings.url.server = server
+            guard error == nil else { completion(error); return }
+            guard let server = server, server.count != 0 else {
+                let setupError = NSError(domain: NDT7WebSocketConstants.domain, code: 0,                                       userInfo: [ NSLocalizedDescriptionKey: "Failed to locate a valid mlab server to contact"])
+                completion(setupError)
+                return
+            }
+            
+            // Save all server options, load the first server's information in to try to use it first
+            strongSelf.settings.allServers = server
+            strongSelf.settings.currentServerIndex = 0
+            strongSelf.settings.hostname = server[0].machine
+            strongSelf.settings.downloadUrl = server[0].urls.downloadUrl
+            strongSelf.settings.uploadUrl = server[0].urls.uploadUrl
+            
             completion(error)
         })
     }
@@ -207,7 +210,7 @@ extension NDT7Test {
 /// This extension represent the internal functions for NDT7Test.
 extension NDT7Test {
 
-    /// Start download test
+    /// Start download test. Will short circuit if error exists
     /// - parameter start: boolean to run download test.
     /// - parameter error: error to return if exist.
     /// - parameter completion: A block to execute.
@@ -219,7 +222,7 @@ extension NDT7Test {
         }
         downloadTestCompletion = completion
         logNDT7("Download test setup")
-        let url = settings.url.download
+        let url = settings.downloadUrl
         if let downloadURL = URL(string: url) {
             timerDownload?.invalidate()
             timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.downloadTimeout,
@@ -232,7 +235,7 @@ extension NDT7Test {
             webSocketDownload = WebSocketWrapper(settings: settings, url: downloadURL)
             webSocketDownload?.delegate = self
         } else {
-            logNDT7("Error with ndt7 download settings", .error)
+            logNDT7("Error with ndt7 download settings: configured URL is \(url)", .error)
         }
     }
 
@@ -248,7 +251,7 @@ extension NDT7Test {
         }
         uploadTestCompletion = completion
         logNDT7("Upload test setup")
-        let url = settings.url.upload
+        let url = settings.uploadUrl
         if let uploadURL = URL(string: url) {
             timerUpload?.invalidate()
             timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.uploadTimeout,
@@ -261,7 +264,7 @@ extension NDT7Test {
             webSocketUpload = WebSocketWrapper(settings: settings, url: uploadURL)
             webSocketUpload?.delegate = self
         } else {
-            logNDT7("Error with ndt7 upload settings", .error)
+            logNDT7("Error with ndt7 upload settings: configured url is \(url)", .error)
         }
     }
 
@@ -444,7 +447,7 @@ extension NDT7Test: WebSocketInteraction {
     func error(webSocket: WebSocketWrapper, error: NSError) {
         let mlabServerError = NSError(domain: NDT7WebSocketConstants.domain,
                                       code: 0,
-                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.url.hostname) has an error during test"])
+                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.hostname) has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in

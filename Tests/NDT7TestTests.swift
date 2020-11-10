@@ -12,20 +12,71 @@ import XCTest
 class NDT7TestTests: XCTestCase {
 
     let jsonServerData = """
-    {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
+    {
+      "results": [
+        {
+          "machine": "mlab1-atl02.mlab-oti.measurement-lab.org",
+          "location": {
+            "city": "Atlanta",
+            "country": "US"
+          },
+          "urls": {
+            "ws:///ndt/v7/download": "ws://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ",
+            "ws:///ndt/v7/upload": "ws://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ",
+            "wss:///ndt/v7/download": "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ",
+            "wss:///ndt/v7/upload": "wss://ndt-mlab1-atl02.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDIubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAyLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.22owCDnIB0aM8Kd3NZ7GmtA-WcLz_0hvrkMbumq-B4QAM1ZBlFqGp7zHGLzainLjEhbqb4JHV56v56CYNayyAQ"
+          }
+        },
+        {
+          "machine": "mlab1-atl03.mlab-oti.measurement-lab.org",
+          "location": {
+            "city": "Atlanta",
+            "country": "US"
+          },
+          "urls": {
+            "ws:///ndt/v7/download": "ws://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw",
+            "ws:///ndt/v7/upload": "ws://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw",
+            "wss:///ndt/v7/download": "wss://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw",
+            "wss:///ndt/v7/upload": "wss://ndt-mlab1-atl03.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDMubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDAzLm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.zgCcTD5FsdAMjEFGqAHB1tiQpEcS7zbMIXwBEUmIfOFiZN4r3lwfUSrTMm4QbKsrhCBjb7ztkAvOr87yuzs9Bw"
+          }
+        },
+        {
+          "machine": "mlab3-atl08.mlab-oti.measurement-lab.org",
+          "location": {
+            "city": "Atlanta",
+            "country": "US"
+          },
+          "urls": {
+            "ws:///ndt/v7/download": "ws://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA",
+            "ws:///ndt/v7/upload": "ws://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA",
+            "wss:///ndt/v7/download": "wss://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA",
+            "wss:///ndt/v7/upload": "wss://ndt-mlab3-atl08.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjMtYXRsMDgubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIzLmF0bDA4Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.EBdE0ub_VIxxXn_3Pk8kqG31e3iIDaR0fniPrTXFEdnKpTeepUTOIr0QbovfspMnuRBtVqD0YPBXidPR0mesAA"
+          }
+        },
+        {
+          "machine": "mlab1-atl04.mlab-oti.measurement-lab.org",
+          "location": {
+            "city": "Atlanta",
+            "country": "US"
+          },
+          "urls": {
+            "ws:///ndt/v7/download": "ws://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ",
+            "ws:///ndt/v7/upload": "ws://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ",
+            "wss:///ndt/v7/download": "wss://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/download?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ",
+            "wss:///ndt/v7/upload": "wss://ndt-mlab1-atl04.mlab-oti.measurement-lab.org/ndt/v7/upload?access_token=eyJhbGciOiJFZERTQSIsImtpZCI6ImxvY2F0ZV8yMDIwMDQwOSJ9.eyJhdWQiOlsibWxhYjEtYXRsMDQubWxhYi1vdGkubWVhc3VyZW1lbnQtbGFiLm9yZyIsIm1sYWIxLmF0bDA0Lm1lYXN1cmVtZW50LWxhYi5vcmciXSwiZXhwIjoxNjAzOTIxODE1LCJpc3MiOiJsb2NhdGUiLCJzdWIiOiJuZHQifQ.q3IgAwb5Y57QIQ3mEgfdU39RSTvEB08GDJfdMdcI5kjn6SdLkhIWBggu4I_l48W3vmXuRoCT14c7bCrqVBRgDQ"
+          }
+        }
+      ]
+    }
     """.data(using: .utf8)
-
-    let jsonServerDataNofqdn = """
-    {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}
-    """.data(using: .utf8)
+    
+    
 
     override func setUp() {
         super.setUp()
-        NDT7Server.lastServer = nil
     }
 
     override func tearDown() {
-        NDT7Server.lastServer = nil
         super.tearDown()
     }
 
@@ -57,7 +108,7 @@ class NDT7TestTests: XCTestCase {
 
     func testNdt7TestStartTestFalse() {
 
-        let settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com", downloadPath: ""))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
@@ -97,7 +148,7 @@ class NDT7TestTests: XCTestCase {
 
     func testNDT7TestCleanup() {
 
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
             XCTAssertNil(error)
@@ -122,14 +173,14 @@ class NDT7TestTests: XCTestCase {
     }
 
     func testServerSetup() throws {
-
-        var settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com"))
-        var ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let session = URLSessionMock()
+        let settings = NDT7Settings()
+        let ndt7Test = NDT7Test(settings: settings)
+        session.data = jsonServerData
         var result = false
         var errorResult: Error?
-        var expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
+        let expectation = XCTestExpectation(description: "Job in main thread")
+        ndt7Test.serverSetup(session: session, { (error) in
             result = true
             errorResult = error
             XCTAssertNil(error)
@@ -138,158 +189,10 @@ class NDT7TestTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
         XCTAssertTrue(result)
         XCTAssertNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        var hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "hostname.com")
-
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNotNil(errorResult)
-        let errorLocalizedDescription = try XCTUnwrap(errorResult)
-        XCTAssertEqual(errorLocalizedDescription.localizedDescription, "Cannot find a suitable mlab server")
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        XCTAssertEqual(ndt7Test?.settings.url.hostname, "")
-        ndt7Test?.discoverServerTask = nil
-
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerData
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        ndt7Test?.discoverServerTask = nil
-
-        // After one successful server, if we don't get a successful server again and we have NDT7 server cache disabled (for default), we don't get the last server
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNotNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "")
-        ndt7Test?.discoverServerTask = nil
-    }
-
-    func testServerSetupUsingNDT7ServerCache() throws {
-
-        // Request failure to get NDT7 server.
-        var settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com"))
-        var ndt7Test: NDT7Test? = NDT7Test(settings: settings)
-        let session = URLSessionMock()
-        var result = false
-        var errorResult: Error?
-        var expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        var hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "hostname.com")
-
-        // No server data found in the payload.
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNotNil(errorResult)
-        let errorLocalizedDescription = try XCTUnwrap(errorResult?.localizedDescription)
-        XCTAssertEqual(errorLocalizedDescription, "Cannot find a suitable mlab server")
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        XCTAssertEqual(ndt7Test?.settings.url.hostname, "")
-        ndt7Test?.discoverServerTask = nil
-
-        // Server found and saving in Cache.
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerData
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        ndt7Test?.discoverServerTask = nil
-
-        // After one successful server, if we don't get a successful server again and we have NDT7 server cache enabled, we use the last server
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, useNDT7ServerCache: true, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        ndt7Test?.discoverServerTask = nil
+        XCTAssertNotNil(ndt7Test.settings.downloadUrl)
+        let hostname = try XCTUnwrap(ndt7Test.settings.hostname)
+        XCTAssertEqual(hostname, "mlab1-atl02.mlab-oti.measurement-lab.org")
+        ndt7Test.discoverServerTask = nil
     }
 
     func testNDT7TestUploader() {
@@ -302,7 +205,7 @@ class NDT7TestTests: XCTestCase {
         let t0 = Date().addingTimeInterval(-10000000)
         let tlast = Date().addingTimeInterval(10000000)
         let count = 123456
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "", uploadPath: ""))
+        let settings = NDT7Settings()
         let url = URL.init(string: "127.0.0.1")
         let webSocketUpload = WebSocketWrapper(settings: settings, url: url!)!
 
@@ -323,7 +226,7 @@ class NDT7TestTests: XCTestCase {
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let testInteractionMock = TestInteractionMock()
         ndt7Test?.delegate = testInteractionMock
-        ndt7Test?.webSocketUpload = WebSocketWrapper(settings: settings, url: URL(string: settings.url.uploadPath)!)
+        ndt7Test?.webSocketUpload = WebSocketWrapper(settings: settings, url: URL(string: "http://test.localhost")!)
         ndt7Test?.uploadMessage(socket: ndt7Test!.webSocketUpload!, t0: t0, t1: t1, count: count)
         XCTAssertEqual(testInteractionMock.count, count)
         XCTAssertEqual(testInteractionMock.direction, .upload)
@@ -416,7 +319,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartDownloadTrue() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "$5^7~c` "))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -453,7 +356,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartUploadTrue() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "$5^7~c` "))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startUploadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -511,20 +414,14 @@ elapsed: 1,
 
     func testNDT7SettingsMeasurementInterval() {
         let settings = NDT7Settings(timeout: NDT7Timeouts(measurement: 5.5))
-        XCTAssertEqual(settings.url.hostname, "")
-        XCTAssertEqual(settings.url.downloadPath, "/ndt/v7/download")
-        XCTAssertEqual(settings.url.uploadPath, "/ndt/v7/upload")
-        XCTAssertTrue(settings.url.wss)
-        XCTAssertTrue(settings.skipTLSCertificateVerification)
         XCTAssertEqual(settings.timeout.measurement, 5.5)
         XCTAssertEqual(settings.timeout.ioTimeout, 7)
         XCTAssertEqual(settings.timeout.downloadTimeout, 15)
         XCTAssertEqual(settings.timeout.uploadTimeout, 15)
-        XCTAssertEqual(settings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
     }
 
     func testWebSocketInteraction() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "", uploadPath: ""))
+        let settings = NDT7Settings()
         let url = URL.init(string: "127.0.0.1")
         let webSocketDownload = WebSocketWrapper(settings: settings, url: url!)!
         let webSocketUpload = WebSocketWrapper(settings: settings, url: url!)!
