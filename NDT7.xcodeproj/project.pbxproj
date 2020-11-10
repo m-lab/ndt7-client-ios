@@ -146,7 +146,7 @@
 		88E34DA3226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
 		88E34DA4226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
 		88E34DA5226E720900067D4F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E34DA1226E720900067D4F /* Constants.swift */; };
-		9CD7B7FE254B1502004E9A7D /* Asurion-Private-NDT7.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CD7B7FD254B1502004E9A7D /* Asurion-Private-NDT7.podspec */; };
+		9CEC7D74255B2C1800099967 /* NDT7.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9CEC7D73255B2C1800099967 /* NDT7.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,7 +219,7 @@
 		8891D9662268DB6A000BF913 /* NDT7Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NDT7Settings.swift; sourceTree = "<group>"; };
 		88D408F8226F7C09002D889D /* ConstantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsTests.swift; sourceTree = "<group>"; };
 		88E34DA1226E720900067D4F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		9CD7B7FD254B1502004E9A7D /* Asurion-Private-NDT7.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Asurion-Private-NDT7.podspec"; sourceTree = "<group>"; };
+		9CEC7D73255B2C1800099967 /* NDT7.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NDT7.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,7 +320,7 @@
 		49BE5B72224EAA3900DB7BDF = {
 			isa = PBXGroup;
 			children = (
-				9CD7B7FD254B1502004E9A7D /* Asurion-Private-NDT7.podspec */,
+				9CEC7D73255B2C1800099967 /* NDT7.podspec */,
 				49BE5BD8224EC8F100DB7BDF /* Deployment */,
 				49BE5B96224EAB1A00DB7BDF /* Documentation */,
 				49BE5B7E224EAA3900DB7BDF /* Sources */,
@@ -701,7 +701,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CD7B7FE254B1502004E9A7D /* Asurion-Private-NDT7.podspec in Resources */,
+				9CEC7D74255B2C1800099967 /* NDT7.podspec in Resources */,
 				49BE5B9C224EAB7300DB7BDF /* LICENSE in Resources */,
 				49BE5B9A224EAB5C00DB7BDF /* README.md in Resources */,
 				49BE5B98224EAB5200DB7BDF /* AUTHORS in Resources */,

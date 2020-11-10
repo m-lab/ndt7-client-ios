@@ -139,21 +139,21 @@ extension NDT7Test {
     /// - parameter error: returns an error if exist.
     func serverSetup<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
                                         _ completion: @escaping (_ error: NSError?) -> Void) {
-        discoverServerTask = NDT7ServerV2.discoverV2(session: session, { [weak self] (server, error) in
+        discoverServerTask = NDT7ServerV2.discoverV2(session: session, { [weak self] (servers, error) in
             guard let strongSelf = self else { return }
             guard error == nil else { completion(error); return }
-            guard let server = server, server.count != 0 else {
+            guard let servers = servers, !servers.isEmpty else {
                 let setupError = NSError(domain: NDT7WebSocketConstants.domain, code: 0,                                       userInfo: [ NSLocalizedDescriptionKey: "Failed to locate a valid mlab server to contact"])
                 completion(setupError)
                 return
             }
             
             // Save all server options, load the first server's information in to try to use it first
-            strongSelf.settings.allServers = server
+            strongSelf.settings.allServers = servers
             strongSelf.settings.currentServerIndex = 0
-            strongSelf.settings.hostname = server[0].machine
-            strongSelf.settings.downloadUrl = server[0].urls.downloadUrl
-            strongSelf.settings.uploadUrl = server[0].urls.uploadUrl
+            strongSelf.settings.hostname = servers[0].machine
+            strongSelf.settings.downloadUrl = servers[0].urls.downloadUrl
+            strongSelf.settings.uploadUrl = servers[0].urls.uploadUrl
             
             completion(error)
         })
