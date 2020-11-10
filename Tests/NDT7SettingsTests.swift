@@ -127,11 +127,11 @@ class NDT7SettingsTests: XCTestCase {
         let session = URLSessionMock()
         session.data = jsonServerData
         var result = false
-        var serverResult: [NDT7ServerV2]?
+        var serverResult: [NDT7Server]?
         let expectation = XCTestExpectation(description: "Job in main thread")
         
         // Call discovery
-        _ = NDT7ServerV2.discoverV2(session: session, { (server, _) in
+        _ = NDT7Server.discoverV2(session: session, { (server, _) in
             serverResult = server
             result = true
             expectation.fulfill()
@@ -148,7 +148,7 @@ class NDT7SettingsTests: XCTestCase {
     }
 
     func testDecodeServer() throws {
-        let apiResponse = try? JSONDecoder().decode(LocateAPIV2Response.self, from: jsonServerData!)
+        let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: jsonServerData!)
         let maybeServer = apiResponse?.results[0]
         guard let server = maybeServer else { XCTFail(); return}
         

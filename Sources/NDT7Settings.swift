@@ -11,18 +11,9 @@ import Foundation
 /// Settings needed for NDT7.
 /// Can be used with default values: NDT7Settings()
 public struct NDT7Settings {
-    public var allServers: [NDT7ServerV2]
-    
-    public var currentServerIndex: Int
-    
-    /// Configured URL to run downlaod test against
-    public var downloadUrl: String
-    
-    /// Configured URL to run upload test against
-    public var uploadUrl: String
-    
-    /// Hostname of configured NDT7 server
-    public var hostname: String
+    public var allServers: [NDT7Server]
+
+    public var currentServerIndex: Int?
 
     /// Timeouts
     public let timeout: NDT7Timeouts
@@ -32,19 +23,35 @@ public struct NDT7Settings {
 
     /// Define all the headers needed for NDT7 request.
     public let headers: [String: String]
+    
+    public var currentServer: NDT7Server? {
+        guard let selectedIndex = currentServerIndex else {
+            return nil
+        }
+        
+        guard selectedIndex < allServers.count else {
+            return nil
+        }
+        
+        return allServers[selectedIndex]
+    }
+    
+    public var currentDownloadUrl: String? {
+        return currentServer?.urls.downloadUrl
+    }
+    
+    public var currentUploadUrl: String? {
+        return currentServer?.urls.uploadUrl
+    }
 
     /// Initialization.
     public init(timeout: NDT7Timeouts = NDT7Timeouts(),
                 skipTLSCertificateVerification: Bool = true,
                 headers: [String: String] = [NDT7WebSocketConstants.Request.headerProtocolKey: NDT7WebSocketConstants.Request.headerProtocolValue]) {
         self.skipTLSCertificateVerification = skipTLSCertificateVerification
-        self.currentServerIndex = 0
         self.allServers = []
         self.timeout = timeout
         self.headers = headers
-        self.hostname = ""
-        self.downloadUrl = ""
-        self.uploadUrl = ""
     }
 }
 
@@ -80,12 +87,12 @@ public struct NDT7Timeouts {
     }
 }
 
-public struct LocateAPIV2Response: Codable {
-    public var results: [NDT7ServerV2]
+public struct LocateAPIResponse: Codable {
+    public var results: [NDT7Server]
 }
 
 /// Response type for the new, Locate API V2 response
-public struct NDT7ServerV2: Codable {
+public struct NDT7Server: Codable {
     public var machine: String
     
     public var location: NDT7Location
@@ -101,12 +108,16 @@ public struct NDT7Location: Codable {
 
 /// Upload and download URLs for the V2 Location API
 public struct NDT7LocationUrls: Codable {
+    /// WSS download speedtest URL including access token
     public var downloadUrl: String
     
+    /// WSS upload speedtest URL including access token
     public var uploadUrl: String
     
+    /// WS download speedtest URL including access token. No SSL
     public var insecureDownloadUrl: String
     
+    /// WS upload speedtest URL including access token. No SSL
     public var insecureUploadUrl: String
     
     enum CodingKeys: String, CodingKey {
@@ -117,7 +128,7 @@ public struct NDT7LocationUrls: Codable {
     }
 }
 
-extension NDT7ServerV2 {
+extension NDT7Server {
     
     /// Calls the Location V2 API to find the M-Labs recommended servers to call.
     /// These servers have on them authenticated URLs to call
@@ -125,8 +136,8 @@ extension NDT7ServerV2 {
     /// - parameter completion: callback to get the NDT7Server and error message.
     /// - parameter server: An array of NDT7ServerV2 object representing the Mlab servers available to call.
     /// - parameter error: if any error happens, this parameter returns the error.
-    public static func discoverV2<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
-                                                     _ completion: @escaping (_ server: [NDT7ServerV2]?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
+    public static func discover<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
+                                                     _ completion: @escaping (_ server: [NDT7Server]?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
         let request = Networking.urlRequest(NDT7WebSocketConstants.MlabServerDiscover.urlv2)
         let task = session.dataTask(with: request) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MLabServer.discoverv2"
@@ -142,11 +153,10 @@ extension NDT7ServerV2 {
                 return
             }
             
-            if let apiResponse = try? JSONDecoder().decode(LocateAPIV2Response.self, from: data) {
+            if let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: data) {
                 completion(apiResponse.results, nil)
                 return
             } else {
-                // Is this the right error?
                 completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
                 return
             }
