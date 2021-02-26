@@ -106,9 +106,9 @@ extension ViewController: NDT7TestInteraction {
     }
 
     func measurement(origin: NDT7TestConstants.Origin, kind: NDT7TestConstants.Kind, measurement: NDT7Measurement) {
-        if let url = ndt7Test?.settings.url.hostname {
-            serverLabel.text = url
-        }
+//        if let url = ndt7Test?.settings.currentDownloadPath {
+//            serverLabel.text = url
+//        }
         if origin == .client,
             enableAppData,
             let elapsedTime = measurement.appInfo?.elapsedTime,

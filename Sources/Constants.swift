@@ -53,13 +53,7 @@ public struct NDT7WebSocketConstants {
         public static let hostname = "locate.measurementlab.net"
 
         /// Discover server path.
-        public static let path = "ndt7"
-
-        /// Geo options.
-        public static let geoOption = "geo_options"
-
-        /// Discover list of Mlab Servers with Geo Options
-        public static let urlWithGeoOption = "https://\(hostname)/\(path)?policy=\(geoOption)"
+        public static let path = "v2/nearest/ndt/ndt7"
 
         /// Discover closer Mlab Server
         public static let url = "https://\(hostname)/\(path)"
