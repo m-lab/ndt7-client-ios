@@ -21,11 +21,9 @@ class NDT7TestTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        NDT7Server.lastServer = nil
     }
 
     override func tearDown() {
-        NDT7Server.lastServer = nil
         super.tearDown()
     }
 
@@ -57,7 +55,7 @@ class NDT7TestTests: XCTestCase {
 
     func testNdt7TestStartTestFalse() {
 
-        let settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com", downloadPath: ""))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
@@ -97,7 +95,7 @@ class NDT7TestTests: XCTestCase {
 
     func testNDT7TestCleanup() {
 
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: ""))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let downloadCompletion: (_ error: NSError?) -> Void = { (error) in
             XCTAssertNil(error)
@@ -123,7 +121,7 @@ class NDT7TestTests: XCTestCase {
 
     func testServerSetup() throws {
 
-        var settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com"))
+        var settings = NDT7Settings()
         var ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let session = URLSessionMock()
         var result = false
@@ -138,11 +136,9 @@ class NDT7TestTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
         XCTAssertTrue(result)
         XCTAssertNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        var hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "hostname.com")
+        XCTAssertNil(ndt7Test?.settings.currentServer)
 
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
+        settings = NDT7Settings()
         ndt7Test = NDT7Test(settings: settings)
         session.data = jsonServerDataNofqdn
         result = false
@@ -159,11 +155,10 @@ class NDT7TestTests: XCTestCase {
         XCTAssertNotNil(errorResult)
         let errorLocalizedDescription = try XCTUnwrap(errorResult)
         XCTAssertEqual(errorLocalizedDescription.localizedDescription, "Cannot find a suitable mlab server")
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        XCTAssertEqual(ndt7Test?.settings.url.hostname, "")
+        XCTAssertNil(ndt7Test?.settings.currentServer)
         ndt7Test?.discoverServerTask = nil
 
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
+        settings = NDT7Settings()
         ndt7Test = NDT7Test(settings: settings)
         session.data = jsonServerData
         result = false
@@ -178,117 +173,8 @@ class NDT7TestTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
         XCTAssertTrue(result)
         XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        ndt7Test?.discoverServerTask = nil
-
-        // After one successful server, if we don't get a successful server again and we have NDT7 server cache disabled (for default), we don't get the last server
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNotNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "")
-        ndt7Test?.discoverServerTask = nil
-    }
-
-    func testServerSetupUsingNDT7ServerCache() throws {
-
-        // Request failure to get NDT7 server.
-        var settings = NDT7Settings(url: NDT7URL(hostname: "hostname.com"))
-        var ndt7Test: NDT7Test? = NDT7Test(settings: settings)
-        let session = URLSessionMock()
-        var result = false
-        var errorResult: Error?
-        var expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        var hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "hostname.com")
-
-        // No server data found in the payload.
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNotNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNotNil(errorResult)
-        let errorLocalizedDescription = try XCTUnwrap(errorResult?.localizedDescription)
-        XCTAssertEqual(errorLocalizedDescription, "Cannot find a suitable mlab server")
-        XCTAssertNil(ndt7Test?.settings.url.server)
-        XCTAssertEqual(ndt7Test?.settings.url.hostname, "")
-        ndt7Test?.discoverServerTask = nil
-
-        // Server found and saving in Cache.
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerData
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "ndt-iupui-mlab4-atl06.measurement-lab.org")
-        ndt7Test?.discoverServerTask = nil
-
-        // After one successful server, if we don't get a successful server again and we have NDT7 server cache enabled, we use the last server
-        settings = NDT7Settings(url: NDT7URL(hostname: ""))
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, useNDT7ServerCache: true, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.url.server)
-        hostname = try XCTUnwrap(ndt7Test?.settings.url.hostname)
-        XCTAssertEqual(hostname, "ndt-iupui-mlab4-atl06.measurement-lab.org")
+        XCTAssertNotNil(ndt7Test?.settings.currentServer)
+        // TODO: olga test download/upload URLs
         ndt7Test?.discoverServerTask = nil
     }
 
@@ -302,7 +188,7 @@ class NDT7TestTests: XCTestCase {
         let t0 = Date().addingTimeInterval(-10000000)
         let tlast = Date().addingTimeInterval(10000000)
         let count = 123456
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "", uploadPath: ""))
+        let settings = NDT7Settings()
         let url = URL.init(string: "127.0.0.1")
         let webSocketUpload = WebSocketWrapper(settings: settings, url: url!)!
 
@@ -323,7 +209,7 @@ class NDT7TestTests: XCTestCase {
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         let testInteractionMock = TestInteractionMock()
         ndt7Test?.delegate = testInteractionMock
-        ndt7Test?.webSocketUpload = WebSocketWrapper(settings: settings, url: URL(string: settings.url.uploadPath)!)
+        ndt7Test?.webSocketUpload = WebSocketWrapper(settings: settings, url: URL(string: "whatever.com")!)
         ndt7Test?.uploadMessage(socket: ndt7Test!.webSocketUpload!, t0: t0, t1: t1, count: count)
         XCTAssertEqual(testInteractionMock.count, count)
         XCTAssertEqual(testInteractionMock.direction, .upload)
@@ -332,7 +218,7 @@ class NDT7TestTests: XCTestCase {
 //        XCTAssertEqual(testInteractionMock.elapsed, Int64(t1.timeIntervalSince1970 - t0.timeIntervalSince1970))
     }
 
-    func testNDT7TestHhandleMessage() {
+    func testNDT7TestHandleMessage() {
         let measurementJSON = """
 {
  "AppInfo": {
@@ -386,7 +272,7 @@ class NDT7TestTests: XCTestCase {
         XCTAssertEqual(message?.rawData, measurementJSON)
     }
 
-    func testNDT7TestHhandleWrongMessage() {
+    func testNDT7TestHandleWrongMessage() {
         let measurementJSON = """
 {
 elapsed: 1,
@@ -416,7 +302,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartDownloadTrue() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "$5^7~c` "))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -453,7 +339,7 @@ elapsed: 1,
     }
 
     func testNDT7TestStartUploadTrue() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "$5^7~c` "))
+        let settings = NDT7Settings()
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startUploadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -511,10 +397,6 @@ elapsed: 1,
 
     func testNDT7SettingsMeasurementInterval() {
         let settings = NDT7Settings(timeout: NDT7Timeouts(measurement: 5.5))
-        XCTAssertEqual(settings.url.hostname, "")
-        XCTAssertEqual(settings.url.downloadPath, "/ndt/v7/download")
-        XCTAssertEqual(settings.url.uploadPath, "/ndt/v7/upload")
-        XCTAssertTrue(settings.url.wss)
         XCTAssertTrue(settings.skipTLSCertificateVerification)
         XCTAssertEqual(settings.timeout.measurement, 5.5)
         XCTAssertEqual(settings.timeout.ioTimeout, 7)
@@ -524,7 +406,7 @@ elapsed: 1,
     }
 
     func testWebSocketInteraction() {
-        let settings = NDT7Settings(url: NDT7URL(hostname: "", downloadPath: "", uploadPath: ""))
+        let settings = NDT7Settings()
         let url = URL.init(string: "127.0.0.1")
         let webSocketDownload = WebSocketWrapper(settings: settings, url: url!)!
         let webSocketUpload = WebSocketWrapper(settings: settings, url: url!)!
