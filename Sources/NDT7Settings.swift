@@ -154,7 +154,7 @@ extension NDT7Server {
     public static func discover<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
                                                    retry: UInt = 0,
                                                    _ completion: @escaping (_ server: [NDT7Server]?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
-        //        let retry = min(retry, 4)
+        let retry = min(retry, 4)
         let request = Networking.urlRequest(NDT7WebSocketConstants.MlabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
@@ -162,47 +162,24 @@ extension NDT7Server {
                 completion(nil, NDT7TestConstants.cancelledError)
                 return
             }
-            guard error == nil, let data = data else {
-                //                if retry > 0 {
-                //                    logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retry: \(retry)", .info)
-                //                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-                //                        _ = discover(session: session,
-                //                                     retry: retry - 1,
-                //                                     useNDT7ServerCache: useNDT7ServerCache,
-                //                                     completion)
-                //                    }
-                //                } else if retry == 0, let server = lastServer {
-                //                    logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-                //                    completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
-                //                }
-                completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+            guard
+                error == nil,
+                let data = data,
+                let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: data) else
+            {
+                if retry > 0 {
+                    logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                        _ = discover(session: session, retry: retry - 1, completion)
+                    }
+                } else {
+                    completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+                }
                 return
             }
 
-            //            if let server = decode(data: data, fromUrl: request.url?.absoluteString), server.fqdn != nil  && server.fqdn! != "" {
-            //                lastServer = server
-            //                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-            //                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
-            //            } else if retry > 0 {
-            //                logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
-            //                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-            //                    _ = discover(session: session,
-            //                                 retry: retry - 1,
-            //                                 useNDT7ServerCache: useNDT7ServerCache,
-            //                                 completion)
-            //                }
-            //            } else if retry == 0, useNDT7ServerCache, let server = lastServer {
-            //                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-            //                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
-            //            } else {
-            //                logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
-            //                completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
-            //            }
-
-            if let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: data) {
-                completion(apiResponse.results, nil)
-                return
-            }
+            completion(apiResponse.results, nil)
+            return
         }
         task.resume()
         return task
