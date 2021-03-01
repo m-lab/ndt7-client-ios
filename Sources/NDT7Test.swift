@@ -147,7 +147,6 @@ extension NDT7Test {
                 return
             }
             guard let servers = servers, !servers.isEmpty else {
-                // TODO: olga change this to use Error
                 let discoveryError = NSError(domain: NDT7WebSocketConstants.domain,
                                              code: 0,
                                              userInfo: [ NSLocalizedDescriptionKey: "Failed to locate a valid mlab server to contact"])
@@ -159,7 +158,7 @@ extension NDT7Test {
             strongSelf.settings.allServers = servers
             strongSelf.settings.currentServerIndex = 0
             completion(error)
-         })
+        })
     }
 
     /// Start a test for download and/or upload, returning error if something was wrong.
@@ -225,22 +224,24 @@ extension NDT7Test {
         }
         downloadTestCompletion = completion
         logNDT7("Download test setup")
-        // TODO: olga return error
-        guard let url = settings.currentDownloadPath else { return }
-        if let downloadURL = URL(string: url) {
-            timerDownload?.invalidate()
-            timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.downloadTimeout,
-                                                 repeats: false,
-                                                 block: { [weak self] (_) in
-                                                    self?.downloadTestCompletion?(nil)
-                                                    self?.downloadTestCompletion = nil
-                                                 })
-            RunLoop.main.add(timerDownload!, forMode: RunLoop.Mode.common)
-            webSocketDownload = WebSocketWrapper(settings: settings, url: downloadURL)
-            webSocketDownload?.delegate = self
-        } else {
+        guard let downloadURL = settings.currentDownloadURL else {
             logNDT7("Error with ndt7 download settings", .error)
+            let noDownloadURL = NSError(domain: NDT7WebSocketConstants.domain,
+                                        code: 0,
+                                        userInfo: [ NSLocalizedDescriptionKey: "Mlab server does not have an download URL."])
+            completion(noDownloadURL)
+            return
         }
+        timerDownload?.invalidate()
+        timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.downloadTimeout,
+                                             repeats: false,
+                                             block: { [weak self] (_) in
+                                                self?.downloadTestCompletion?(nil)
+                                                self?.downloadTestCompletion = nil
+                                             })
+        RunLoop.main.add(timerDownload!, forMode: RunLoop.Mode.common)
+        webSocketDownload = WebSocketWrapper(settings: settings, url: downloadURL)
+        webSocketDownload?.delegate = self
     }
 
     /// Start upload test
@@ -255,22 +256,24 @@ extension NDT7Test {
         }
         uploadTestCompletion = completion
         logNDT7("Upload test setup")
-        // TODO: olga return error
-        guard let url = settings.currentUploadPath else { return }
-        if let uploadURL = URL(string: url) {
-            timerUpload?.invalidate()
-            timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.uploadTimeout,
-                                               repeats: false,
-                                               block: { [weak self] (_) in
-                                                self?.uploadTestCompletion?(nil)
-                                                self?.uploadTestCompletion = nil
-                                               })
-            RunLoop.main.add(timerUpload!, forMode: RunLoop.Mode.common)
-            webSocketUpload = WebSocketWrapper(settings: settings, url: uploadURL)
-            webSocketUpload?.delegate = self
-        } else {
+        guard let uploadURL = settings.currentUploadURL else {
             logNDT7("Error with ndt7 upload settings", .error)
+            let noUploadURL = NSError(domain: NDT7WebSocketConstants.domain,
+                                      code: 0,
+                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server does not have an upload URL."])
+            completion(noUploadURL)
+            return
         }
+        timerUpload?.invalidate()
+        timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.uploadTimeout,
+                                           repeats: false,
+                                           block: { [weak self] (_) in
+                                            self?.uploadTestCompletion?(nil)
+                                            self?.uploadTestCompletion = nil
+                                           })
+        RunLoop.main.add(timerUpload!, forMode: RunLoop.Mode.common)
+        webSocketUpload = WebSocketWrapper(settings: settings, url: uploadURL)
+        webSocketUpload?.delegate = self
     }
 
     /// Uploader is a function to upload messages to the server to meassure the upload speed.

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7F-sf-97m">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rj4-kh-Ol2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rj4-kh-Ol2">
                                         <rect key="frame" x="24" y="158" width="160" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="160" id="MXo-6b-gQS"/>
@@ -64,7 +64,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xf-GV-VxS">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xf-GV-VxS">
                                         <rect key="frame" x="24" y="80" width="100" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2AM-4N-Xtf"/>
@@ -76,7 +76,7 @@
                                             <action selector="startButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hrz-hY-0mu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="68F-7B-Ty6">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="68F-7B-Ty6">
                                         <rect key="frame" x="290" y="80" width="100" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="Gxe-bb-hqN"/>
@@ -123,6 +123,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="l7F-sf-97m" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DXR-jI-bA2"/>
@@ -130,12 +131,11 @@
                             <constraint firstItem="l7F-sf-97m" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="MCb-4T-Ypz"/>
                             <constraint firstItem="l7F-sf-97m" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ip7-mJ-lfN"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="68F-7B-Ty6" id="E41-dG-2Iy"/>
                         <outlet property="downloadSpeedLabel" destination="ltS-Qf-0AD" id="oTH-Xo-RjS"/>
-                        <outlet property="serverLabel" destination="Y0f-KN-A37" id="8FF-b2-c4r"/>
+                        <outlet property="serverLocationLabel" destination="Y0f-KN-A37" id="8FF-b2-c4r"/>
                         <outlet property="startButton" destination="3xf-GV-VxS" id="Ti7-1k-kHS"/>
                         <outlet property="uploadSpeedLabel" destination="Z39-F4-xKn" id="iWQ-rk-xG7"/>
                     </connections>

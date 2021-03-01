@@ -21,24 +21,29 @@ public struct NDT7Settings {
     /// Define all the headers needed for NDT7 request.
     public let headers: [String: String]
 
-
+    /// MLab servers returned from Locate V2 API that will be used to run the speed test.
     public var allServers: [NDT7Server] = []
 
+    /// Index of the server in `allServers` array that will be used for the test.
     public var currentServerIndex: Int?
 
-      /// The server Locate API discovered to perform the test.
+    /// MLab server that will be used to perform a speed test.
     public var currentServer: NDT7Server? {
         guard let selectedIndex = currentServerIndex,
               selectedIndex < allServers.count else { return nil }
         return allServers[selectedIndex]
     }
 
-    public var currentDownloadPath: String? {
-        return currentServer?.urls.downloadPath
+    /// URL to use to run download speed test.
+    public var currentDownloadURL: URL? {
+        guard let downloadPath = currentServer?.urls.downloadPath else { return nil }
+        return URL(string: downloadPath)
     }
 
-    public var currentUploadPath: String? {
-        return currentServer?.urls.uploadPath
+    /// URL to use to run upload speed test.
+    public var currentUploadURL: URL? {
+        guard let uploadPath = currentServer?.urls.uploadPath else { return nil }
+        return URL(string: uploadPath)
     }
 
     /// Initialization.
@@ -50,48 +55,6 @@ public struct NDT7Settings {
         self.headers = headers
     }
 }
-
-///// URL settings.
-//public struct NDT7URL {
-//
-//    /// Mlab Server:
-//    public var server: NDT7Server?
-//
-//    /// Server to connect.
-//    public var hostname: String
-//
-//    /// Patch for download test.
-//    public let downloadPath: String
-//
-//    /// Patch for upload test.
-//    public let uploadPath: String
-//
-//    /// Define if it is wss or ws.
-//    public let wss: Bool
-//
-//    /// Download URL
-//    public var download: String {
-//        return "\(wss ? "wss" : "ws")\("://")\(hostname)\(downloadPath)"
-//    }
-//
-//    /// Upload URL
-//    public var upload: String {
-//        return "\(wss ? "wss" : "ws")\("://")\(hostname)\(uploadPath)"
-//    }
-//
-//    /// Initialization.
-//    public init(hostname: String,
-//                downloadPath: String = NDT7WebSocketConstants.Request.downloadPath,
-//                uploadPath: String = NDT7WebSocketConstants.Request.uploadPath,
-//                wss: Bool = true) {
-//        self.hostname = hostname
-//        self.downloadPath = downloadPath
-//        self.uploadPath = uploadPath
-//        self.wss = wss
-//    }
-//
-//
-//}
 
 /// Timeout settings.
 public struct NDT7Timeouts {
@@ -130,7 +93,7 @@ public struct LocateAPIResponse: Codable {
     public var results: [NDT7Server]
 }
 
-/// Locate API V2 Mlab NDT7 Server.
+/// Locate API V2 MLab NDT7 Server.
 public struct NDT7Server: Codable {
 
     /// The URL of the machine.
@@ -143,21 +106,32 @@ public struct NDT7Server: Codable {
     public var urls: NDT7URLs
 }
 
-/// Locate API V2 client location.
+/// Locate API V2 Location that describes geographic location of the target server.
 public struct NDT7Location: Codable {
-    /// Country of the
+    /// Country of the target server.
     public var country: String?
 
-    /// city
+    /// City of the target server.
     public var city: String?
 }
 
 /// Locate API V2 URLs.
 /// This struct contains the complete download/upload URL for running a measurement.
 public struct NDT7URLs: Codable {
+    /// Complete path to server to test download speed.
+    /// The path uses wss:// protocol (encrypted connection) and auth token.
     public var downloadPath: String
+
+    /// Complete path to server to test upload speed.
+    /// The path uses wss:// protocol (encrypted connection) and auth token.
     public var uploadPath: String
+
+    /// Complete path to server to test download speed.
+    /// The path uses ws:// protocol scheme (unencrypted connection) and auth token.
     public var insecureDownloadPath: String
+
+    /// Complete path to server to test upload speed.
+    /// The path uses ws:// protocol (unencrypted connection) and auth token.
     public var insecureUploadPath: String
 
     enum CodingKeys: String, CodingKey {
@@ -175,13 +149,12 @@ extension NDT7Server {
     /// - parameter session: URLSession object used to request servers, using URLSession.shared object as default session.
     /// - parameter retry: Number of times to retry.
     /// - parameter completion: callback to get the NDT7Server and error message.
-    /// - parameter servers: An array of NDT7Server objects representing the Mlab server located nearby.
+    /// - parameter servers: An array of NDT7Server objects representing the MLab servers located nearby.
     /// - parameter error: if any error happens, this parameter returns the error.
     public static func discover<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
                                                    retry: UInt = 0,
-                                                   useNDT7ServerCache: Bool = false,
                                                    _ completion: @escaping (_ server: [NDT7Server]?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
-//        let retry = min(retry, 4)
+        //        let retry = min(retry, 4)
         let request = Networking.urlRequest(NDT7WebSocketConstants.MlabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
@@ -190,64 +163,48 @@ extension NDT7Server {
                 return
             }
             guard error == nil, let data = data else {
-//                if retry > 0 {
-//                    logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retry: \(retry)", .info)
-//                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-//                        _ = discover(session: session,
-//                                     retry: retry - 1,
-//                                     useNDT7ServerCache: useNDT7ServerCache,
-//                                     completion)
-//                    }
-//                } else if retry == 0, let server = lastServer {
-//                    logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-//                    completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
-//                }
+                //                if retry > 0 {
+                //                    logNDT7("NDT7 Mlab error, cannot find a suitable mlab server, retry: \(retry)", .info)
+                //                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+                //                        _ = discover(session: session,
+                //                                     retry: retry - 1,
+                //                                     useNDT7ServerCache: useNDT7ServerCache,
+                //                                     completion)
+                //                    }
+                //                } else if retry == 0, let server = lastServer {
+                //                    logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
+                //                    completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
+                //                }
                 completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
                 return
             }
 
-//            if let server = decode(data: data, fromUrl: request.url?.absoluteString), server.fqdn != nil  && server.fqdn! != "" {
-//                lastServer = server
-//                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-//                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
-//            } else if retry > 0 {
-//                logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
-//                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
-//                    _ = discover(session: session,
-//                                 retry: retry - 1,
-//                                 useNDT7ServerCache: useNDT7ServerCache,
-//                                 completion)
-//                }
-//            } else if retry == 0, useNDT7ServerCache, let server = lastServer {
-//                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
-//                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
-//            } else {
-//                logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
-//                completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
-//            }
+            //            if let server = decode(data: data, fromUrl: request.url?.absoluteString), server.fqdn != nil  && server.fqdn! != "" {
+            //                lastServer = server
+            //                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
+            //                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
+            //            } else if retry > 0 {
+            //                logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
+            //                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
+            //                    _ = discover(session: session,
+            //                                 retry: retry - 1,
+            //                                 useNDT7ServerCache: useNDT7ServerCache,
+            //                                 completion)
+            //                }
+            //            } else if retry == 0, useNDT7ServerCache, let server = lastServer {
+            //                logNDT7("NDT7 Mlab server \(server.fqdn!)\(error == nil ? "" : " error: \(error!.localizedDescription)")", .info)
+            //                completion(server, server.fqdn == nil ? NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError : nil)
+            //            } else {
+            //                logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
+            //                completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+            //            }
 
-          if let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: data) {
-            completion(apiResponse.results, nil)
-            return
-          }
+            if let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: data) {
+                completion(apiResponse.results, nil)
+                return
+            }
         }
         task.resume()
         return task
-    }
-
-    static func decode(data: Data?, fromUrl url: String?) -> NDT7Server? {
-        guard let data = data, let url = url else { return nil }
-        switch url {
-        case NDT7WebSocketConstants.MlabServerDiscover.url:
-            return try? JSONDecoder().decode(NDT7Server.self, from: data)
-//        case NDT7WebSocketConstants.MlabServerDiscover.urlWithGeoOption:
-//            let decoded = try? JSONDecoder().decode([NDT7Server].self, from: data)
-//            let server = decoded?.first(where: { (server) -> Bool in
-//                return server.fqdn != nil && !server.fqdn!.isEmpty
-//            })
-//            return server
-        default:
-            return nil
-        }
     }
 }
