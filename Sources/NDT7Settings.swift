@@ -15,7 +15,7 @@ public struct NDT7Settings {
     /// Timeouts
     public let timeout: NDT7Timeouts
 
-    /// Skipt TLS certificate verification.
+    /// Skip TLS certificate verification.
     public let skipTLSCertificateVerification: Bool
 
     /// Define all the headers needed for NDT7 request.
@@ -162,11 +162,7 @@ extension NDT7Server {
                 completion(nil, NDT7TestConstants.cancelledError)
                 return
             }
-            guard
-                error == nil,
-                let data = data,
-                let apiResponse = try? JSONDecoder().decode(LocateAPIResponse.self, from: data) else
-            {
+            guard error == nil, let data = data else {
                 if retry > 0 {
                     logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
                     DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -178,7 +174,14 @@ extension NDT7Server {
                 return
             }
 
-            completion(apiResponse.results, nil)
+            do {
+                let apiResponse = try JSONDecoder().decode(LocateAPIResponse.self, from: data)
+                completion(apiResponse.results, nil)
+            } catch let jsonError as NSError {
+                logNDT7("JSON decode failed: \(jsonError.localizedDescription)")
+                completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+            }
+
             return
         }
         task.resume()

@@ -12,11 +12,37 @@ import XCTest
 class NDT7TestTests: XCTestCase {
 
     let jsonServerData = """
-    {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"fqdn\": \"ndt-iupui-mlab4-atl06.measurement-lab.org\", \"site\": \"atl06\"}
+    {
+        "results": [
+            {
+                "machine": "mlab2-lga05.measurement-lab.org",
+                "location": {
+                        "city": "San Francisco",
+                        "country": "US"
+                },
+                "urls": {
+                    "wss:///ndt/v7/download": "wss://ndt-mlab2-lga05.measurement-lab.org/ndt/v7/download?access_token=.",
+                    "wss:///ndt/v7/upload": "wss://ndt-mlab2-lga05.measurement-lab.org/ndt/v7/upload?access_token=.",
+                    "ws:///ndt/v7/download": "ws://ndt-mlab2-lga05.measurement-lab.org/ndt/v7/download?access_token=.",
+                    "ws:///ndt/v7/upload": "ws://ndt-mlab2-lga05.measurement-lab.org/ndt/v7/upload?access_token=.",
+                }
+            }
+        ]
+    }
     """.data(using: .utf8)
 
-    let jsonServerDataNofqdn = """
-    {\"ip\": [\"70.42.177.114\", \"2600:c0b:2002:5::114\"], \"country\": \"US\", \"city\": \"Atlanta_GA\", \"site\": \"atl06\"}
+    let jsonServerDataNoURLs = """
+    {
+        "results": [
+            {
+                "machine": "mlab2-lga05.measurement-lab.org",
+                "location": {
+                        "city": "San Francisco",
+                        "country": "US"
+                }
+            }
+        ]
+    }
     """.data(using: .utf8)
 
     override func setUp() {
@@ -120,31 +146,15 @@ class NDT7TestTests: XCTestCase {
     }
 
     func testServerSetup() throws {
-
         var settings = NDT7Settings()
-        var ndt7Test: NDT7Test? = NDT7Test(settings: settings)
+        var ndt7Test = NDT7Test(settings: settings)
         let session = URLSessionMock()
         var result = false
         var errorResult: Error?
         var expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
-            result = true
-            errorResult = error
-            XCTAssertNil(error)
-            expectation.fulfill()
-        })
-        wait(for: [expectation], timeout: 10.0)
-        XCTAssertTrue(result)
-        XCTAssertNil(errorResult)
-        XCTAssertNil(ndt7Test?.settings.currentServer)
 
-        settings = NDT7Settings()
-        ndt7Test = NDT7Test(settings: settings)
-        session.data = jsonServerDataNofqdn
-        result = false
-        errorResult = nil
-        expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
+        session.data = jsonServerDataNoURLs
+        ndt7Test.serverSetup(session: session, { (error) in
             result = true
             errorResult = error
             XCTAssertNotNil(error)
@@ -155,8 +165,8 @@ class NDT7TestTests: XCTestCase {
         XCTAssertNotNil(errorResult)
         let errorLocalizedDescription = try XCTUnwrap(errorResult)
         XCTAssertEqual(errorLocalizedDescription.localizedDescription, "Cannot find a suitable mlab server")
-        XCTAssertNil(ndt7Test?.settings.currentServer)
-        ndt7Test?.discoverServerTask = nil
+        XCTAssertNil(ndt7Test.settings.currentServer)
+        ndt7Test.discoverServerTask = nil
 
         settings = NDT7Settings()
         ndt7Test = NDT7Test(settings: settings)
@@ -164,7 +174,7 @@ class NDT7TestTests: XCTestCase {
         result = false
         errorResult = nil
         expectation = XCTestExpectation(description: "Job in main thread")
-        ndt7Test?.serverSetup(session: session, { (error) in
+        ndt7Test.serverSetup(session: session, { (error) in
             result = true
             errorResult = error
             XCTAssertNil(error)
@@ -173,9 +183,8 @@ class NDT7TestTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
         XCTAssertTrue(result)
         XCTAssertNil(errorResult)
-        XCTAssertNotNil(ndt7Test?.settings.currentServer)
-        // TODO: olga test download/upload URLs
-        ndt7Test?.discoverServerTask = nil
+        XCTAssertNotNil(ndt7Test.settings.currentServer)
+        ndt7Test.discoverServerTask = nil
     }
 
     func testNDT7TestUploader() {
@@ -302,7 +311,16 @@ elapsed: 1,
     }
 
     func testNDT7TestStartDownloadTrue() {
-        let settings = NDT7Settings()
+        var settings = NDT7Settings()
+        settings.allServers = [
+            NDT7Server(machine: "",
+                       location: nil,
+                       urls: NDT7URLs(downloadPath: "wss://download/path",
+                                      uploadPath: "wss://upload/path",
+                                      insecureDownloadPath: "ws://download/path",
+                                      insecureUploadPath: "ws://upload/path"))
+        ]
+        settings.currentServerIndex = 0
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startDownloadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
@@ -339,7 +357,16 @@ elapsed: 1,
     }
 
     func testNDT7TestStartUploadTrue() {
-        let settings = NDT7Settings()
+        var settings = NDT7Settings()
+        settings.allServers = [
+            NDT7Server(machine: "",
+                       location: nil,
+                       urls: NDT7URLs(downloadPath: "wss://download/path",
+                                      uploadPath: "wss://upload/path",
+                                      insecureDownloadPath: "ws://download/path",
+                                      insecureUploadPath: "ws://upload/path"))
+        ]
+        settings.currentServerIndex = 0
         let ndt7Test: NDT7Test? = NDT7Test(settings: settings)
         var startUploadCheck = false
         let completion: (_ error: NSError?) -> Void = { (error) in
