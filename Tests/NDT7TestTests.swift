@@ -164,7 +164,7 @@ class NDT7TestTests: XCTestCase {
         XCTAssertTrue(result)
         XCTAssertNotNil(errorResult)
         let errorLocalizedDescription = try XCTUnwrap(errorResult)
-        XCTAssertEqual(errorLocalizedDescription.localizedDescription, "Cannot find a suitable mlab server")
+        XCTAssertEqual(errorLocalizedDescription.localizedDescription, "Cannot find a suitable MLab server")
         XCTAssertNil(ndt7Test.settings.currentServer)
         ndt7Test.discoverServerTask = nil
 

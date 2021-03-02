@@ -144,6 +144,6 @@ class NDT7SettingsTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
         XCTAssertNil(serversResult)
         XCTAssertNotNil(resultingError)
-        XCTAssertEqual(resultingError, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+        XCTAssertEqual(resultingError, NDT7WebSocketConstants.MLabServerDiscover.noMLabServerError)
     }
 }

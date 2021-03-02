@@ -142,10 +142,10 @@ public struct NDT7URLs: Codable {
     }
 }
 
-/// This extension provides helper methods to discover Mlab servers availables.
+/// This extension provides helper methods to discover MLab servers availables.
 extension NDT7Server {
 
-    /// Discover the closer Mlab server available or using geo location to get a random server from a list of the closer servers.
+    /// Discover the closer MLab server available or using geo location to get a random server from a list of the closer servers.
     /// - parameter session: URLSession object used to request servers, using URLSession.shared object as default session.
     /// - parameter retry: Number of times to retry.
     /// - parameter completion: callback to get the NDT7Server and error message.
@@ -155,7 +155,7 @@ extension NDT7Server {
                                                    retry: UInt = 0,
                                                    _ completion: @escaping (_ server: [NDT7Server]?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
         let retry = min(retry, 4)
-        let request = Networking.urlRequest(NDT7WebSocketConstants.MlabServerDiscover.url)
+        let request = Networking.urlRequest(NDT7WebSocketConstants.MLabServerDiscover.url)
         let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
             guard error?.localizedDescription != "cancelled" else {
@@ -164,12 +164,12 @@ extension NDT7Server {
             }
             guard error == nil, let data = data else {
                 if retry > 0 {
-                    logNDT7("NDT7 Mlab cannot find a suitable mlab server, retry: \(retry)", .info)
+                    logNDT7("NDT7 MLab cannot find a suitable MLab server, retry: \(retry)", .info)
                     DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
                         _ = discover(session: session, retry: retry - 1, completion)
                     }
                 } else {
-                    completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+                    completion(nil, NDT7WebSocketConstants.MLabServerDiscover.noMLabServerError)
                 }
                 return
             }
@@ -179,7 +179,7 @@ extension NDT7Server {
                 completion(apiResponse.results, nil)
             } catch let jsonError as NSError {
                 logNDT7("JSON decode failed: \(jsonError.localizedDescription)")
-                completion(nil, NDT7WebSocketConstants.MlabServerDiscover.noMlabServerError)
+                completion(nil, NDT7WebSocketConstants.MLabServerDiscover.noMLabServerError)
             }
 
             return

@@ -149,7 +149,7 @@ extension NDT7Test {
             guard let servers = servers, !servers.isEmpty else {
                 let discoveryError = NSError(domain: NDT7WebSocketConstants.domain,
                                              code: 0,
-                                             userInfo: [ NSLocalizedDescriptionKey: "Failed to locate a valid mlab server to contact"])
+                                             userInfo: [ NSLocalizedDescriptionKey: "Failed to locate a valid MLab server to contact"])
                 completion(discoveryError)
                 return
             }
@@ -228,7 +228,7 @@ extension NDT7Test {
             logNDT7("Error with ndt7 download settings", .error)
             let noDownloadURL = NSError(domain: NDT7WebSocketConstants.domain,
                                         code: 0,
-                                        userInfo: [ NSLocalizedDescriptionKey: "Mlab server does not have an download URL."])
+                                        userInfo: [ NSLocalizedDescriptionKey: "MLab server does not have an download URL."])
             completion(noDownloadURL)
             return
         }
@@ -260,7 +260,7 @@ extension NDT7Test {
             logNDT7("Error with ndt7 upload settings", .error)
             let noUploadURL = NSError(domain: NDT7WebSocketConstants.domain,
                                       code: 0,
-                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server does not have an upload URL."])
+                                      userInfo: [ NSLocalizedDescriptionKey: "MLab server does not have an upload URL."])
             completion(noUploadURL)
             return
         }
@@ -453,22 +453,22 @@ extension NDT7Test: WebSocketInteraction {
     }
 
     func error(webSocket: WebSocketWrapper, error: NSError) {
-        let mlabServerError = NSError(domain: NDT7WebSocketConstants.domain,
+        let mLabServerError = NSError(domain: NDT7WebSocketConstants.domain,
                                       code: 0,
-                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.currentServer?.machine ?? "") has an error during test"])
+                                      userInfo: [ NSLocalizedDescriptionKey: "MLab server \(settings.currentServer?.machine ?? "") has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in
-                self?.delegate?.error(kind: .download, error: mlabServerError)
+                self?.delegate?.error(kind: .download, error: mLabServerError)
             }
-            downloadTestCompletion?(mlabServerError)
+            downloadTestCompletion?(mLabServerError)
             downloadTestCompletion = nil
         } else if webSocket === webSocketUpload {
             logNDT7("Upload test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in
-                self?.delegate?.error(kind: .upload, error: mlabServerError)
+                self?.delegate?.error(kind: .upload, error: mLabServerError)
             }
-            uploadTestCompletion?(mlabServerError)
+            uploadTestCompletion?(mLabServerError)
             uploadTestCompletion = nil
         }
     }
