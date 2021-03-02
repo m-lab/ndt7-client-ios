@@ -48,7 +48,7 @@ public struct NDT7Settings {
 
     /// Initialization.
     public init(timeout: NDT7Timeouts = NDT7Timeouts(),
-                skipTLSCertificateVerification: Bool = true,
+                skipTLSCertificateVerification: Bool = false,
                 headers: [String: String] = [NDT7WebSocketConstants.Request.headerProtocolKey: NDT7WebSocketConstants.Request.headerProtocolValue]) {
         self.skipTLSCertificateVerification = skipTLSCertificateVerification
         self.timeout = timeout

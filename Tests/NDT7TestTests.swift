@@ -424,7 +424,7 @@ elapsed: 1,
 
     func testNDT7SettingsMeasurementInterval() {
         let settings = NDT7Settings(timeout: NDT7Timeouts(measurement: 5.5))
-        XCTAssertTrue(settings.skipTLSCertificateVerification)
+        XCTAssertFalse(settings.skipTLSCertificateVerification)
         XCTAssertEqual(settings.timeout.measurement, 5.5)
         XCTAssertEqual(settings.timeout.ioTimeout, 7)
         XCTAssertEqual(settings.timeout.downloadTimeout, 15)

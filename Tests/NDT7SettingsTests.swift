@@ -50,7 +50,7 @@ class NDT7SettingsTests: XCTestCase {
 
     func testNDT7SettingsDefault() {
         let defaultSettings = NDT7Settings()
-        XCTAssertTrue(defaultSettings.skipTLSCertificateVerification)
+        XCTAssertFalse(defaultSettings.skipTLSCertificateVerification)
         XCTAssertEqual(defaultSettings.headers["Sec-WebSocket-Protocol"], "net.measurementlab.ndt.v7")
     }
 

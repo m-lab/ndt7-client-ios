@@ -20,6 +20,7 @@ class ConstantsTests: XCTestCase {
         XCTAssertEqual(NDT7WebSocketConstants.domain, "net.measurementlab.NDT7")
         XCTAssertEqual(NDT7WebSocketConstants.MLabServerDiscover.hostname, "locate.measurementlab.net")
         XCTAssertEqual(NDT7WebSocketConstants.MLabServerDiscover.path, "v2/nearest/ndt/ndt7")
+        XCTAssertEqual(NDT7WebSocketConstants.MLabServerDiscover.clientName, "ndt7-client-ios")
         XCTAssertEqual(NDT7WebSocketConstants.MLabServerDiscover.hostname, "locate.measurementlab.net")
         XCTAssertEqual(NDT7WebSocketConstants.MLabServerDiscover.hostname, "locate.measurementlab.net")
         XCTAssertEqual(NDT7WebSocketConstants.MLabServerDiscover.hostname, "locate.measurementlab.net")

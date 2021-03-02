@@ -55,8 +55,11 @@ public struct NDT7WebSocketConstants {
         /// Discover server path.
         public static let path = "v2/nearest/ndt/ndt7"
 
+        /// Client name query parameter.
+        public static let clientName  = "ndt7-client-ios"
+
         /// Discover closer MLab Server
-        public static let url = "https://\(hostname)/\(path)"
+        public static let url = "https://\(hostname)/\(path)?client_name=\(clientName)"
 
         /// Cannot find a suitable MLab server error
         public static let noMLabServerError = NSError(domain: NDT7WebSocketConstants.domain,
