@@ -52,7 +52,7 @@ extension Networking: URLSessionDelegate {
                     didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
-            challenge.protectionSpace.host == NDT7WebSocketConstants.MlabServerDiscover.hostname,
+            challenge.protectionSpace.host == NDT7WebSocketConstants.MLabServerDiscover.hostname,
             let serverTrust = challenge.protectionSpace.serverTrust {
             let credential = URLCredential(trust: serverTrust)
             completionHandler(URLSession.AuthChallengeDisposition.useCredential, credential)

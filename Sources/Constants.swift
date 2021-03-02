@@ -47,27 +47,24 @@ public struct NDT7WebSocketConstants {
     public static let domain = "net.measurementlab.NDT7"
 
     /// MLab Server discover constants.
-    public struct MlabServerDiscover {
+    public struct MLabServerDiscover {
 
         /// Discover closer server hostname url.
         public static let hostname = "locate.measurementlab.net"
 
         /// Discover server path.
-        public static let path = "ndt7"
+        public static let path = "v2/nearest/ndt/ndt7"
 
-        /// Geo options.
-        public static let geoOption = "geo_options"
+        /// Client name query parameter.
+        public static let clientName  = "ndt7-client-ios"
 
-        /// Discover list of Mlab Servers with Geo Options
-        public static let urlWithGeoOption = "https://\(hostname)/\(path)?policy=\(geoOption)"
+        /// Discover closer MLab Server
+        public static let url = "https://\(hostname)/\(path)?client_name=\(clientName)"
 
-        /// Discover closer Mlab Server
-        public static let url = "https://\(hostname)/\(path)"
-
-        /// Cannot find a suitable mlab server error
-        public static let noMlabServerError = NSError(domain: NDT7WebSocketConstants.domain,
+        /// Cannot find a suitable MLab server error
+        public static let noMLabServerError = NSError(domain: NDT7WebSocketConstants.domain,
                                                       code: 0,
-                                                      userInfo: [NSLocalizedDescriptionKey: "Cannot find a suitable mlab server"])
+                                                      userInfo: [NSLocalizedDescriptionKey: "Cannot find a suitable MLab server"])
     }
 
     /// Websocket constants definition.

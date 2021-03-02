@@ -128,7 +128,7 @@ extension NDT7Test {
         logNDT7("NDT7 test started")
         cleanup()
         NDT7Test.ndt7TestInstances.forEach { $0.object?.cancel() }
-        serverSetup(session: Networking.shared.session, useNDT7ServerCache: true, { [weak self] (error) in
+        serverSetup(session: Networking.shared.session, { [weak self] (error) in
             OperationQueue.current?.name = "net.measurementlab.NDT7.test"
             self?.test(download: download, upload: upload, error: error, completion)
         })
@@ -136,22 +136,27 @@ extension NDT7Test {
 
     /// Server setup discover a MLab server for testing if there is not hostname deffined in settings.
     /// - parameter completion: closure for callback.
-    /// - parameter error: returns an error if exist.
+    /// - parameter servers: An array of NDT7Servers that were located with Locate API.
+    /// - parameter error: returns an error if exists.
     func serverSetup<T: URLSessionNDT7>(session: T = URLSession.shared as! T,
-                                        useNDT7ServerCache: Bool = false,
                                         _ completion: @escaping (_ error: NSError?) -> Void) {
-        guard settings.url.hostname.isEmpty else {
-            completion(nil)
-            return
-        }
         discoverServerTask = NDT7Server.discover(session: session,
-                                                 withGeoOptions: settings.useGeoOptions,
-                                                 retray: 4,
-                                                 geoOptionsChangeInRetray: true,
-                                                 useNDT7ServerCache: useNDT7ServerCache, { [weak self] (server, error) in
+                                                 retry: 4, { [weak self] (servers, error) in
+            guard error == nil else {
+                completion(error)
+                return
+            }
+            guard let servers = servers, !servers.isEmpty else {
+                let discoveryError = NSError(domain: NDT7WebSocketConstants.domain,
+                                             code: 0,
+                                             userInfo: [ NSLocalizedDescriptionKey: "Failed to locate a valid MLab server to contact"])
+                completion(discoveryError)
+                return
+            }
             guard let strongSelf = self else { return }
-            strongSelf.settings.url.hostname = server?.fqdn ?? ""
-            strongSelf.settings.url.server = server
+
+            strongSelf.settings.allServers = servers
+            strongSelf.settings.currentServerIndex = 0
             completion(error)
         })
     }
@@ -219,21 +224,24 @@ extension NDT7Test {
         }
         downloadTestCompletion = completion
         logNDT7("Download test setup")
-        let url = settings.url.download
-        if let downloadURL = URL(string: url) {
-            timerDownload?.invalidate()
-            timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.downloadTimeout,
-                                                 repeats: false,
-                                                 block: { [weak self] (_) in
-                                                    self?.downloadTestCompletion?(nil)
-                                                    self?.downloadTestCompletion = nil
-            })
-            RunLoop.main.add(timerDownload!, forMode: RunLoop.Mode.common)
-            webSocketDownload = WebSocketWrapper(settings: settings, url: downloadURL)
-            webSocketDownload?.delegate = self
-        } else {
+        guard let downloadURL = settings.currentDownloadURL else {
             logNDT7("Error with ndt7 download settings", .error)
+            let noDownloadURL = NSError(domain: NDT7WebSocketConstants.domain,
+                                        code: 0,
+                                        userInfo: [ NSLocalizedDescriptionKey: "MLab server does not have an download URL."])
+            completion(noDownloadURL)
+            return
         }
+        timerDownload?.invalidate()
+        timerDownload = Timer.scheduledTimer(withTimeInterval: settings.timeout.downloadTimeout,
+                                             repeats: false,
+                                             block: { [weak self] (_) in
+                                                self?.downloadTestCompletion?(nil)
+                                                self?.downloadTestCompletion = nil
+                                             })
+        RunLoop.main.add(timerDownload!, forMode: RunLoop.Mode.common)
+        webSocketDownload = WebSocketWrapper(settings: settings, url: downloadURL)
+        webSocketDownload?.delegate = self
     }
 
     /// Start upload test
@@ -248,21 +256,24 @@ extension NDT7Test {
         }
         uploadTestCompletion = completion
         logNDT7("Upload test setup")
-        let url = settings.url.upload
-        if let uploadURL = URL(string: url) {
-            timerUpload?.invalidate()
-            timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.uploadTimeout,
-                                               repeats: false,
-                                               block: { [weak self] (_) in
-                                                self?.uploadTestCompletion?(nil)
-                                                self?.uploadTestCompletion = nil
-            })
-            RunLoop.main.add(timerUpload!, forMode: RunLoop.Mode.common)
-            webSocketUpload = WebSocketWrapper(settings: settings, url: uploadURL)
-            webSocketUpload?.delegate = self
-        } else {
+        guard let uploadURL = settings.currentUploadURL else {
             logNDT7("Error with ndt7 upload settings", .error)
+            let noUploadURL = NSError(domain: NDT7WebSocketConstants.domain,
+                                      code: 0,
+                                      userInfo: [ NSLocalizedDescriptionKey: "MLab server does not have an upload URL."])
+            completion(noUploadURL)
+            return
         }
+        timerUpload?.invalidate()
+        timerUpload = Timer.scheduledTimer(withTimeInterval: settings.timeout.uploadTimeout,
+                                           repeats: false,
+                                           block: { [weak self] (_) in
+                                            self?.uploadTestCompletion?(nil)
+                                            self?.uploadTestCompletion = nil
+                                           })
+        RunLoop.main.add(timerUpload!, forMode: RunLoop.Mode.common)
+        webSocketUpload = WebSocketWrapper(settings: settings, url: uploadURL)
+        webSocketUpload?.delegate = self
     }
 
     /// Uploader is a function to upload messages to the server to meassure the upload speed.
@@ -289,13 +300,13 @@ extension NDT7Test {
         let underbuffered = 7 * message.count
         var buffered: Int? = 0
         if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25,
-            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated {
+           let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated {
             tlast = t1
             uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
         }
         while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true,
-            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated,
-            count < outputBytesAccumulated + underbuffered {
+              let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated,
+              count < outputBytesAccumulated + underbuffered {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
                 count += message.count * Int(NDT7WebSocketConstants.Request.maxConcurrentMessages)
@@ -411,8 +422,8 @@ extension NDT7Test: WebSocketInteraction {
             }
             let t1 = Date()
             if let tLast = tLastDownload,
-                let t0 = t0Download,
-                t1.timeIntervalSince1970 - tLast.timeIntervalSince1970 > 0.25 {
+               let t0 = t0Download,
+               t1.timeIntervalSince1970 - tLast.timeIntervalSince1970 > 0.25 {
                 tLastDownload = t1
                 let elapsedTime = Int64(((t1.timeIntervalSince1970 * 1000000.0) - (t0.timeIntervalSince1970 * 1000000.0)))
                 let appInfo = NDT7APPInfo(elapsedTime: elapsedTime, numBytes: Int64(webSocket.inputBytesLengthAccumulated))
@@ -442,22 +453,22 @@ extension NDT7Test: WebSocketInteraction {
     }
 
     func error(webSocket: WebSocketWrapper, error: NSError) {
-        let mlabServerError = NSError(domain: NDT7WebSocketConstants.domain,
+        let mLabServerError = NSError(domain: NDT7WebSocketConstants.domain,
                                       code: 0,
-                                      userInfo: [ NSLocalizedDescriptionKey: "Mlab server \(settings.url.hostname) has an error during test"])
+                                      userInfo: [ NSLocalizedDescriptionKey: "MLab server \(settings.currentServer?.machine ?? "") has an error during test"])
         if webSocket === webSocketDownload {
             logNDT7("Download test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in
-                self?.delegate?.error(kind: .download, error: mlabServerError)
+                self?.delegate?.error(kind: .download, error: mLabServerError)
             }
-            downloadTestCompletion?(mlabServerError)
+            downloadTestCompletion?(mLabServerError)
             downloadTestCompletion = nil
         } else if webSocket === webSocketUpload {
             logNDT7("Upload test error: \(error.localizedDescription)", .error)
             mainThread { [weak self] in
-                self?.delegate?.error(kind: .upload, error: mlabServerError)
+                self?.delegate?.error(kind: .upload, error: mLabServerError)
             }
-            uploadTestCompletion?(mlabServerError)
+            uploadTestCompletion?(mLabServerError)
             uploadTestCompletion = nil
         }
     }
