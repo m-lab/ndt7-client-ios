@@ -76,7 +76,7 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'NDT7 example' do
-  pod 'NDT7', '0.0.2'
+  pod 'NDT7', '0.0.3'
 end
 ```
 
@@ -94,7 +94,7 @@ $ pod install
 Create a `Cartfile` and add the following line:
 
 ```
-github "m-lab/ndt7-client-ios" ~> 0.0.2
+github "m-lab/ndt7-client-ios" ~> 0.0.3
 ```
 
 Next, run the following command:
