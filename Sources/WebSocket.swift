@@ -423,7 +423,9 @@ class Inflater {
                     break
                 }
                 strm.avail_in = CUnsignedInt(inflateEndG.count)
-                strm.next_in = UnsafeMutablePointer<UInt8>(mutating: inflateEndG)
+                let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: inflateEndG.count)
+                pointer.initialize(from: &inflateEndG, count: inflateEndG.count)
+                strm.next_in = pointer
             }
             while true {
                 strm.avail_out = CUnsignedInt(bufsiz)
