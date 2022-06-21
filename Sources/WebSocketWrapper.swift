@@ -9,7 +9,7 @@
 import Foundation
 
 /// Protocol to allow websocket interaction.
-protocol WebSocketInteraction: class {
+protocol WebSocketInteraction: AnyObject {
     func open(webSocket: WebSocketWrapper)
     func close(webSocket: WebSocketWrapper)
     func message(webSocket: WebSocketWrapper, message: Any)

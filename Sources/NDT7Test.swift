@@ -9,7 +9,7 @@
 import Foundation
 
 /// This protocol allows to receive the test information.
-public protocol NDT7TestInteraction: class {
+public protocol NDT7TestInteraction: AnyObject {
 
     /// Provide the status of download and upload test
     /// - parameter kind: Kind of test.
