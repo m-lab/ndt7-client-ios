@@ -156,7 +156,7 @@ extension NDT7Server {
                                                    _ completion: @escaping (_ server: [NDT7Server]?, _ error: NSError?) -> Void) -> URLSessionTaskNDT7 {
         let retry = min(retry, 4)
         let request = Networking.urlRequest(NDT7WebSocketConstants.MLabServerDiscover.url)
-        let task = session.dataTask(with: request as URLRequest) { (data, _, error) -> Void in
+        let task = session.ndt7DataTask(with: request as URLRequest) { (data, _, error) -> Void in
             OperationQueue.current?.name = "net.measurementlab.NDT7.MlabServer.discover"
             guard error?.localizedDescription != "cancelled" else {
                 completion(nil, NDT7TestConstants.cancelledError)
