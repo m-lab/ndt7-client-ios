@@ -11,11 +11,7 @@ import Foundation
 /// Protocol for URLSession dataTask
 public protocol URLSessionNDT7 {
     associatedtype DataTaskType: URLSessionTaskNDT7
-  @available (iOS 16, *)
   func dataTask(with request: URLRequest, completion: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> DataTaskType
-
-  @available(iOS, obsoleted: 16)
-  func dataTask(with request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> DataTaskType
 }
 
 /// Protocol for URLSessionTask
@@ -26,14 +22,8 @@ public protocol URLSessionTaskNDT7 {
 }
 
 extension URLSession: URLSessionNDT7 {
-  @available (iOS 16, *)
   public func dataTask(with request: URLRequest, completion: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
    dataTask(with: request, completionHandler: completion)
-  }
-
-  @available(iOS, obsoleted: 16)
-  public func dataTask(with request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
-    dataTask(with: request, completionHandler: completion)
   }
 }
 
