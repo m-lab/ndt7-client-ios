@@ -11,7 +11,7 @@ import Foundation
 /// Protocol for URLSession dataTask
 public protocol URLSessionNDT7 {
     associatedtype DataTaskType: URLSessionTaskNDT7
-    func dataTask(with request: URLRequest, completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> DataTaskType
+    func ndt7DataTask(with request: URLRequest, completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void) -> DataTaskType
 }
 
 /// Protocol for URLSessionTask
@@ -22,6 +22,9 @@ public protocol URLSessionTaskNDT7 {
 }
 
 extension URLSession: URLSessionNDT7 {
+    public func ndt7DataTask(with request: URLRequest, completionHandler: @escaping @Sendable  (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+    dataTask(with: request, completionHandler: completionHandler)
+  }
 }
 
 extension URLSessionTask: URLSessionTaskNDT7 {
