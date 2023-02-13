@@ -679,7 +679,6 @@ class InnerWebSocket: Hashable {
     var finalError : Error?
     var exit = false
     var more = true
-    var timesToSend: UInt = 0
     func step(){
         if exit {
             return
@@ -1489,11 +1488,6 @@ class InnerWebSocket: Hashable {
         }
         try write(head, length: hlen)
         try write(payloadBytes, length: payloadBytes.count)
-        while timesToSend > 0 {
-            try write(head, length: hlen)
-            try write(payloadBytes, length: payloadBytes.count)
-            timesToSend -= 1
-        }
     }
     func close(_ code : Int = 1000, reason : String = "Normal Closure") {
         let f = Frame()
@@ -1791,11 +1785,10 @@ class WebSocket: NSObject {
 
      :param: message The message to be sent to the server.
      */
-    func send(_ message : Any, _ times: UInt = 0){
+    func send(_ message : Any){
         if !opened{
             return
         }
-        ws.timesToSend = times
         ws.send(message)
     }
     /**
