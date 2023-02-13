@@ -317,7 +317,14 @@ extension NDT7Test {
                 uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
             }
         }
-        queue.asyncAfter(deadline: .now() + NDT7WebSocketConstants.Request.uploadRequestDelay) { [weak self] in
+
+        let elapsedTime = (t1.timeIntervalSince1970) - (t0.timeIntervalSince1970)
+        let numBytes = webSocketUpload?.outputBytesLengthAccumulated ?? 0
+        var delay = NDT7WebSocketConstants.Request.initialUploadRequestDelay
+        if numBytes > 0 {
+            delay = Float64(buffered ?? underbuffered) / (Float64(numBytes) / Float64(elapsedTime))
+        }
+        queue.asyncAfter(deadline: .now() + delay) { [weak self] in
             self?.uploader(socket: socket, message: message, t0: t0, tlast: tlast, count: count, queue: queue)
         }
     }
