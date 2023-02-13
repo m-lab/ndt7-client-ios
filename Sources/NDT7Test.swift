@@ -336,18 +336,20 @@ extension NDT7Test {
     /// - parameter count: Number of transmitted bytes.
     func uploadMessage(socket: WebSocketWrapper, t0: Date, t1: Date, count: Int) {
         guard socket === webSocketUpload else { return }
-        let message = "{ }"
-        if var measurement = handleMessage(message) {
-            measurement.origin = .client
-            measurement.direction = .upload
-            measurement.appInfo = NDT7APPInfo(elapsedTime: Int64((t1.timeIntervalSince1970 * 1000000.0) - (t0.timeIntervalSince1970 * 1000000.0)), numBytes: Int64(count))
-            if let jsonData = try? JSONEncoder().encode(measurement) {
-                measurement.rawData = String(data: jsonData, encoding: .utf8)
-            }
-            logNDT7("Upload test from client: \(measurement.rawData ?? "")")
-            mainThread { [weak self] in
-                self?.delegate?.measurement(origin: .client, kind: .upload, measurement: measurement)
-            }
+        let appInfo = NDT7APPInfo(elapsedTime: Int64((t1.timeIntervalSince1970 * 1000000.0) - (t0.timeIntervalSince1970 * 1000000.0)), numBytes: Int64(count))
+        var measurement = NDT7Measurement(appInfo: appInfo,
+                                                bbrInfo: nil,
+                                                connectionInfo: nil,
+                                                origin: .client,
+                                                direction: .upload,
+                                                tcpInfo: nil,
+                                                rawData: nil)
+        if let jsonData = try? JSONEncoder().encode(measurement) {
+            measurement.rawData = String(data: jsonData, encoding: .utf8)
+        }
+        logNDT7("Upload test from client: \(measurement.rawData ?? "")")
+        mainThread { [weak self] in
+            self?.delegate?.measurement(origin: .client, kind: .upload, measurement: measurement)
         }
     }
 
