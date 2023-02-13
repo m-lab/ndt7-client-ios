@@ -289,6 +289,8 @@ extension NDT7Test {
         var t1 = Date()
         var tlast = tlast ?? Date()
         var count = count
+        var message = message
+        var yield = false
         let duration: TimeInterval = 10.0
         guard t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true else {
             uploadMessage(socket: socket, t0: t0, t1: t1, count: webSocketUpload?.outputBytesLengthAccumulated ?? 0)
@@ -297,24 +299,29 @@ extension NDT7Test {
             return
         }
 
-        let underbuffered = 7 * message.count
+        let underbuffered = 2 * message.count
         var buffered: Int? = 0
         if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25,
            let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated {
             tlast = t1
             uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
         }
-        while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true,
+        while buffered != nil && buffered! < underbuffered && t1.timeIntervalSince1970 - t0.timeIntervalSince1970 < duration && uploadTestRunning == true && yield == false,
               let outputBytesAccumulated = webSocketUpload?.outputBytesLengthAccumulated,
               count < outputBytesAccumulated + underbuffered {
             buffered = socket.send(message, maxBuffer: underbuffered)
             if buffered != nil {
-                count += message.count * Int(NDT7WebSocketConstants.Request.maxConcurrentMessages)
+                count += message.count
+                if message.count < NDT7WebSocketConstants.Request.maxMessageSize,
+                   message.count <= outputBytesAccumulated/NDT7WebSocketConstants.Request.scalingFraction {
+                    message = message + message
+                }
             }
             t1 = Date()
             if t1.timeIntervalSince1970 - tlast.timeIntervalSince1970 > 0.25 {
                 tlast = t1
                 uploadMessage(socket: socket, t0: t0, t1: t1, count: outputBytesAccumulated)
+                yield = true
             }
         }
 
