@@ -117,7 +117,7 @@ extension ViewController: NDT7TestInteraction {
             }
         }
 
-        if origin == .client,
+        if origin == .client && kind == .download,
             enableAppData,
             let elapsedTime = measurement.appInfo?.elapsedTime,
             let numBytes = measurement.appInfo?.numBytes,
@@ -125,40 +125,20 @@ extension ViewController: NDT7TestInteraction {
             let seconds = elapsedTime / 1000000
             let mbit = numBytes / 125000
             let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
-            switch kind {
-            case .download:
-                downloadSpeed = rounded
-                DispatchQueue.main.async { [weak self] in
-                    self?.downloadSpeedLabel.text = "\(rounded) Mbit/s"
-                }
-            case .upload:
-                uploadSpeed = rounded
-                DispatchQueue.main.async { [weak self] in
-                    self?.uploadSpeedLabel.text = "\(rounded) Mbit/s"
-                }
+            downloadSpeed = rounded
+            DispatchQueue.main.async { [weak self] in
+                self?.downloadSpeedLabel.text = "\(rounded) Mbit/s"
             }
-        } else if origin == .server,
+        } else if origin == .server && kind == .upload,
             let elapsedTime = measurement.tcpInfo?.elapsedTime,
             elapsedTime >= 1000000 {
             let seconds = elapsedTime / 1000000
-            switch kind {
-            case .download:
-                if let numBytes = measurement.tcpInfo?.bytesSent {
-                    let mbit = numBytes / 125000
-                    let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
-                    downloadSpeed = rounded
-                    DispatchQueue.main.async { [weak self] in
-                        self?.downloadSpeedLabel.text = "\(rounded) Mbit/s"
-                    }
-                }
-            case .upload:
-                if let numBytes = measurement.tcpInfo?.bytesReceived {
-                    let mbit = numBytes / 125000
-                    let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
-                    uploadSpeed = rounded
-                    DispatchQueue.main.async { [weak self] in
-                        self?.uploadSpeedLabel.text = "\(rounded) Mbit/s"
-                    }
+            if let numBytes = measurement.tcpInfo?.bytesReceived {
+                let mbit = numBytes / 125000
+                let rounded = Double(Float64(mbit)/Float64(seconds)).rounded(toPlaces: 1)
+                uploadSpeed = rounded
+                DispatchQueue.main.async { [weak self] in
+                    self?.uploadSpeedLabel.text = "\(rounded) Mbit/s"
                 }
             }
         }

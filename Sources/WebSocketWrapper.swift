@@ -78,7 +78,7 @@ extension WebSocketWrapper {
     func send(_ message: Any, maxBuffer: Int) -> Int? {
         guard let buffer = webSocket?.ws.outputBytesLength, buffer < maxBuffer else { return nil }
         if open {
-            webSocket?.send(message, NDT7WebSocketConstants.Request.maxConcurrentMessages)
+            webSocket?.send(message)
             return buffer
         } else {
             logNDT7("WebSocket \(url.absoluteString) did not send message. WebSocket not connected")

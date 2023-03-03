@@ -94,13 +94,19 @@ public struct NDT7WebSocketConstants {
         /// updateInterval is the interval between client side upload measurements.
         public static let updateInterval: TimeInterval = 0.25
 
-        /// bulkMessageSize is the size of uploaded messages
-        public static let bulkMessageSize = 1 << 13
+        /// initialMessageSize is the starting size of uploaded messages
+        public static let initialMessageSize = 1 << 13
 
-        /// maxConcurrentMessages is the max concurrent messages for upload
-        public static let maxConcurrentMessages: UInt = 100
+        /// maxMessageSize is the maximum accepted message size
+        public static let maxMessageSize = 1 << 20
 
-        /// uploadRequestDelay is delay for upload messages
-        public static let uploadRequestDelay: Double = Double(maxConcurrentMessages) * Double(bulkMessageSize) / (4 * 125000) / 100
+        // scalingFraction sets the threshold for scaling binary messages. When
+        // the current binary message size is <= than 1/scalingFactor of the
+        // amount of bytes sent so far, we scale the message. This is documented
+        // in the appendix of the ndt7 specification.
+        public static let scalingFraction = 16
+
+        /// uploadRequestDelay is delay for upload messages when output is buffered
+        public static let initialUploadRequestDelay: Double = Double(initialMessageSize) / (4 * 125000)
     }
 }

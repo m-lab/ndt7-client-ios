@@ -32,6 +32,8 @@ class ConstantsTests: XCTestCase {
         XCTAssertEqual(NDT7WebSocketConstants.Request.uploadTimeout, 15)
         XCTAssertEqual(NDT7WebSocketConstants.Request.ioTimeout, 7)
         XCTAssertEqual(NDT7WebSocketConstants.Request.updateInterval, 0.25)
-        XCTAssertEqual(NDT7WebSocketConstants.Request.bulkMessageSize, 1 << 13)
+        XCTAssertEqual(NDT7WebSocketConstants.Request.initialMessageSize, 1 << 13)
+        XCTAssertEqual(NDT7WebSocketConstants.Request.maxMessageSize, 1 << 20)
+        XCTAssertEqual(NDT7WebSocketConstants.Request.scalingFraction, 16)
     }
 }
