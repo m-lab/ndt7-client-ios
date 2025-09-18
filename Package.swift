@@ -19,12 +19,12 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "NDT7",
+            name: "NDT7-TechSee",
             targets: ["NDT7"])
     ],
     targets: [
         .target(
-            name: "NDT7",
+            name: "NDT7-TechSee",
             path: "Sources")
     ],
     swiftLanguageVersions: [.v5]
