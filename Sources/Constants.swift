@@ -49,8 +49,12 @@ public struct NDT7WebSocketConstants {
     /// MLab Server discover constants.
     public struct MLabServerDiscover {
 
+        // SpeedTest environment variable Ranh
+        public static var env  = ""
+
         /// Discover closer server hostname url.
-        public static let hostname = "locate.measurementlab.net"
+        //public static let hostname = "locate.measurementlab.net"
+        public static let hostname = "https://stats-\(env)-api.techsee.me"
 
         /// Discover server path.
         public static let path = "v2/nearest/ndt/ndt7"
