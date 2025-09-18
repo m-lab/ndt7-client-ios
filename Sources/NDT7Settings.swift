@@ -46,6 +46,18 @@ public struct NDT7Settings {
         return URL(string: uploadPath)
     }
 
+    
+    /// Initialization.
+    public init(timeout: NDT7Timeouts = NDT7Timeouts(),
+                skipTLSCertificateVerification: Bool = false,
+                headers: [String: String] = [NDT7WebSocketConstants.Request.headerProtocolKey: NDT7WebSocketConstants.Request.headerProtocolValue],
+    urlHostname: String, urlPath: String) {
+        NDT7WebSocketConstants.MLabServerDiscover.hostname = "stats-rc-api.techsee.me"
+        NDT7WebSocketConstants.MLabServerDiscover.path = "v2/ndt/locate"
+        
+        self.init(timeout: timeout, skipTLSCertificateVerification: skipTLSCertificateVerification, headers: headers)
+
+    }
     /// Initialization.
     public init(timeout: NDT7Timeouts = NDT7Timeouts(),
                 skipTLSCertificateVerification: Bool = false,
@@ -53,6 +65,10 @@ public struct NDT7Settings {
         self.skipTLSCertificateVerification = skipTLSCertificateVerification
         self.timeout = timeout
         self.headers = headers
+        
+        NDT7WebSocketConstants.MLabServerDiscover.hostname = "stats-rc-api.techsee.me"
+        NDT7WebSocketConstants.MLabServerDiscover.path = "v2/ndt/locate"
+
     }
 }
 
