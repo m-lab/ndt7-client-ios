@@ -54,10 +54,10 @@ public struct NDT7WebSocketConstants {
 
         /// Discover closer server hostname url.
         //public static let hostname = "locate.measurementlab.net"
-        public static let hostname = "https://stats-\(env)-api.techsee.me"
+        public static var hostname = "https://stats-\(env)-api.techsee.me"
 
         /// Discover server path.
-        public static let path = "v2/nearest/ndt/ndt7"
+        public static var path = "v2/nearest/ndt/ndt7"
 
         /// Client name query parameter.
         public static let clientName  = "ndt7-client-ios"
